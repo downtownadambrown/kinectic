@@ -48,7 +48,15 @@ I have designed the structure and skeleton using Balsamiq to layout how I would 
 
 -  **Wireframes & Sitemap**
  
-	- All wireframes and sitemap can be visualize in the following link - [view]()
+	- Main Screen Logged Out - [view](https://ik.imagekit.io/2a1in3cldn/MS2/Wireframes_and_Sitemap/Main_Screen_Logged_Out_Mt2S110tz.png)
+  	- Main Screen Logged In - [view](https://ik.imagekit.io/2a1in3cldn/MS2/Wireframes_and_Sitemap/Main_Screen_Logged_In_YADaJTpebfjQ.png)
+	- Login Form Modal - [view](https://ik.imagekit.io/2a1in3cldn/MS2/Wireframes_and_Sitemap/Login_Form_Modal_6LcRlEsUU.png)
+	- Sign Up Form Modal - [view](https://ik.imagekit.io/2a1in3cldn/MS2/Wireframes_and_Sitemap/Signup_Form_Modal_cuQSQu3yu.png)
+	- Dashboard Modal - [view](https://ik.imagekit.io/2a1in3cldn/MS2/Wireframes_and_Sitemap/Dashboard_Modal_3vZLrvOmH0qg.png)
+	- Settings Modal - [view](https://ik.imagekit.io/2a1in3cldn/MS2/Wireframes_and_Sitemap/Seetings_Modal_qBj6bc3Ouaij.png)
+	- Information and Guide modal - [view](https://ik.imagekit.io/2a1in3cldn/MS2/Wireframes_and_Sitemap/Information_and_Guide_Modal_Fll1qTwg_3qU.png)
+	- Game Screen - [view](https://ik.imagekit.io/2a1in3cldn/MS2/Wireframes_and_Sitemap/Game_Screen_V6A-5elm8.png)
+
 
 	
 - **API Routes**
@@ -73,6 +81,55 @@ At this stage I have chosen the Colours, Typography, Logo and Images.
 	- **Logo** - I used [Canva](https://www.canva.com) to design logo and favicon. You can view this under **Resources** in this document.  The fonts used for the logo are Mont Thin and Alta which both are also from canva.
 	
 	- **Icons** - I will be using icons from Font Awesome. more in the **Resources** section in this document.
+
+## Algorithms and Data Structure
+
+## Data Structure
+
+- The proposed plan for the Data Structure will be to use an Object composed of several arrays, all arrays must have equal sizes.
+  Each array will have sets of letters which will form a grid where the puzzle will be filled. When I think about it these are the challanges that come to mind:
+    - Game Logic Thoughts
+      - How many words will it be able to fill inside the grid?
+      - How will I trasverse the arrays to find the best location to fill a word?
+      - What happens when there are no words?
+      - How can the grid dynamically fill the words?
+      - How will empty spaces be filled?
+      - How do I not saturate a grid with too many words?
+      - How can orientations be checked and which orientations are allowed?
+      - How can I map every single UI square in the grid with the actual puzzle?
+      - What is the biggest word possible for the game?
+      - How big can the grid grow?
+      - How overlapping words will be filled in grid?How many is a sensible number?
+      - If grid is too small what will happen to the words? Can grid increase in size depending on the length of a word?
+      - How will I name variables?
+    - Generic Game Thoughts
+      - Where will be the words for a particular category be stored? And How can I make this easily edited rather than hard coded?
+      - How will the dashboard data be stored?
+      - How will user sign up data be stored?
+      - How will use sign up data be stored?
+      - How will sound be played and How can user switch it off?
+      - How will events for the grid be tracked?
+      - How will I have the code written in one file? Or split into sevral ones? 
+- The above questions are initially what came to me when I think about it, my inital thought is to use 3 dimensional array and this is where I will start it.
+
+
+## Algorithms
+
+- When thinking about how to generate the puzzle this is where my starting point. This is my initial PseudoCode to get things started.
+
+- Program Start
+- Initialise Words Array
+- Initialise Puzzle Array
+- generatePuzzle (Words Array){
+  - If (Words Array Has Length AND Puzzle Array Does Not Exist)
+    - While (Puzzle Array Does not Exist)
+      - Fill Puzzle Array With Words Array
+      - If (Puzzle Does not Exist)
+        - Increase Array Size
+    - Fill Empty Spaces With Random Letters  
+    - Return Puzzle 
+- }
+- generatePuzzle(Words Array)
 
 # Technologies
 
