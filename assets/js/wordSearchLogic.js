@@ -11,32 +11,125 @@ class GameClass {
         return { puzzle, orientations, allOrientations };
     }
 
-    LETTERS = "abcdefghijklmnoprstuvwy";
+    getCheckedOrientations = (orientation) => {
+        const checkOrientations = {
+            horizontal: function (x, y, h, w, l) {
+                return w >= x + l;
+            },
+            horizontalBack: function (x, y, h, w, l) {
+                return x + 1 >= l;
+            },
+            vertical: function (x, y, h, w, l) {
+                return h >= y + l;
+            },
+            verticalUp: function (x, y, h, w, l) {
+                return y + 1 >= l;
+            },
+            diagonal: function (x, y, h, w, l) {
+                return w >= x + l && h >= y + l;
+            },
+            diagonalBack: function (x, y, h, w, l) {
+                return x + 1 >= l && h >= y + l;
+            },
+            diagonalUp: function (x, y, h, w, l) {
+                return w >= x + l && y + 1 >= l;
+            },
+            diagonalUpBack: function (x, y, h, w, l) {
+                return x + 1 >= l && y + 1 >= l;
+            },
+        };
+        if (orientation) {
+            return checkOrientations[orientation];
+        } else {
+            return checkOrientations;
+        }
 
-    allPossibleWordOrientations = [
-        "horizontal",
-        "horizontalBack",
-        "vertical",
-        "verticalUp",
-        "diagonal",
-        "diagonalUp",
-        "diagonalBack",
-        "diagonalUpBack",
-    ];
+    }
 
-    orientations = () => {
+    getSkippedOrientations = (orientation) => {
+        const skipOrientations = {
+            horizontal: function (x, y, l) {
+                return { x: 0, y: y + 1 };
+            },
+            horizontalBack: function (x, y, l) {
+                return { x: l - 1, y: y };
+            },
+            vertical: function (x, y, l) {
+                return { x: 0, y: y + 100 };
+            },
+            verticalUp: function (x, y, l) {
+                return { x: 0, y: l - 1 };
+            },
+            diagonal: function (x, y, l) {
+                return { x: 0, y: y + 1 };
+            },
+            diagonalBack: function (x, y, l) {
+                return { x: l - 1, y: x >= l - 1 ? y + 1 : y };
+            },
+            diagonalUp: function (x, y, l) {
+                return { x: 0, y: y < l - 1 ? l - 1 : y + 1 };
+            },
+            diagonalUpBack: function (x, y, l) {
+                return { x: l - 1, y: x >= l - 1 ? y + 1 : y };
+            },
+        };
+        if (orientation) {
+            return skipOrientations[orientation];
+        } else {
+            return skipOrientations;
+        }
+    }
 
+
+    getOrientations = (orientation) => {
+        const orientations = {
+            horizontal: function (x, y, i) {
+                return { x: x + i, y: y };
+            },
+            horizontalBack: function (x, y, i) {
+                return { x: x - i, y: y };
+            },
+            vertical: function (x, y, i) {
+                return { x: x, y: y + i };
+            },
+            verticalUp: function (x, y, i) {
+                return { x: x, y: y - i };
+            },
+            diagonal: function (x, y, i) {
+                return { x: x + i, y: y + i };
+            },
+            diagonalBack: function (x, y, i) {
+                return { x: x - i, y: y + i };
+            },
+            diagonalUp: function (x, y, i) {
+                return { x: x + i, y: y - i };
+            },
+            diagonalUpBack: function (x, y, i) {
+                return { x: x - i, y: y - i };
+            },
+        };
+        if (orientation) {
+            return orientations[orientation];
+        } else {
+            return orientations;
+        }
     };
-
-    checkOrientations = () => {
-
-    };
-
-    getOrientations = () => {
-        return this.orientations;
-    };
-    getAllOrientations = () => {
-        return this.allOrientations;
+    getAllOrientations = (orientation) => {
+        const allOrientations = [
+            "horizontal",
+            "horizontalBack",
+            "vertical",
+            "verticalUp",
+            "diagonal",
+            "diagonalUp",
+            "diagonalBack",
+            "diagonalUpBack",
+        ];
+        if (orientation) {
+            return allOrientations[orientation];
+        } else {
+            return allOrientations;
+        }
     };
 
     /** STEP 1
@@ -76,7 +169,7 @@ class GameClass {
         const settings = {
             gridHeight: configs.gridHeight || wordListLength,
             gridWidth: configs.gridHeight || wordListLength,
-            orientations: configs.orientations || allOrientations,
+            orientations: configs.orientations || this.getAllOrientations,
             maxGridGrowth: 20,
             maxGridGenerationAttempts: 20
         };
@@ -178,15 +271,40 @@ class GameClass {
             gridHeight = settings.gridHeight,
             gridWidth = settings.gridWidth,
             wordLength = word.length,
-            maxOverlap = 0;
-
-        for (let k = 0, len = settings.orientations.length; k < len; k++) {
+            maxOverlap = 0, 
+            x = 0,
+            y = 0;
+        for (let k = 0, length = settings.orientations.length; k < length; k++) {
             let orientation = settings.orientations[k],
-                check = this.checkOrientations[orientation],
-                next = this.orientations[orientation],
-                skipTo = this.skipOrientations[orientation];
-            console.log(`${check} x ${next} x ${skipTo}`)
+                check = this.getCheckedOrientations([orientation]),
+                next = this.getOrientations([orientation]),
+                skipTo = this.getSkippedOrientations([orientation]);
+
+            locations.push({
+                x: x,
+                y: y,
+                orientation: orientation
+            });
+            console.log(locations)
         }
+        return locations
     };
 }
-generatePuzzle(wordListHard)
+
+const wordList = [
+    "love",
+    "you",
+    "bus",
+    "goat",
+    "jazz",
+    "apple",
+    "university",
+    "pipe",
+    "joke",
+    "player",
+    "provoke",
+];
+
+const settings = {};
+
+const game = new GameClass(wordList, settings)
