@@ -1,129 +1,192 @@
-const wordListVeryHard = ["bus", "jacket", "provoke", "university", "diversity", "game", "puzzle", "crowded", "extraordinary"
-    , "quality", "practice", "computer", "bicycle", "prank", "bond"];
-const wordListHard = ["bus", "jacket", "provoke", "university", "diversity", "game", "puzzle", "crowded", "extraordinary"
-    , "quality"];
-const wordListEasy = ["bus", "jacket", "provoke", "university", "diversity"];
-
-// STEP 1
-const generatePuzzle = (wordsArray, settings) => {
-    let wordList,
-        puzzle,
-        wordListLength,
-        configs = settings || {};
-
-    if (wordsArray.legth <= 0) {
-        throw new Error(
-            `Array must contain entries.`
-        );
-
-    } else if (wordsArray.every(e => e >= 0 || e <= 0)) {
-        throw new Error(
-            `Array cannot contain numbers.`
-        );
-    } else if (wordsArray === Object) {
-        throw new Error(
-            `Object cannot be used to feed this function.`);
+/**
+ * This is a class that will handle the game grid generation as well as 
+ * randomly placing the words in the grid. The UI script will only have to 
+ * give this class's constructor a
+ */
+class GameClass {
+    constructor(wordList, settings) {
+        const puzzle = this.generatePuzzle(wordList, settings);
+        const orientations = this.getOrientations();
+        const allOrientations = this.getAllOrientations();
+        return { puzzle, orientations, allOrientations };
     }
-    else {
-        wordList = [...wordsArray.slice(0).sort()];
-        wordListLength = wordList[0].length;
-        configs = puzzleConfiguration(configs, wordListLength);
-        puzzle = returnFilledPuzzle(wordList, configs);
-    }
-    //console.log(typeof (puzzle));
-    return puzzle;
-};
 
-//STEP 2
-const puzzleConfiguration = (configs, wordListLength) => {
-    const settings = {
-        gridHeight: configs.gridHeight || wordListLength,
-        gridWidth: configs.gridHeight || wordListLength,
-        maxGridGrowth: 100,
-        maxGridGenerationAttempts: 10,
-        fillEmptySpaces: true,
+    LETTERS = "abcdefghijklmnoprstuvwy";
+
+    allPossibleWordOrientations = [
+        "horizontal",
+        "horizontalBack",
+        "vertical",
+        "verticalUp",
+        "diagonal",
+        "diagonalUp",
+        "diagonalBack",
+        "diagonalUpBack",
+    ];
+
+    orientations = () => {
+
     };
-    return settings;
-};
 
-//STEP 3
-const returnFilledPuzzle = (wordList, settings) => {
-    let puzzle,
-        attempts = 0,
-        gridGrowths = 0;
+    checkOrientations = () => {
 
-    while (!puzzle) {
-        while (!puzzle && attempts++ < settings.maxGridGenerationAttempts) {
-            puzzle = fillPuzzleWithWords(wordList, settings);
-        }
+    };
 
-        if (!puzzle) {
-            gridGrowths++;
-            if (gridGrowths > settings.maxGridGrowth) {
-                throw new Error(
-                    `Grid growth is bigger than Maximum Grid Growth, please check settings.`
-                );
-            }
-            console.table(
-                `No valid ${settings.gridWidth}x${settings.gridHeight} grid found after ${
-                attempts - 1
-                } attempts, trying with bigger grid`
-            );
-            settings.gridHeight++;
-            settings.gridWidth++;
-            attempts = 0;
-        }
-    }
-    return puzzle
-};
+    getOrientations = () => {
+        return this.orientations;
+    };
+    getAllOrientations = () => {
+        return this.allOrientations;
+    };
 
-//STEP 4
-const fillPuzzleWithWords = (wordList, settings) => {
-    let puzzle = [];
-    puzzle = generateEmptyPuzzleArrays(settings);
-    console.table(puzzle)
-    //puzzle = insertWordsOneByOne(puzzle, wordList, settings); Commented out as it causes while loop to go crazy.
-    return puzzle;
-};
+    /** STEP 1
+     *
+     */
+    generatePuzzle = (wordsArray, settings) => {
+        let wordList,
+            puzzle,
+            wordListLength,
+            configsFinal,
+            configs = settings || {};
 
-//STEP 5
-const generateEmptyPuzzleArrays = (settings) => {
-    let puzzle = [],
-        i,
-        j;
-    for (i = 0; i < settings.gridHeight; i++) {
-        puzzle.push([]);
-        for (j = 0; j < settings.gridWidth; j++) {
-            puzzle[i].push("");
-        }
-    }
-    return puzzle;
-};
-//STEP 5
-const insertWordsOneByOne = (puzzle, wordList, settings) => {
-    for (i = 0, len = wordList.length; i < len; i++) {
-        if (puzzle && settings && wordList[i]) {
-            let locations = findBestLocationForEachWord(puzzle, settings, wordList[i]);
-            mapWordInPuzzleGrid(puzzle, wordList[i], locations)
+        if (wordsArray.legth <= 0) {
+            throw new Error(`Array must contain entries.`);
+        } else if (wordsArray.every((e) => e >= 0 || e <= 0)) {
+            throw new Error(`Array cannot contain numbers.`);
+        } else if (wordsArray === Object) {
+            throw new Error(`Object cannot be used to feed this function.`);
         } else {
-            return null;
+            wordList = [
+                ...wordsArray.slice(0).sort(function (i, j) {
+                    i.length - j.length;
+                    return j.length - i.length;
+                }),
+            ];
+            wordListLength = wordList[0].length;
+            configsFinal = this.puzzleConfiguration(configs, wordListLength);
+            puzzle = this.returnFilledPuzzle(wordList, configsFinal);
+
+        };
+    }
+
+    /** STEP 2
+     *
+     */
+    puzzleConfiguration = (configs, wordListLength) => {
+        const settings = {
+            gridHeight: configs.gridHeight || wordListLength,
+            gridWidth: configs.gridHeight || wordListLength,
+            orientations: configs.orientations || allOrientations,
+            maxGridGrowth: 20,
+            maxGridGenerationAttempts: 20
+        };
+        console.log(settings);
+
+        return settings;
+    };
+
+    /** STEP 3
+     *
+     */
+    returnFilledPuzzle = (wordList, settings) => {
+        let puzzle,
+            attempts = 0,
+            gridGrowths = 0;
+
+        while (!puzzle) {
+            while (!puzzle && attempts++ < settings.maxGridGenerationAttempts) {
+                puzzle = this.fillPuzzleWithWords(wordList, settings);
+            }
+
+            if (!puzzle) {
+                gridGrowths++;
+                if (gridGrowths > settings.maxGridGrowth) {
+                    throw new Error(
+                        `Grid growth is bigger than Maximum Grid Growth, please check settings.Height ${settings.gridHeight} x Width ${settings.gridWidth}`
+                    );
+                }
+                console.table(
+                    `No valid ${settings.gridWidth}x${
+                    settings.gridHeight
+                    } grid found after ${attempts - 1} attempts, trying with bigger grid`
+                );
+                settings.gridHeight++;
+                settings.gridWidth++;
+                attempts = 0;
+            }
         }
-    }
-    return puzzle;
-};
-//STEP 6
-const findBestLocationForEachWord = (puzzle, settings, word) => {
+        return puzzle;
+    };
 
-};
-//STEP 7
-const mapWordInPuzzleGrid = (puzzle, word, locations) => {
+    /** STEP 4
+     * 
+    .*/
+    fillPuzzleWithWords = (words, settings) => {
+        let puzzle = [];
+        puzzle = this.generateEmptyPuzzleArrays(settings);
+        puzzle = this.insertWordsOneByOne(puzzle, words, settings);
+        return puzzle;
+    };
 
-    if (locations.length === 0) {
-        return false;
-    }
-};
+    /** STEP 5
+     * 
+     */
+    generateEmptyPuzzleArrays = (settings) => {
+        let puzzle = [],
+            i,
+            j;
+        for (i = 0; i < settings.gridHeight; i++) {
+            puzzle.push([]);
+            for (j = 0; j < settings.gridWidth; j++) {
+                puzzle[i].push("");
+            }
+        }
 
+        return puzzle;
+    };
+    /** STEP 6
+       * 
+       */
+    insertWordsOneByOne = (puzzle, wordList, settings) => {
+        for (let i = 0, len = wordList.length; i < len; i++) {
+            if (puzzle && settings && wordList[i]) {
+                this.mapWordInPuzzleGrid(puzzle, settings, wordList[i]);
+            } else {
+                return null;
+            }
+        }
+        return puzzle;
+    };
 
+    /** STEP 7
+       * 
+       */
 
+    mapWordInPuzzleGrid = (puzzle, settings, word) => {
+        const locations = this.findBestLocationForEachWord(puzzle, settings, word);
+        if (locations.length === 0) {
+            return false;
+        }
+        console.log(locations)
+    };
 
-//generatePuzzle(wordListHard)
+    /** STEP 8
+       * 
+       */
+    findBestLocationForEachWord = (puzzle, settings, word) => {
+        let locations = [],
+            gridHeight = settings.gridHeight,
+            gridWidth = settings.gridWidth,
+            wordLength = word.length,
+            maxOverlap = 0;
+
+        for (let k = 0, len = settings.orientations.length; k < len; k++) {
+            let orientation = settings.orientations[k],
+                check = this.checkOrientations[orientation],
+                next = this.orientations[orientation],
+                skipTo = this.skipOrientations[orientation];
+            console.log(`${check} x ${next} x ${skipTo}`)
+        }
+    };
+}
+generatePuzzle(wordListHard)
