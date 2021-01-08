@@ -11,6 +11,16 @@ class GameClass {
         return { puzzle, orientations, allOrientations };
     }
 
+    getLetters = (letter) => {
+        const LETTERS = "abcdefghijklmnoprstuvwy";
+        if (letter) {
+            return LETTERS[letter];
+        } else {
+            return LETTERS;
+        }
+    }
+
+
     getCheckedOrientations = (orientation) => {
         const checkOrientations = {
             horizontal: function (x, y, h, w, l) {
@@ -134,7 +144,13 @@ class GameClass {
 
     /** STEP 1
      *
+     * This function will take an array of words for the puzzle.
+     * Copy wordsArray and sort them in alphabetical order in a array called wordList.
+     * Get configuration for the puzzle such as orientation, maximum grid size...
+     * Return filled puzzle and fill empty spaces in the puzzle.
+     * @param {Array} wordsArray
      */
+
     generatePuzzle = (wordsArray, settings) => {
         let wordList,
             puzzle,
@@ -158,28 +174,36 @@ class GameClass {
             wordListLength = wordList[0].length;
             configsFinal = this.puzzleConfiguration(configs, wordListLength);
             puzzle = this.returnFilledPuzzle(wordList, configsFinal);
-
-        };
-    }
+           
+        }
+    };
 
     /** STEP 2
      *
+     * This is where puzzle configuration will be set for the grid generation
      */
     puzzleConfiguration = (configs, wordListLength) => {
         const settings = {
             gridHeight: configs.gridHeight || wordListLength,
             gridWidth: configs.gridHeight || wordListLength,
-            orientations: configs.orientations || this.getAllOrientations,
+            orientations: configs.orientations || this.getAllOrientations(),
             maxGridGrowth: 20,
-            maxGridGenerationAttempts: 20
+            maxGridGenerationAttempts: 20,
+            fillEmptySpaces: true,
+            preferOverlap: false,
         };
-        console.log(settings);
+        //console.log(settings);
 
         return settings;
     };
-
     /** STEP 3
      *
+     * Take words array and puzzle configuration settings
+     * Keep trying to find the correct grid size for words array
+     * Throw error if the maximum number of attemps has been reached.
+     *
+     * @param {Array} wordList
+     * @param {Object} settings
      */
     returnFilledPuzzle = (wordList, settings) => {
         let puzzle,
@@ -212,8 +236,14 @@ class GameClass {
     };
 
     /** STEP 4
-     * 
-    .*/
+     *
+     * This is called when a new game is generated, it will do two things
+     * generate a grid which is essentially empty, once grid is generated,
+     * insert words into grid.
+     *
+     * @param {Array} words
+     * @param {Object} settings
+     */
     fillPuzzleWithWords = (words, settings) => {
         let puzzle = [];
         puzzle = this.generateEmptyPuzzleArrays(settings);
@@ -222,7 +252,10 @@ class GameClass {
     };
 
     /** STEP 5
-     * 
+     *
+     * Take settings object using gridWidth and gridHeight create puzzle grid
+     *
+     * @param {Object} settings
      */
     generateEmptyPuzzleArrays = (settings) => {
         let puzzle = [],
@@ -237,9 +270,16 @@ class GameClass {
 
         return puzzle;
     };
+
     /** STEP 6
-       * 
-       */
+     *
+     * Take created puzzle grid, word list and settingsn to place words
+     * inside grid and do so word by word.
+     *
+     * @param {Array} puzzle
+     * @param {Array} wordList
+     * @param {Object} settings
+     */
     insertWordsOneByOne = (puzzle, wordList, settings) => {
         for (let i = 0, len = wordList.length; i < len; i++) {
             if (puzzle && settings && wordList[i]) {
@@ -251,42 +291,69 @@ class GameClass {
         return puzzle;
     };
 
-    /** STEP 7
-       * 
-       */
+    //===================================================== Step 3
 
     mapWordInPuzzleGrid = (puzzle, settings, word) => {
         const locations = this.findBestLocationForEachWord(puzzle, settings, word);
+          console.log(locations)
         if (locations.length === 0) {
             return false;
         }
-        console.log(locations)
+        const sel = locations[Math.floor(Math.random() * locations.length)];
+        this.insertWordOnGrid(
+            puzzle,
+            word,
+            sel.x,
+            sel.y,
+            this.getOrientations([sel.orientation])
+        );
+
+        return true;
     };
 
-    /** STEP 8
-       * 
-       */
+    insertWordOnGrid = (puzzle, word, x, y, fnGetSquare) => {
+        for (let i = 0, len = word.length; i < len; i++) {
+            let next = fnGetSquare(x, y, i);
+            puzzle[next.y][next.x] = word[i];
+        }
+    };
+
+    //===================================================== Step 4
+
     findBestLocationForEachWord = (puzzle, settings, word) => {
         let locations = [],
             gridHeight = settings.gridHeight,
             gridWidth = settings.gridWidth,
             wordLength = word.length,
-            maxOverlap = 0, 
-            x = 0,
-            y = 0;
-        for (let k = 0, length = settings.orientations.length; k < length; k++) {
+            maxOverlap = 0;
+        for (let k = 0, len = settings.orientations.length; k < len; k++) {
             let orientation = settings.orientations[k],
                 check = this.getCheckedOrientations([orientation]),
                 next = this.getOrientations([orientation]),
-                skipTo = this.getSkippedOrientations([orientation]);
+                skipTo = this.getSkippedOrientations([orientation]),
+                x = 0,
+                y = 0;
+            while (y < gridHeight) {
+                if (check(x, y, gridHeight, gridWidth, wordLength)) {
+                    locations.push({
+                        x: x,
+                        y: y,
+                        orientation: orientation,
 
-            locations.push({
-                x: x,
-                y: y,
-                orientation: orientation
-            });
-            console.log(locations)
+                    });
+                    x++;
+                    if (x >= gridWidth) {
+                        x = 0;
+                        y++;
+                    }
+                } else {
+                    let nextPossible = skipTo(x, y, wordLength);
+                    x = nextPossible.x;
+                    y = nextPossible.y;
+                }
+            }
         }
+      
         return locations
     };
 }
