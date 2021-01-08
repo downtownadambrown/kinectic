@@ -27,7 +27,7 @@ class GameClass {
                 return w >= x + l;
             },
             horizontalBack: function (x, y, h, w, l) {
-                return x + 1 >= l;
+                return x;
             },
             vertical: function (x, y, h, w, l) {
                 return h >= y + l;
@@ -39,13 +39,13 @@ class GameClass {
                 return w >= x + l && h >= y + l;
             },
             diagonalBack: function (x, y, h, w, l) {
-                return x + 1 >= l && h >= y + l;
+                return x + 1 >= l ;
             },
             diagonalUp: function (x, y, h, w, l) {
-                return w >= x + l && y + 1 >= l;
+                return w >= x + l ;
             },
             diagonalUpBack: function (x, y, h, w, l) {
-                return x + 1 >= l && y + 1 >= l;
+                return x + 1 >= l ;
             },
         };
         if (orientation) {
@@ -74,10 +74,10 @@ class GameClass {
                 return { x: 0, y: y + 1 };
             },
             diagonalBack: function (x, y, l) {
-                return { x: l - 1, y: x >= l - 1 ? y + 1 : y };
+                return { x: l - 1 };
             },
             diagonalUp: function (x, y, l) {
-                return { x: 0, y: y < l - 1 ? l - 1 : y + 1 };
+                return { x: 0 };
             },
             diagonalUpBack: function (x, y, l) {
                 return { x: l - 1, y: x >= l - 1 ? y + 1 : y };
@@ -115,7 +115,7 @@ class GameClass {
                 return { x: x + i, y: y - i };
             },
             diagonalUpBack: function (x, y, i) {
-                return { x: x - i, y: y - i };
+                return { x: x };
             },
         };
         if (orientation) {
