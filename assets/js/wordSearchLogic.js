@@ -189,7 +189,7 @@ class WordSearchLogic {
             orientations: configs.orientations || this.getAllOrientations(),
             maxGridGrowth: 20,
             maxGridGenerationAttempts: 20,
-            fillEmptySpaces: true,
+            fillEmptySquareSpaces: true,
             optionalOverlap: false,
         };
         //console.log(settings);
@@ -379,8 +379,6 @@ class WordSearchLogic {
             while (y < gridHeight) {
                 if (checkPossibleOrientation(x, y, gridHeight, gridWidth, wordLength)) {
                     let overlap = this.calculateWordOverlap(word, puzzle, x, y, nextPossibleOrientation);
-                    console.log(overlap)
-
                     if (
                         overlap >= maxWordOverlap ||
                         (!settings.optionalOverlap && overlap > -1)
@@ -440,39 +438,53 @@ class WordSearchLogic {
     };
 
     /** STEP 10
-    * 
-    */
+     * 
+     */
     fillGridEmptySpaces = (puzzle, settings) => {
-        if (settings.fillEmptySpaces) {
-            let generateLetterForEmptySpace;
-            generateLetterForEmptySpace(settings)
-            var extraLettersCount = this.fillEmptySquares({
+        if (settings.fillEmptySquareSpaces) {
+            let generatedLettersForPuzzle;
+            generatedLettersForPuzzle = this.generateLettersForGrid(settings);
+            this.fillEmptySquares({
                 puzzle,
-                generateLetterForEmptySpace: generateLetterForEmptySpace,
+                generatedLettersForPuzzle: generatedLettersForPuzzle
             });
-        }
+        };
     };
 
-    generateLetterForEmptySpace = (settings) => {
-        let lettersToAddToPuzzle,
-            emptySpacesCount = 0;
-
+    /** STEP 11
+     * 
+     */
+    generateLettersForGrid = (settings) => {
+        let lettersToAdd,
+            fillingBlanksCount = 0,
+            extraLetterGenerator;
         if (typeof settings.fillEmptySquares === "function") {
-            return generateLetterForEmptySpace = settings.fillEmptySquares;
+            extraLetterGenerator = settings.fillEmptySquares;
         } else if (typeof settings.fillEmptySquares === "string") {
-            lettersToAddToPuzzle = settings.fillEmptySquares.toLowerCase().split("");
-            return lettersToAddToPuzzle.pop() || (emptySpacesCount++ && "");
+            lettersToAdd = settings.fillEmptySquares.toLowerCase().split("");
+            extraLetterGenerator = () =>
+                lettersToAdd.pop() || (fillingBlanksCount++ && "");
         } else {
-            return this.getLetters([Math.floor(Math.random() * this.getLetters().length)]);
+            extraLetterGenerator = () =>
+                this.getLetters([Math.floor(Math.random() * this.getLetters().length)]);
         }
+        return extraLetterGenerator;
     }
 
-
-    /** STEP 11
-    * 
-    */
-    fillEmptySquares = ({ puzzle, generateLetterForEmptySpace }) => {
-
+    /** STEP 12
+     * 
+     */
+    fillEmptySquares = ({ puzzle, generatedLettersForPuzzle }) => {
+        var extraLettersCount = 0;
+        for (var i = 0, gridHeight = puzzle.length; i < gridHeight; i++) {
+            var row = puzzle[i];
+            for (var j = 0, gridWidth = row.length; j < gridWidth; j++) {
+                if (!puzzle[i][j]) {
+                    puzzle[i][j] = generatedLettersForPuzzle();
+                    extraLettersCount++;
+                }
+            }
+        }
     };
 };
 
