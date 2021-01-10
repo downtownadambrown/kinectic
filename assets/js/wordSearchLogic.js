@@ -443,7 +443,19 @@ class WordSearchLogic {
     */
     fillGridEmptySpaces = (puzzle, settings) => {
         if (settings.fillEmptySpaces) {
-
+            let lettersToAdd,
+                fillingBlanksCount = 0,
+                extraLetterGenerator;
+            if (typeof settings.fillEmptySquares === "function") {
+                extraLetterGenerator = settings.fillEmptySquares;
+            } else if (typeof settings.fillEmptySquares === "string") {
+                lettersToAdd = settings.fillEmptySquares.toLowerCase().split("");
+                extraLetterGenerator = () =>
+                    lettersToAdd.pop() || (fillingBlanksCount++ && "");
+            } else {
+                extraLetterGenerator = () =>
+                    this.getLetters([Math.floor(Math.random() * this.getLetters().length)]);
+            }
         }
     };
 }
