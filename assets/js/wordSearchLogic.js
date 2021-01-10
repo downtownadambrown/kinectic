@@ -3,7 +3,7 @@
  * randomly placing the words in the grid. The UI script will only have to 
  * give this class's constructor a
  */
-class GameClass {
+class WordSearchLogic {
     constructor(wordList, settings) {
         const puzzle = this.generatePuzzle(wordList, settings);
         const orientations = this.getOrientations();
@@ -27,7 +27,7 @@ class GameClass {
                 return w >= x + l;
             },
             horizontalBack: function (x, y, h, w, l) {
-                return x;
+                return x + 1 >= l;
             },
             vertical: function (x, y, h, w, l) {
                 return h >= y + l;
@@ -39,13 +39,13 @@ class GameClass {
                 return w >= x + l && h >= y + l;
             },
             diagonalBack: function (x, y, h, w, l) {
-                return x + 1 >= l ;
+                return x + 1 >= l && h >= y + l;
             },
             diagonalUp: function (x, y, h, w, l) {
-                return w >= x + l ;
+                return w >= x + l && y + 1 >= l;
             },
             diagonalUpBack: function (x, y, h, w, l) {
-                return x + 1 >= l ;
+                return x + 1 >= l && y + 1 >= l;
             },
         };
         if (orientation) {
@@ -74,10 +74,10 @@ class GameClass {
                 return { x: 0, y: y + 1 };
             },
             diagonalBack: function (x, y, l) {
-                return { x: l - 1 };
+                return { x: l - 1, y: x >= l - 1 ? y + 1 : y };
             },
             diagonalUp: function (x, y, l) {
-                return { x: 0 };
+                return { x: 0, y: y < l - 1 ? l - 1 : y + 1 };
             },
             diagonalUpBack: function (x, y, l) {
                 return { x: l - 1, y: x >= l - 1 ? y + 1 : y };
@@ -115,7 +115,7 @@ class GameClass {
                 return { x: x + i, y: y - i };
             },
             diagonalUpBack: function (x, y, i) {
-                return { x: x };
+                return { x: x - i, y: y - i };
             },
         };
         if (orientation) {
@@ -150,7 +150,6 @@ class GameClass {
      * Return filled puzzle and fill empty spaces in the puzzle.
      * @param {Array} wordsArray
      */
-
     generatePuzzle = (wordsArray, settings) => {
         let wordList,
             puzzle,
@@ -174,7 +173,7 @@ class GameClass {
             wordListLength = wordList[0].length;
             configsFinal = this.puzzleConfiguration(configs, wordListLength);
             puzzle = this.returnFilledPuzzle(wordList, configsFinal);
-           
+            return puzzle
         }
     };
 
@@ -190,12 +189,12 @@ class GameClass {
             maxGridGrowth: 20,
             maxGridGenerationAttempts: 20,
             fillEmptySpaces: true,
-            preferOverlap: false,
+            optionalOverlap: false,
         };
         //console.log(settings);
-
         return settings;
     };
+
     /** STEP 3
      *
      * Take words array and puzzle configuration settings
@@ -279,8 +278,9 @@ class GameClass {
      * @param {Array} puzzle
      * @param {Array} wordList
      * @param {Object} settings
-     */
+     */ 
     insertWordsOneByOne = (puzzle, wordList, settings) => {
+        let isWordMapped;
         for (let i = 0, len = wordList.length; i < len; i++) {
             if (puzzle && settings && wordList[i]) {
                 this.mapWordInPuzzleGrid(puzzle, settings, wordList[i]);
@@ -288,14 +288,22 @@ class GameClass {
                 return null;
             }
         }
+        
         return puzzle;
     };
 
-    //===================================================== Step 3
-
+    /** STEP 7
+     * 
+     * Take a word, the grid and the settings to map the best location for each word
+     * Once best location for a word is found, make sure locations are randomly passed
+     * to insert word to grid.
+     * 
+     * @param {Array} puzzle
+     * @param {Object} settings
+     * @param {Array} word
+     */
     mapWordInPuzzleGrid = (puzzle, settings, word) => {
         const locations = this.findBestLocationForEachWord(puzzle, settings, word);
-          console.log(locations)
         if (locations.length === 0) {
             return false;
         }
@@ -307,57 +315,93 @@ class GameClass {
             sel.y,
             this.getOrientations([sel.orientation])
         );
-
         return true;
     };
 
-    insertWordOnGrid = (puzzle, word, x, y, fnGetSquare) => {
+    /** Step 8
+     * 
+     * 
+     */
+    insertWordOnGrid = (puzzle, word, x, y, findSquareLocation) => {
         for (let i = 0, len = word.length; i < len; i++) {
-            let next = fnGetSquare(x, y, i);
-            puzzle[next.y][next.x] = word[i];
+            let nextPossibleOrientation = findSquareLocation(x, y, i);
+            puzzle[nextPossibleOrientation.y][nextPossibleOrientation.x] = word[i];
         }
     };
 
-    //===================================================== Step 4
-
+    /** Step 9
+     * 
+     * 
+     */
     findBestLocationForEachWord = (puzzle, settings, word) => {
         let locations = [],
             gridHeight = settings.gridHeight,
             gridWidth = settings.gridWidth,
             wordLength = word.length,
-            maxOverlap = 0;
-        for (let k = 0, len = settings.orientations.length; k < len; k++) {
-            let orientation = settings.orientations[k],
-                check = this.getCheckedOrientations([orientation]),
-                next = this.getOrientations([orientation]),
-                skipTo = this.getSkippedOrientations([orientation]),
+            maxWordOverlap
+                = 0;
+        for (let i = 0, len = settings.orientations.length; i < len; i++) {
+            let orientation = settings.orientations[i],
+                checkPossibleOrientation = this.getCheckedOrientations([orientation]),
+                nextPossibleOrientation = this.getOrientations([orientation]),
+                skipToPossibleOrientation = this.getSkippedOrientations([orientation]),
                 x = 0,
                 y = 0;
             while (y < gridHeight) {
-                if (check(x, y, gridHeight, gridWidth, wordLength)) {
-                    locations.push({
-                        x: x,
-                        y: y,
-                        orientation: orientation,
+                if (checkPossibleOrientation(x, y, gridHeight, gridWidth, wordLength)) {
+                    let overlap = this.calculateWordOverlap(word, puzzle, x, y, nextPossibleOrientation);
 
-                    });
+                    if (
+                        overlap >= maxWordOverlap ||
+                        (!settings.optionalOverlap && overlap > -1)
+                    ) {
+                        maxWordOverlap = overlap;
+                        locations.push({
+                            x: x,
+                            y: y,
+                            orientation: orientation,
+                            overlap: overlap,
+                        });
+                    }
+
                     x++;
                     if (x >= gridWidth) {
                         x = 0;
                         y++;
                     }
                 } else {
-                    let nextPossible = skipTo(x, y, wordLength);
-                    x = nextPossible.x;
-                    y = nextPossible.y;
+                    let nextPossibleOrient = skipToPossibleOrientation(x, y, wordLength);
+                    x = nextPossibleOrient.x;
+                    y = nextPossibleOrient.y;
                 }
             }
         }
-      
-        return locations
+        return locations;
+    };
+
+    /** STEP 10
+     * 
+     * 
+     */
+    calculateWordOverlap = (word, puzzle, x, y, findSquareLocation) => {
+        let overlap = 0;
+
+        for (let i = 0, len = word.length; i < len; i++) {
+            let nextPossibleOrientation = findSquareLocation(x, y, i),
+                square = puzzle[nextPossibleOrientation.y][nextPossibleOrientation.x];
+            if (square === word[i]) {
+                overlap++;
+            } else if (square !== "") {
+                return -1;
+            }
+        }
+        return overlap;
     };
 }
 
+/**
+ * array with words
+ */
 const wordList = [
     "love",
     "you",
@@ -372,6 +416,15 @@ const wordList = [
     "provoke",
 ];
 
+/**
+ * Settings object
+ */
 const settings = {};
 
-const game = new GameClass(wordList, settings)
+/**
+ * create a class by passing to constructor word array and settings object
+ * return a puzzle
+ */
+const game = new WordSearchLogic(wordList, settings);
+
+console.table(game.puzzle)
