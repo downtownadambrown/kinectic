@@ -154,7 +154,7 @@ class WordSearchLogic {
         let wordList,
             puzzle,
             wordListLength,
-            configsFinal,
+            userPuzzleConfigs,
             configs = settings || {};
 
         if (wordsArray.legth <= 0) {
@@ -171,9 +171,10 @@ class WordSearchLogic {
                 }),
             ];
             wordListLength = wordList[0].length;
-            configsFinal = this.puzzleConfiguration(configs, wordListLength);
-            puzzle = this.returnFilledPuzzle(wordList, configsFinal);
-            return puzzle
+            userPuzzleConfigs = this.puzzleConfiguration(configs, wordListLength);
+            puzzle = this.returnFilledPuzzle(wordList, userPuzzleConfigs);
+            this.fillGridEmptySpaces(puzzle, userPuzzleConfigs);
+            return puzzle;
         }
     };
 
@@ -443,22 +444,38 @@ class WordSearchLogic {
     */
     fillGridEmptySpaces = (puzzle, settings) => {
         if (settings.fillEmptySpaces) {
-            let lettersToAdd,
-                fillingBlanksCount = 0,
-                extraLetterGenerator;
-            if (typeof settings.fillEmptySquares === "function") {
-                extraLetterGenerator = settings.fillEmptySquares;
-            } else if (typeof settings.fillEmptySquares === "string") {
-                lettersToAdd = settings.fillEmptySquares.toLowerCase().split("");
-                extraLetterGenerator = () =>
-                    lettersToAdd.pop() || (fillingBlanksCount++ && "");
-            } else {
-                extraLetterGenerator = () =>
-                    this.getLetters([Math.floor(Math.random() * this.getLetters().length)]);
-            }
+            let generateLetterForEmptySpace;
+            generateLetterForEmptySpace(settings)
+            var extraLettersCount = this.fillEmptySquares({
+                puzzle,
+                generateLetterForEmptySpace: generateLetterForEmptySpace,
+            });
         }
     };
-}
+
+    generateLetterForEmptySpace = (settings) => {
+        let lettersToAddToPuzzle,
+            emptySpacesCount = 0;
+
+        if (typeof settings.fillEmptySquares === "function") {
+            return generateLetterForEmptySpace = settings.fillEmptySquares;
+        } else if (typeof settings.fillEmptySquares === "string") {
+            lettersToAddToPuzzle = settings.fillEmptySquares.toLowerCase().split("");
+            return lettersToAddToPuzzle.pop() || (emptySpacesCount++ && "");
+        } else {
+            return this.getLetters([Math.floor(Math.random() * this.getLetters().length)]);
+        }
+    }
+
+
+    /** STEP 11
+    * 
+    */
+    fillEmptySquares = ({ puzzle, generateLetterForEmptySpace }) => {
+
+    };
+};
+
 
 /**
  * array with words
