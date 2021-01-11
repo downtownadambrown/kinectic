@@ -41,7 +41,8 @@
             <div class="uk-navbar-center">
                 <ul class="uk-navbar-nav">
                     <li>
-                        <a href="index.html" class="uk-logo"><img src="/assets/images/logo.png" alt="Logo Image For A Puzzle Game"></a>
+                        <a href="index.html" class="uk-logo"><img src="/assets/images/logo.png"
+                                alt="Logo Image For A Puzzle Game"></a>
                     </li>
                 </ul>
             </div>
@@ -52,8 +53,10 @@
                         <a href="#"><i class="fas fa-bars" style="font-size:38px;"></i></a>
                         <div class="uk-navbar-dropdown">
                             <ul class="uk-nav uk-navbar-dropdown-nav uk-nav-center">
-                                <li><a href="#"><i class="fas fa-sign-in-alt" style="font-size:38px;"></i></a></li>
-                                <li><a href="#"><i class="fas fa-user-plus" style="font-size:38px;"></i></a></li>
+                                <li><a href="#loginModal" uk-toggle><i class="fas fa-sign-in-alt"
+                                            style="font-size:38px;"></i></a></li>
+                                <li><a href="#signUpModal" uk-toggle><i class="fas fa-user-plus"
+                                            style="font-size:38px;"></i></a></li>
                             </ul>
                         </div>
                     </li>
@@ -62,7 +65,59 @@
         </nav>
     </header>
     <section>
-        <!-- Main Game Intro will go here -->
+        <div class="uk-child-width-1-1@m" uk-grid>
+            <div>
+                <div class="uk-card uk-card-default">
+                    <div class="uk-card-media-top">
+                        <div class="uk-cover-container uk-height-large">
+                            <iframe
+                                src="https://www.youtube-nocookie.com/embed/c2pz2mlSfXA?autoplay=1&amp;controls=0&amp;showinfo=0&amp;rel=0&amp;loop=1&amp;modestbranding=1&amp;wmode=transparent"
+                                width="1920" height="1080" frameborder="0" allowfullscreen uk-cover></iframe>
+                        </div>
+                    </div>
+                    <div class="uk-card-body">
+                        <h3 class="uk-card-title">Word Search Game</h3>
+                        <p>This is a word search game where you will be given a square for the user to search
+                            for each word.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="loginModal" class="uk-flex-top" uk-modal>
+            <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
+                <button class="uk-modal-close-default" type="button" uk-close></button>
+                <form class="uk-align-center uk-form-horizontal uk-grid">
+                    <div class="uk-margin">
+                        <h1 class="uk-heading-divider">Login To Play</h1>
+                    </div>
+                    <div class="uk-margin">
+                        <label class="uk-form-label uk-heading-large">Username:</label>
+                        <div class="uk-inline">
+                            <span class="uk-form-icon" uk-icon="icon: user"></span>
+                            <input class="uk-input" type="text">
+                        </div>
+                    </div>
+                    <div class="uk-margin">
+                        <label class="uk-form-label uk-heading-large">Password:</label>
+                        <div class="uk-inline">
+                            <span class="uk-form-icon" uk-icon="icon: lock"></span>
+                            <input class="uk-input" type="text">
+                        </div>
+                    </div>
+                    <div class="uk-margin">
+                        <button class="uk-button uk-button-primary">Login</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div id="signUpModal" class="uk-flex-top" uk-modal>
+            <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
+                <button class="uk-modal-close-default" type="button" uk-close></button>
+                <p>SIGNUP</p>
+
+            </div>
+        </div>
     </section>
     <footer>
         <!-- Footer will go here -->
