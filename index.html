@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <title>Puzzlemania</title>
     <meta charset="utf-8">
@@ -32,9 +31,7 @@
     <script src="/assets/js/wordSearchLogic.js"></script>
     <!-- Load Tests -->
     <!-- <script src="/assets/spec/wordSearchLogic.spec.js"></script> -->
-
 </head>
-
 <body>
     <header>
         <nav class="uk-navbar-container" uk-navbar>
@@ -92,14 +89,14 @@
                         <h1 class="uk-heading-divider">Login To Play</h1>
                     </div>
                     <div class="uk-margin">
-                        <label class="uk-form-label uk-heading-large">Username:</label>
+                        <label class="uk-form-label">Username:</label>
                         <div class="uk-inline">
                             <span class="uk-form-icon" uk-icon="icon: user"></span>
                             <input class="uk-input" type="text">
                         </div>
                     </div>
                     <div class="uk-margin">
-                        <label class="uk-form-label uk-heading-large">Password:</label>
+                        <label class="uk-form-label">Password:</label>
                         <div class="uk-inline">
                             <span class="uk-form-icon" uk-icon="icon: lock"></span>
                             <input class="uk-input" type="text">
@@ -114,8 +111,35 @@
         <div id="signUpModal" class="uk-flex-top" uk-modal>
             <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
                 <button class="uk-modal-close-default" type="button" uk-close></button>
-                <p>SIGNUP</p>
-
+                <form class="uk-align-center uk-form-horizontal uk-grid">
+                    <div class="uk-margin">
+                        <h1 class="uk-heading-divider">Sign Up To Play</h1>
+                    </div>
+                    <div class="uk-margin">
+                        <label class="uk-form-label">Username:</label>
+                        <div class="uk-inline">
+                            <span class="uk-form-icon" uk-icon="icon: user"></span>
+                            <input class="uk-input" type="text">
+                        </div>
+                    </div>
+                    <div class="uk-margin">
+                        <label class="uk-form-label">Email:</label>
+                        <div class="uk-inline">
+                            <span class="uk-form-icon" uk-icon="icon: mail"></span>
+                            <input class="uk-input" type="text">
+                        </div>
+                    </div>
+                    <div class="uk-margin">
+                        <label class="uk-form-label">Password:</label>
+                        <div class="uk-inline">
+                            <span class="uk-form-icon" uk-icon="icon: lock"></span>
+                            <input class="uk-input" type="text">
+                        </div>
+                    </div>
+                    <div class="uk-margin">
+                        <button class="uk-button uk-button-primary">Sign Up</button>
+                    </div>
+                </form>
             </div>
         </div>
     </section>
@@ -123,5 +147,4 @@
         <!-- Footer will go here -->
     </footer>
 </body>
-
 </html>
