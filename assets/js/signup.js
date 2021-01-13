@@ -1,5 +1,5 @@
 const userNameInput = document.querySelector("#userName");
-const firstNameInput = document.querySelector("#firstName");
+const firstNameInput = document.getElementById("firstName");
 const lastNameInput = document.querySelector("#lastName");
 const emailInput = document.querySelector("#email");
 const passwordInput = document.querySelector("#password");
@@ -58,16 +58,18 @@ passwordInput.addEventListener('input', function () {
     else { showErrorMessage() };
 });
 
-window.addEventListener("load", function () {
-    async function postDataToAPI(firstName, lastName, userName, lastNameInput, password) {
-        axios.post('http://localhost:1337/game-users', {
-            firstname: firstName,
-            lastname: lastName,
-            username: userName,
-            lastNameInput: lastNameInput,
-            password: password
+async function checkUserNameExist(userInputValidated) {
+        axios.get('http://localhost:1337/game-users', userInputValidated)
+            .then((response) => {
+                console.log(response);
+            }, (error) => {
+                console.log(error);
+            });
+    }
 
-        })
+window.addEventListener("load", function () {
+    async function postDataToAPI(userInputValidated) {
+        axios.post('http://localhost:1337/game-users', userInputValidated)
             .then((response) => {
                 console.log(response);
             }, (error) => {
@@ -76,10 +78,25 @@ window.addEventListener("load", function () {
     }
 
     signUpForm.addEventListener("submit", function (event) {
-        alert("submit")
 
+        // if(!firstNameInput.validity.valid) {showError();}
+		// if(!lastNameInput.validity.valid) {showError();}
+		// if(!emailInput.validity.valid) {showError();}
+        // if(!userNameInput.validity.valid) {showError();}
+        // if(!passwordInput.validity.valid) {showError();}
+        const userInputValidated = {
+
+            firstname: firstNameInput.value,
+            lastname: lastNameInput.value,
+            username: userNameInput.value,
+            email: emailInput.value,
+            password: passwordInput.value
+        }        
+        console.log(userInputValidated)
         event.preventDefault();
-        //postDataToAPI();
+
+        postDataToAPI(userInputValidated);
+        
         //redirect to game screen
     });
 });
@@ -120,6 +137,8 @@ const showErrorMessage = () => {
     }
     else if (userNameInput.validity.tooLong) {
         userNameInputError.textContent = `There must be a maximum of ${userNameInput.maxLength} characters.`;
+    } else{
+        checkUserNameExist(userNameInput)
     }
     /**
      * Validation for Email
