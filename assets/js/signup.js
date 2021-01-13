@@ -92,10 +92,10 @@ const showErrorMessage = () => {
         firstNameInputError.textContent = 'Please add your first name.';
     }
     else if (firstNameInput.validity.tooShort) {
-        firstNameInputError.textContent = `You must enter a first name with minimum of ${firstNameInput.minLength} characters.`;
+        firstNameInputError.textContent = `There must be a minimum of ${firstNameInput.minLength} characters.`;
     }
     else if (firstNameInput.validity.tooLong) {
-        firstNameInputError.textContent = `You must enter a first name with a maximum of ${firstNameInput.maxLength} characters.`;
+        firstNameInputError.textContent = `There must be a maximum of ${firstNameInput.maxLength} characters.`;
     }
     /**
      * Validation for Last Name
@@ -104,10 +104,10 @@ const showErrorMessage = () => {
         lastNameInputError.textContent = 'Please add your last name.';
     }
     else if (lastNameInput.validity.tooShort) {
-        lastNameInputError.textContent = `You must enter a last name with minimum of ${lastNameInput.minLength} characters.`;
+        lastNameInputError.textContent = `There must be a minimum of ${lastNameInput.minLength} characters.`;
     }
     else if (lastNameInput.validity.tooLong) {
-        lastNameInputError.textContent = `You must enter a last name with a maximum of ${lastNameInputInput.maxLength} characters.`;
+        lastNameInputError.textContent = `There must be a maximum of ${lastNameInputInput.maxLength} characters.`;
     }
     /**
      * Validation for Username
@@ -116,16 +116,16 @@ const showErrorMessage = () => {
         userNameInputError.textContent = 'Please add a username.';
     }
     else if (userNameInput.validity.tooShort) {
-        userNameInputError.textContent = `You must enter a username with minimum of ${userNameInput.minLength} characters.`;
+        userNameInputError.textContent = `There must be a minimum of ${userNameInput.minLength} characters.`;
     }
     else if (userNameInput.validity.tooLong) {
-        userNameInputError.textContent = `You must enter a username with a maximum of ${userNameInput.maxLength} characters.`;
+        userNameInputError.textContent = `There must be a maximum of ${userNameInput.maxLength} characters.`;
     }
     /**
      * Validation for Email
      */
     if(emailInput.validity.valueMissing) {
-		emailInputError.textContent = 'Please enter an email ';
+		emailInputError.textContent = 'Please enter an email.';
 	}
 	else if(emailInput.validity.typeMismatch || emailInput.validity.patternMismatch) {
 		emailInputError.textContent = 'Please enter an Email with format example@example.com';
@@ -138,10 +138,10 @@ const showErrorMessage = () => {
         passwordInputError.textContent = 'Please add a password.';
     }
     else if (passwordInput.validity.tooShort) {
-        passwordInputError.textContent = `You must enter a password with minimum of ${passwordInput.minLength} characters.`;
+        passwordInputError.textContent = `There must be a minimum of ${passwordInput.minLength} characters.`;
     }
     else if (passwordInput.validity.tooLong) {
-        passwordInputError.textContent = `You must enter a username with a maximum of ${passwordInput.maxLength} characters.`;
+        passwordInputError.textContent = `There must be a maximum of ${passwordInput.maxLength} characters.`;
     }
 
     /**
