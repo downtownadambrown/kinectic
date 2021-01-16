@@ -91,26 +91,30 @@
         <div id="loginModal" class="uk-flex-top" uk-modal>
             <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
                 <button class="uk-modal-close-default" type="button" uk-close></button>
-                <form class="uk-align-center uk-form-horizontal uk-grid">
+                <form class="uk-align-center uk-form-horizontal uk-grid" id="loginForm" novalidate>
                     <div class="uk-margin">
                         <h1 class="uk-heading-divider">Login To Play</h1>
                     </div>
-                    <div class="uk-margin">
+                     <div class="uk-margin">
                         <label class="uk-form-label">Username:</label>
                         <div class="uk-inline">
                             <span class="uk-form-icon" uk-icon="icon: user"></span>
-                            <input class="uk-input" type="text">
+                            <input class="uk-input" name="userNameLogin" type="text" id="userNameLogin" required minlength="6"
+                                maxlength="18">
+                            <span class="uk-text-danger"></span>
                         </div>
                     </div>
                     <div class="uk-margin">
                         <label class="uk-form-label">Password:</label>
                         <div class="uk-inline">
                             <span class="uk-form-icon" uk-icon="icon: lock"></span>
-                            <input class="uk-input" type="text">
+                            <input class="uk-input" name="passwordLogin" type="password" id="passwordLogin" required minlength="6"
+                                maxlength="18">
+                            <span class="uk-text-danger"></span>
                         </div>
                     </div>
                     <div class="uk-margin">
-                        <button class="uk-button uk-button-primary">Login</button>
+                        <button class="uk-button uk-button-primary" id="login">Login</button>
                     </div>
                 </form>
             </div>

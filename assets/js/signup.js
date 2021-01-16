@@ -58,14 +58,24 @@ passwordInput.addEventListener('input', function () {
     else { showErrorMessage() };
 });
 
-async function checkUserNameExist(userInputValidated) {
-        axios.get('http://localhost:1337/game-users', userInputValidated)
-            .then((response) => {
-                console.log(response);
-            }, (error) => {
-                console.log(error);
-            });
-    }
+async function checkUserNameExist(userNameCheck) {
+    axios.get('http://localhost:1337/game-users', {
+        params: {
+            username: userNameCheck
+        }
+    })
+        .then((response) => {
+            if (response.data.length === 0) {
+                console.log("false", response)
+                return false;
+            } else {
+                console.log("true", response)
+                return true;
+            }
+        }, (error) => {
+            console.log(error);
+        });
+}
 
 window.addEventListener("load", function () {
     async function postDataToAPI(userInputValidated) {
@@ -78,30 +88,34 @@ window.addEventListener("load", function () {
     }
 
     signUpForm.addEventListener("submit", function (event) {
+        var isTrue = new Boolean(true);
+        if (!firstNameInput.validity.valid) { showErrorMessage(); }
+        else if (!lastNameInput.validity.valid) { showErrorMessage(); }
+        else if (!emailInput.validity.valid) { showErrorMessage(); }
+        else if (!passwordInput.validity.valid) { showErrorMessage(); }
+        else if (!userNameInput.validity.valid) { showErrorMessage(); }
+        isTrue = checkUserNameExist(userNameInput.value)
+        console.log(isTrue)
+        if (isTrue) {
+             event.preventDefault();
+            showErrorMessage(isTrue)
+        } else if (isTrue){
+           const userInputValidated = {
+                firstname: firstNameInput.value,
+                lastname: lastNameInput.value,
+                username: userNameInput.value,
+                email: emailInput.value,
+                password: passwordInput.value
+            }
+            event.preventDefault();
+            postDataToAPI(userInputValidated);
+            //redirect to game screen
+        }
 
-        // if(!firstNameInput.validity.valid) {showError();}
-		// if(!lastNameInput.validity.valid) {showError();}
-		// if(!emailInput.validity.valid) {showError();}
-        // if(!userNameInput.validity.valid) {showError();}
-        // if(!passwordInput.validity.valid) {showError();}
-        const userInputValidated = {
-
-            firstname: firstNameInput.value,
-            lastname: lastNameInput.value,
-            username: userNameInput.value,
-            email: emailInput.value,
-            password: passwordInput.value
-        }        
-        console.log(userInputValidated)
-        event.preventDefault();
-
-        postDataToAPI(userInputValidated);
-        
-        //redirect to game screen
     });
 });
 
-const showErrorMessage = () => {
+const showErrorMessage = (isTrue) => {
     /**
      * Validation for First name
      */
@@ -137,19 +151,20 @@ const showErrorMessage = () => {
     }
     else if (userNameInput.validity.tooLong) {
         userNameInputError.textContent = `There must be a maximum of ${userNameInput.maxLength} characters.`;
-    } else{
-        checkUserNameExist(userNameInput)
+    } else if (isTrue === true) {
+        console.log(isTrue)
+        userNameInputError.textContent = `This username "${userNameInput.value}" already exist.`;
     }
     /**
      * Validation for Email
      */
-    if(emailInput.validity.valueMissing) {
-		emailInputError.textContent = 'Please enter an email.';
-	}
-	else if(emailInput.validity.typeMismatch || emailInput.validity.patternMismatch) {
-		emailInputError.textContent = 'Please enter an Email with format example@example.com';
+    if (emailInput.validity.valueMissing) {
+        emailInputError.textContent = 'Please enter an email.';
     }
-    
+    else if (emailInput.validity.typeMismatch || emailInput.validity.patternMismatch) {
+        emailInputError.textContent = 'Please enter an Email with format example@example.com';
+    }
+
     /**
      * Validation for Password
      */
