@@ -13,178 +13,94 @@ const passwordInputError = document.querySelector("#password + span.uk-text-dang
 const signUpButton = document.querySelector("#signUp");
 const signUpForm = document.querySelector("#signUpForm");
 
+function postUserDetails(firstName, lastName, userName, email, password) {
+    axios
+        .post('http://localhost:1337/auth/local/register', {
+            firstname: firstName,
+            lastname: lastName,
+            username: userName,
+            email: email,
+            password: password
+        })
+        .then(response => {
+            // Handle success.
+            console.log('Well done!');
+            console.log('User profile', response.data.user);
+            console.log('User token', response.data.jwt);
+            return response.data;
+        })
+        .catch(error => {
+            // Handle error.
+            console.log('An error occurred:', error.response);
+            return error.response;
+        });
 
-firstNameInput.addEventListener('input', function () {
-    if (firstNameInput.validity.valid) {
-        firstNameInputError.innerHTML = '';
-        firstNameInputError.className = 'uk-text-danger';
+}
 
-    }
-    else { showErrorMessage() };
-});
-
-lastNameInput.addEventListener('input', function () {
-    if (lastNameInput.validity.valid) {
-        lastNameInputError.innerHTML = '';
-        lastNameInputError.className = 'uk-text-danger';
-
-    }
-    else { showErrorMessage() };
-});
-
-userNameInput.addEventListener('input', function () {
-    if (userNameInput.validity.valid) {
-        userNameInputError.innerHTML = '';
-        userNameInputError.className = 'uk-text-danger';
-
-    }
-    else { showErrorMessage() };
-});
-
-emailInput.addEventListener('input', function () {
-    if (emailInput.validity.valid) {
-        emailInputError.innerHTML = '';
-        emailInputError.className = 'uk-text-danger';
-    }
-    else { showErrorMessage() };
-});
-
-
-passwordInput.addEventListener('input', function () {
-    if (passwordInput.validity.valid) {
-        passwordInputError.innerHTML = '';
-        passwordInputError.className = 'uk-text-danger';
-    }
-    else { showErrorMessage() };
-});
-
-async function checkUserNameExist(userNameCheck) {
-    axios.get('http://localhost:1337/game-users', {
-        params: {
-            username: userNameCheck
-        }
-    })
-        .then((response) => {
-            if (response.data.length === 0) {
-                console.log("false", response)
-                return false;
-            } else {
-                console.log("true", response)
-                return true;
+function authenticateLoginDetails(username, email) {
+    console.log(`Username: ${username} and Password: ${email}`)
+    axios
+        .get('http://localhost:1337/users', {
+            params: {
+                username: username,
+                email: email,
             }
-        }, (error) => {
-            console.log(error);
+        })
+        .then(response => {
+            // Handle success.
+            console.log('Well done!');
+            console.log('Data', response.data);
+            return response.data;
+        })
+        .catch(error => {
+            // Handle error.
+            console.log('An error occurred:', error.response);
+            return error.response;
         });
 }
 
-window.addEventListener("load", function () {
-    async function postDataToAPI(userInputValidated) {
-        axios.post('http://localhost:1337/game-users', userInputValidated)
-            .then((response) => {
-                console.log(response);
-            }, (error) => {
-                console.log(error);
-            });
-    }
 
-    signUpForm.addEventListener("submit", function (event) {
-        var isTrue = new Boolean(true);
-        if (!firstNameInput.validity.valid) { showErrorMessage(); }
-        else if (!lastNameInput.validity.valid) { showErrorMessage(); }
-        else if (!emailInput.validity.valid) { showErrorMessage(); }
-        else if (!passwordInput.validity.valid) { showErrorMessage(); }
-        else if (!userNameInput.validity.valid) { showErrorMessage(); }
-        isTrue = checkUserNameExist(userNameInput.value)
-        console.log(isTrue)
-        if (isTrue) {
-             event.preventDefault();
-            showErrorMessage(isTrue)
-        } else if (isTrue){
-           const userInputValidated = {
-                firstname: firstNameInput.value,
-                lastname: lastNameInput.value,
-                username: userNameInput.value,
-                email: emailInput.value,
-                password: passwordInput.value
+$(document).ready(function () {
+    $("#signUpForm").validate({
+        errorClass: "uk-text-danger",
+        validClass: "uk-text-success",
+        rules: {
+            email: {
+                email: true
+            },
+        },
+        messages: {
+            firstName: {
+                required: "Please enter your first name.",
+                min: "First name must have at least 3 characters.",
+                max: "Maximum length is 30 characters."
+            },
+            lastName: {
+                required: "Please enter your last name.",
+                min: "Last name must have at least 3 characters.",
+                max: "Maximum length is 30 characters."
+            },
+            userName: {
+                required: "Please enter your username.",
+                min: "Username must be at least 6 characters.",
+                max: "Maximum length is 30 characters."
+            },
+            email: {
+                required: "Please enter your email.",
+                email: "Email must be a valid email.",
+            },
+            password: {
+                required: "Please enter your age.",
+                min: "Password must be at least 6 characters.",
+                max: "Maximum password length is 18 characters."
             }
-            event.preventDefault();
-            postDataToAPI(userInputValidated);
-            //redirect to game screen
+        },
+        submitHandler: function (form) {
+            console.log(form.firstName.value, form.lastName.value, form.userName.value, form.email.value, form.password.value)
+            const response = postUserDetails(form.firstName.value, form.lastName.value, form.userName.value, form.email.value, form.password.value)
+            if (response.status === 400) {
+                console.log("exists")
+            }
         }
-
     });
 });
-
-const showErrorMessage = (isTrue) => {
-    /**
-     * Validation for First name
-     */
-    if (firstNameInput.validity.valueMissing) {
-        firstNameInputError.textContent = 'Please add your first name.';
-    }
-    else if (firstNameInput.validity.tooShort) {
-        firstNameInputError.textContent = `There must be a minimum of ${firstNameInput.minLength} characters.`;
-    }
-    else if (firstNameInput.validity.tooLong) {
-        firstNameInputError.textContent = `There must be a maximum of ${firstNameInput.maxLength} characters.`;
-    }
-    /**
-     * Validation for Last Name
-     */
-    if (lastNameInput.validity.valueMissing) {
-        lastNameInputError.textContent = 'Please add your last name.';
-    }
-    else if (lastNameInput.validity.tooShort) {
-        lastNameInputError.textContent = `There must be a minimum of ${lastNameInput.minLength} characters.`;
-    }
-    else if (lastNameInput.validity.tooLong) {
-        lastNameInputError.textContent = `There must be a maximum of ${lastNameInputInput.maxLength} characters.`;
-    }
-    /**
-     * Validation for Username
-     */
-    if (userNameInput.validity.valueMissing) {
-        userNameInputError.textContent = 'Please add a username.';
-    }
-    else if (userNameInput.validity.tooShort) {
-        userNameInputError.textContent = `There must be a minimum of ${userNameInput.minLength} characters.`;
-    }
-    else if (userNameInput.validity.tooLong) {
-        userNameInputError.textContent = `There must be a maximum of ${userNameInput.maxLength} characters.`;
-    } else if (isTrue === true) {
-        console.log(isTrue)
-        userNameInputError.textContent = `This username "${userNameInput.value}" already exist.`;
-    }
-    /**
-     * Validation for Email
-     */
-    if (emailInput.validity.valueMissing) {
-        emailInputError.textContent = 'Please enter an email.';
-    }
-    else if (emailInput.validity.typeMismatch || emailInput.validity.patternMismatch) {
-        emailInputError.textContent = 'Please enter an Email with format example@example.com';
-    }
-
-    /**
-     * Validation for Password
-     */
-    if (passwordInput.validity.valueMissing) {
-        passwordInputError.textContent = 'Please add a password.';
-    }
-    else if (passwordInput.validity.tooShort) {
-        passwordInputError.textContent = `There must be a minimum of ${passwordInput.minLength} characters.`;
-    }
-    else if (passwordInput.validity.tooLong) {
-        passwordInputError.textContent = `There must be a maximum of ${passwordInput.maxLength} characters.`;
-    }
-
-    /**
-     * These will add UIKIT classes for validation status
-     */
-    firstNameInputError.className = 'uk-text-danger uk-text-small';
-    lastNameInputError.className = 'uk-text-danger uk-text-small';
-    userNameInputError.className = 'uk-text-danger uk-text-small';
-    emailInputError.className = 'uk-text-danger uk-text-small';
-    passwordInputError.className = 'uk-text-danger uk-text-small';
-
-}
