@@ -5,12 +5,20 @@ $(document).ready(function () {
         rules: {
             email: {
                 email: true,
-                depends: async function (element) {
-                    const res = await checkExistingUser(element.value);
-                    console.log("test", res)
-                    var validator = $("#signUpForm").validate();
-                    validator.showErrors({
-                        "email": "Email is already taken."
+                depends: function (email) {
+                    const emailCheckResponse = checkEmailExist(email.value);
+                    console.log(emailCheckResponse)
+                    emailCheckResponse.then((element) => {
+                        if (element.length != 0) {
+                            if (email.value === element[0].email) {
+                                const validator = $("#signUpForm").validate();
+                                validator.showErrors({
+                                    "email": "Email is already taken."
+                                });
+                            } else if (!element[0].email) {
+                                console.log("email does not exist")
+                            }
+                        }
                     });
                 }
             },
@@ -43,20 +51,15 @@ $(document).ready(function () {
         },
         submitHandler: function (form, event) {
             event.preventDefault();
-            checkUserName(form);
+            //checkUserName(form);
         }
     });
 });
 
 
-async function checkUserName(form) {
-    console.log(form.firstName.value, form.lastName.value, form.userName.value, form.email.value, form.password.value)
-    const response = await postUserDetails(form.firstName.value, form.lastName.value, form.userName.value, form.email.value, form.password.value)
-    console.log(response)
-    if (response.status === 400) {
-        console.log(response.data.message[0].messages[0].message)
-
-    }
+async function checkEmailExist(value) {
+    const response = await checkExistingUser(value);
+    return response;
 }
 
 async function postUserDetails(firstName, lastName, userName, email, password) {
@@ -84,24 +87,31 @@ async function postUserDetails(firstName, lastName, userName, email, password) {
     return res;
 }
 
-async function checkExistingUser(username, email) {
+async function checkExistingUser(email) {
     const res = axios
         .get('http://localhost:1337/users', {
             params: {
-                username: username,
                 email: email,
             }
         })
         .then(response => {
             // Handle success.
-            console.log('Well done!');
-            console.log('Data', response.data);
+            //console.log('Well done!');
+            //console.log('Data', response.data);
             return response.data;
         })
         .catch(error => {
             // Handle error.
-            console.log('An error occurred:', error.response);
+            //console.log('An error occurred:', error.response);
             return error.response;
         });
     return res;
 }
+
+//    console.log(form.firstName.value, form.lastName.value, form.userName.value, form.email.value, form.password.value)
+//     const response = await postUserDetails(form.firstName.value, form.lastName.value, form.userName.value, form.email.value, form.password.value)
+//     console.log(response)
+//     if (response.status === 400) {
+//         console.log(response.data.message[0].messages[0].message)
+
+//     }
