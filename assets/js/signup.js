@@ -1,18 +1,3 @@
-const userNameInput = document.querySelector("#userName");
-const firstNameInput = document.getElementById("firstName");
-const lastNameInput = document.querySelector("#lastName");
-const emailInput = document.querySelector("#email");
-const passwordInput = document.querySelector("#password");
-
-const userNameInputError = document.querySelector("#userName + span.uk-text-danger");
-const firstNameInputError = document.querySelector("#firstName + span.uk-text-danger");
-const lastNameInputError = document.querySelector("#lastName + span.uk-text-danger");
-const emailInputError = document.querySelector("#email + span.uk-text-danger");
-const passwordInputError = document.querySelector("#password + span.uk-text-danger");
-
-const signUpButton = document.querySelector("#signUp");
-const signUpForm = document.querySelector("#signUpForm");
-
 function postUserDetails(firstName, lastName, userName, email, password) {
     axios
         .post('http://localhost:1337/auth/local/register', {
