@@ -20,7 +20,6 @@ $(document).ready(function () {
                                 }
                             } else {
                                 console.log("email does not exist")
-                                return true;
                             }
                         });
                     } else if (!email.value.match(regExpression)) {
@@ -46,7 +45,6 @@ $(document).ready(function () {
                                 }
                             } else {
                                 console.log("username does not exist")
-                                return true;
                             }
                         });
                     } else if (!userName.value.match(regExpression) && userName.value.length >= 6) {
@@ -87,10 +85,30 @@ $(document).ready(function () {
         submitHandler: function (form, event) {
             event.preventDefault();
             const response = dispatchUserDetails(form.firstName.value, form.lastName.value, form.userName.value, form.email.value, form.password.value);
-            console.log("Server responded with user details.", response.then(element => {console.log(element.user.firstname)}))
+            storeUserDetailsLocallyForGaming(response)
         }
     });
 });
+
+async function storeUserDetailsLocallyForGaming(response) {
+    response.then((element) => {
+        console.log("local storage", element)
+        if (element.status === 400 && element.statusText === "Bad Request") {
+            console.log("Email or Username already exists.", element);
+        } else {
+            console.log("Successfully received user details.", element)
+            localStorage.setItem("username", element.user.username);
+            localStorage.setItem("firstname", element.user.firstname);
+            localStorage.setItem("lastname", element.user.lastname);
+            localStorage.setItem("isLoggedIn", true);
+            // console.log("Logging User Details For Gamming Purposes",localStorage.getItem("isLoggedIn", true),
+            //     localStorage.getItem("username"),
+            //     localStorage.getItem("firstname"),
+            //     localStorage.getItem("lastname"),
+            //     localStorage.getItem("isLoggedIn"));
+        }
+    })
+}
 
 async function dispatchUserDetails(firstName, lastName, userName, email, password) {
     const promiseResponse = await addUserDetailsToDatabase(firstName, lastName, userName, email, password);
@@ -117,13 +135,13 @@ async function addUserDetailsToDatabase(firstName, lastName, userName, email, pa
         })
         .then(response => {
             // Handle success.
-            console.log('Registering User!');
-            console.log('User profile', response.data.user);
+            //console.log('Registering User!');
+            //console.log('User profile', response.data.user);
             return response.data;
         })
         .catch(error => {
             // Handle error.
-            console.log('An error occurred, whilst registering a user.', error.response);
+            //console.log('An error occurred, whilst registering a user.', error.response);
             return error.response;
         });
 
@@ -139,13 +157,13 @@ async function checkExistingUserEmail(email) {
         })
         .then(response => {
             // Handle success.
-            console.log('Email Check!');
-            console.log('Data', response.data);
+            // console.log('Email Check!');
+            //console.log('User Email Checked Response', response.data);
             return response.data;
         })
         .catch(error => {
             // Handle error.
-            console.log('An error occurred, whilst checking email.', error.response);
+            //console.log('An error occurred, whilst checking email.', error.response);
             return error.response;
         });
     return res;
@@ -160,13 +178,13 @@ async function checkExistingUserName(username) {
         })
         .then(response => {
             // Handle success.
-            console.log('Username Check!');
-            console.log('Data', response.data);
+            //console.log('Username Check!');
+            //console.log('Username Checked Response', response.data);
             return response.data;
         })
         .catch(error => {
             // Handle error.
-            console.log('An error occurred, whilst checking username.', error.response);
+            //console.log('An error occurred, whilst checking username.', error.response);
             return error.response;
         });
     return res;
