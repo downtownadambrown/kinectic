@@ -10,7 +10,6 @@ $(document).ready(function () {
                     const regExpression = /^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/
                     if (email.value.match(regExpression)) {
                         const emailCheckResponse = checkEmailExist(email.value);
-                        console.log(emailCheckResponse)
                         emailCheckResponse.then((element) => {
                             if (element.length != 0) {
                                 if (email.value === element[0].email) {
@@ -21,6 +20,7 @@ $(document).ready(function () {
                                 }
                             } else {
                                 console.log("email does not exist")
+                                return true;
                             }
                         });
                     } else if (!email.value.match(regExpression)) {
@@ -36,7 +36,6 @@ $(document).ready(function () {
                     const regExpression = /^[a-z0-9_.]+$/;
                     if (userName.value.match(regExpression)) {
                         const userNameCheckResponse = checkUserNameExist(userName.value);
-                        console.log(userNameCheckResponse)
                         userNameCheckResponse.then((element) => {
                             if (element.length != 0) {
                                 if (userName.value === element[0].username) {
@@ -47,6 +46,7 @@ $(document).ready(function () {
                                 }
                             } else {
                                 console.log("username does not exist")
+                                return true;
                             }
                         });
                     } else if (!userName.value.match(regExpression) && userName.value.length >= 6) {
@@ -86,22 +86,27 @@ $(document).ready(function () {
         },
         submitHandler: function (form, event) {
             event.preventDefault();
-            //checkUserName(form);
+            const response = dispatchUserDetails(form.firstName.value, form.lastName.value, form.userName.value, form.email.value, form.password.value);
+            console.log("Server responded with user details.", response.then(element => {console.log(element.user.firstname)}))
         }
     });
 });
 
-
-async function checkEmailExist(value) {
-    const response = await checkExistingUserEmail(value);
-    return response;
-}
-async function checkUserNameExist(value) {
-    const response = await checkExistingUserName(value);
-    return response;
+async function dispatchUserDetails(firstName, lastName, userName, email, password) {
+    const promiseResponse = await addUserDetailsToDatabase(firstName, lastName, userName, email, password);
+    return promiseResponse;
 }
 
-async function postUserDetails(firstName, lastName, userName, email, password) {
+async function checkEmailExist(email) {
+    const promiseResponse = await checkExistingUserEmail(email);
+    return promiseResponse;
+}
+async function checkUserNameExist(userName) {
+    const promiseResponse = await checkExistingUserName(userName);
+    return promiseResponse;
+}
+
+async function addUserDetailsToDatabase(firstName, lastName, userName, email, password) {
     const res = axios
         .post('http://localhost:1337/auth/local/register', {
             firstname: firstName,
@@ -112,14 +117,13 @@ async function postUserDetails(firstName, lastName, userName, email, password) {
         })
         .then(response => {
             // Handle success.
-            console.log('Well done!');
+            console.log('Registering User!');
             console.log('User profile', response.data.user);
-            console.log('User token', response.data.jwt);
             return response.data;
         })
         .catch(error => {
             // Handle error.
-            console.log('An error occurred:', error.response);
+            console.log('An error occurred, whilst registering a user.', error.response);
             return error.response;
         });
 
@@ -135,13 +139,13 @@ async function checkExistingUserEmail(email) {
         })
         .then(response => {
             // Handle success.
-            console.log('Well done!');
+            console.log('Email Check!');
             console.log('Data', response.data);
             return response.data;
         })
         .catch(error => {
             // Handle error.
-            console.log('An error occurred:', error.response);
+            console.log('An error occurred, whilst checking email.', error.response);
             return error.response;
         });
     return res;
@@ -156,13 +160,13 @@ async function checkExistingUserName(username) {
         })
         .then(response => {
             // Handle success.
-            console.log('Well done!');
+            console.log('Username Check!');
             console.log('Data', response.data);
             return response.data;
         })
         .catch(error => {
             // Handle error.
-            console.log('An error occurred:', error.response);
+            console.log('An error occurred, whilst checking username.', error.response);
             return error.response;
         });
     return res;
