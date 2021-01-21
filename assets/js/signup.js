@@ -101,11 +101,6 @@ async function storeUserDetailsLocallyForGaming(response) {
             localStorage.setItem("firstname", element.user.firstname);
             localStorage.setItem("lastname", element.user.lastname);
             localStorage.setItem("isLoggedIn", true);
-            // console.log("Logging User Details For Gamming Purposes",localStorage.getItem("isLoggedIn", true),
-            //     localStorage.getItem("username"),
-            //     localStorage.getItem("firstname"),
-            //     localStorage.getItem("lastname"),
-            //     localStorage.getItem("isLoggedIn"));
         }
     })
 }
@@ -189,11 +184,3 @@ async function checkExistingUserName(username) {
         });
     return res;
 }
-
-//    console.log(form.firstName.value, form.lastName.value, form.userName.value, form.email.value, form.password.value)
-//     const response = await postUserDetails(form.firstName.value, form.lastName.value, form.userName.value, form.email.value, form.password.value)
-//     console.log(response)
-//     if (response.status === 400) {
-//         console.log(response.data.message[0].messages[0].message)
-
-//     }

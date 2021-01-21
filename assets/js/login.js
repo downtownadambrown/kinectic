@@ -1,3 +1,70 @@
+
+
+$(document).ready(function () {
+    $("#loginForm").validate({
+        onclick: false,
+        errorClass: "uk-text-danger",
+        validClass: "uk-text-success",
+        messages: {
+            userNameLogin: {
+                required: "Please enter your username."
+            },
+            passwordLogin: {
+                required: "Please enter your password."
+            }
+        },
+        submitHandler: function (form, event) {
+            event.preventDefault();
+            const loginResponse = dispatchUserDetailsForAuthentication(form.userNameLogin.value, form.passwordLogin.value);
+            console.log(loginResponse);
+            //storeUserDetailsLocally(loginResponse);
+        }
+    });
+});
+
+async function storeUserDetailsLocally(response) {
+
+    // response.then((element) => {
+    //     console.log("local storage", element)
+    //     if (element.status === 400 && element.statusText === "Bad Request") {
+    //         console.log("Email or Username already exists.", element);
+    //     } else {
+    //         console.log("Successfully received user details.", element)
+    //         localStorage.setItem("username", element.user.username);
+    //         localStorage.setItem("firstname", element.user.firstname);
+    //         localStorage.setItem("lastname", element.user.lastname);
+    //         localStorage.setItem("isLoggedIn", true);
+    //     }
+    // })
+}
+
+async function dispatchUserDetailsForAuthentication(userName, password) {
+    const promiseResponse = await checkLoginDetailsExist(userName, password);
+    return promiseResponse;
+}
+
+async function checkLoginDetailsExist(username, password) {
+    console.log(`Username: ${username} and Password: ${password}`)
+    const response = axios
+        .post('http://localhost:1337/auth/local', {
+            identifier: username,
+            password: password,
+        })
+        .then(response => {
+            // Handle success.
+            console.log('Authenticating!');
+            console.log('Authenticated Data', response.data);
+            console.log('Authenticated User profile', response.data.user);
+            return response.data;
+        })
+        .catch(error => {
+            // Handle error.
+            console.log('An error occurred, whilst trying to login user.', error.response);
+            return error.response;
+        });
+    return response
+}
+
 // async function requestDataFromAPI() {
 //     axios
 //         .get("http://localhost:1337/game-users")
@@ -69,101 +136,6 @@
 // populateData(countries)
 
 // //postDataToAPI();
-
-
-const userNameLogin = document.querySelector("#userNameLogin");
-const passwordLogin = document.querySelector("#passwordLogin");
-const userNameLoginError = document.querySelector("#userNameLogin + span.uk-text-danger");
-const passwordLoginError = document.querySelector("#passwordLogin + span.uk-text-danger");
-const loginForm = document.querySelector("#loginForm");
-
-userNameLogin.addEventListener('input', function () {
-    if (userNameLogin.validity.valid) {
-        firstNameInputError.innerHTML = '';
-        firstNameInputError.className = 'uk-text-danger';
-
-    }
-    else { showLoginErrorMessage() };
-});
-
-passwordLogin.addEventListener('input', function () {
-    if (passwordLogin.validity.valid) {
-        lastNameInputError.innerHTML = '';
-        lastNameInputError.className = 'uk-text-danger';
-
-    }
-    else { showLoginErrorMessage() };
-});
-
-window.addEventListener("load", function () {
-    async function authenticateLoginDetails(username, password) {
-        console.log(`Username: ${username} and Password: ${password}`)
-        axios
-            .post('http://localhost:1337/auth/local', {
-                identifier: username,
-                password: password,
-            })
-            .then(response => {
-                // Handle success.
-                console.log('Well done!');
-                console.log('Data', response.data);
-                console.log('User profile', response.data.user);
-                console.log('User token', response.data.jwt);
-            })
-            .catch(error => {
-                // Handle error.
-                console.log('An error occurred:', error.response);
-            });
-    }
-
-    loginForm.addEventListener("submit", function (event) {
-
-        if (!userNameLogin.validity.valid) { showLoginErrorMessage(); }
-        else if (!passwordLogin.validity.valid) { showLoginErrorMessage(); }
-        else {
-            event.preventDefault();
-            authenticateLoginDetails(userNameLogin.value, passwordLogin.value);
-        }
-
-        event.preventDefault();
-    });
-});
-
-const showLoginErrorMessage = () => {
-    /**
-     * Validation for Username
-     */
-    if (userNameLogin.validity.valueMissing) {
-        userNameLoginError.textContent = 'Please add a username.';
-    }
-    else if (userNameLogin.validity.tooShort) {
-        userNameLoginError.textContent = `There must be a minimum of ${userNameLogin.minLength} characters.`;
-    }
-    else if (userNameLogin.validity.tooLong) {
-        userNameLoginError.textContent = `There must be a maximum of ${userNameLogin.maxLength} characters.`;
-    }
-
-    /**
-     * Validation for Password
-     */
-    if (passwordLogin.validity.valueMissing) {
-        passwordLoginError.textContent = 'Please add a password.';
-    }
-    else if (passwordLogin.validity.tooShort) {
-        passwordLoginError.textContent = `There must be a minimum of ${passwordLogin.minLength} characters.`;
-    }
-    else if (passwordLogin.validity.tooLong) {
-        passwordLoginError.textContent = `There must be a maximum of ${passwordLogin.maxLength} characters.`;
-    }
-
-    /**
-     * These will add UIKIT classes for validation status
-     */
-    userNameLoginError.className = 'uk-text-danger uk-text-small';
-    passwordLoginError.className = 'uk-text-danger uk-text-small';
-
-}
-
 
 
  // async function registerUserDetails(firstName,lastName,userName,email,password) {
