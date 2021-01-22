@@ -1,19 +1,24 @@
-const loadCorrectPage = () => {
+window.addEventListener('load', () => {
     const isAuthenticated = localStorage.getItem("isAuthenticated")
-    console.log(typeof isAuthenticated);
     if (isAuthenticated === "true") {
-        $("#app-root").load("gamepage.html");
-    } else if (isAuthenticated === "false") {
-        $("#app-root").load("homepage.html");
+        loadLoggedInContent();
+        setTimeout(() => {
+            welcomeUser();
+            logOutUser();
+        }, 300);
+    } else {
+        loadLoggedOutContent();
     }
+    
+});
+
+const loadLoggedInContent = () => {
+    $("#app-root").load("gamepage.html");
 }
 
-window.addEventListener('load', () => {
-    loadCorrectPage();
-    setTimeout(() => {
-        logOutUser();
-    }, 200);
-});
+const loadLoggedOutContent = () => {
+    $("#app-root").load("homepage.html");
+}
 
 const logOutUser = () => {
     const logOutButton = document.querySelector("#logOut");
@@ -27,10 +32,6 @@ const logOutUser = () => {
         });
     }
 }
-
-setTimeout(() => {
-    welcomeUser();
-}, 100);
 
 const welcomeUser = () => {
     const welcomeUser = document.querySelector("#welcomeUser");
