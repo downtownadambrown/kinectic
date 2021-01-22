@@ -28,4 +28,27 @@ const logOutUser = () => {
     }
 }
 
-export { loadCorrectPage }
+setTimeout(() => {
+    welcomeUser();
+}, 100);
+
+const welcomeUser = () => {
+    const welcomeUser = document.querySelector("#welcomeUser");
+    const userFirstName = localStorage.getItem("firstname");
+    const capitalizedName = capitalizeFirstLetter(userFirstName);
+    welcomeUser.textContent = capitalizedName;
+}
+
+const capitalizeFirstLetter = (firstName) => {
+    const splitWords = firstName.toLowerCase().split(" ");
+    const capitalizedName = splitWords.map((word) => {
+        return word[0].toUpperCase() + word.substring(1);
+    }).join(" ");
+    return capitalizedName;
+}
+
+
+
+
+
+

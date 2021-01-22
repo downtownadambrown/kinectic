@@ -15,10 +15,14 @@
                     <a href="#"><i class="fas fa-bars" style="font-size:38px;"></i></a>
                     <div class="uk-navbar-dropdown">
                         <ul class="uk-nav uk-navbar-dropdown-nav uk-nav-center">
-                            <li><a href="#informationModal" style="font-size:38px;" uk-toggle><i class="fas fa-info"></i></a></li>
-                            <li><a href="#dashboardModal" style="font-size:38px;" uk-toggle><i class="fas fa-tachometer-alt"></i></a></li>
-                            <li><a href="#settingsModal" style="font-size:38px;" uk-toggle><i class="fas fa-cog"></i></a></li>
-                            <li><a href="#" id="logOut" style="font-size:38px;"><i class="fas fa-sign-out-alt"></i></a></li>
+                            <li><a href="#informationModal" style="font-size:38px;" uk-toggle><i
+                                        class="fas fa-info"></i></a></li>
+                            <li><a href="#dashboardModal" style="font-size:38px;" uk-toggle><i
+                                        class="fas fa-tachometer-alt"></i></a></li>
+                            <li><a href="#settingsModal" style="font-size:38px;" uk-toggle><i
+                                        class="fas fa-cog"></i></a></li>
+                            <li><a href="#" id="logOut" style="font-size:38px;"><i class="fas fa-sign-out-alt"></i></a>
+                            </li>
                         </ul>
                     </div>
                 </li>
@@ -27,6 +31,47 @@
     </nav>
 </header>
 <section>
+    <div class="uk-section uk-section-secondary uk-light">
+    <div class="uk-container">
+
+        <h3>Welcome <span id="welcomeUser"></span> to PuzzleMania</h3>
+
+        <div class="uk-grid-match uk-child-width-1-3@m" uk-grid>
+            <div>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</p>
+            </div>
+            <div>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</p>
+            </div>
+            <div>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</p>
+            </div>
+        </div>
+
+    </div>
+</div>
+    <div class="uk-child-width-1-2@s" uk-grid>
+        <div>
+            <ul class="uk-tab-left" uk-tab>
+                <h3>Categories</h3>
+                <li><a href="#">Movies</a></li>
+                <li><a href="#">Countries</a></li>
+                <li><a href="#">TV</a></li>
+                <li><a href="#">Animals</a></li>
+                <li><a href="#">Food & Drinks</a></li>
+                <li><a href="#">Cities & Places</a></li>
+            </ul>
+        </div>
+
+        <div>
+            <ul class="uk-tab-right" uk-tab>
+                <li class="uk-active"><a href="#">Difficulty</a></li>
+                <li><a href="#">Easy</a></li>
+                <li><a href="#">Hard</a></li>
+                <li><a href="#">Very Hard</a></li>
+            </ul>
+        </div>
+    </div>
     <div id="informationModal" class="uk-flex-top" uk-modal>
         <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
             <button class="uk-modal-close-default" type="button" uk-close></button>
@@ -50,7 +95,8 @@
         <div>
             <div class="uk-background-muted uk-height-medium">
                 <div class="uk-height-small uk-background-muted">
-                    <div class="uk-card uk-card-default uk-card-body uk-align-center" style="z-index: 980;" uk-sticky="bottom: true">
+                    <div class="uk-card uk-card-default uk-card-body uk-align-center" style="z-index: 980;"
+                        uk-sticky="bottom: true">
                         Thiago Santos 2021</div>
                 </div>
             </div>

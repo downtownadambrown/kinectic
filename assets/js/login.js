@@ -1,5 +1,3 @@
-import { loadCorrectPage } from "./index.js";
-
 setTimeout(() => {
     $(document).ready(function () {
         $("#loginForm").validate({
