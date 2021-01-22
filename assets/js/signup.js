@@ -1,94 +1,96 @@
-$(document).ready(function () {
-    $("#signUpForm").validate({
-        onclick: false,
-        errorClass: "uk-text-danger",
-        validClass: "uk-text-success",
-        rules: {
-            email: {
-                email: true,
-                depends: function (email) {
-                    const regExpression = /^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/
-                    if (email.value.match(regExpression)) {
-                        const emailCheckResponse = checkEmailExist(email.value);
-                        emailCheckResponse.then((element) => {
-                            if (element.length != 0) {
-                                if (email.value === element[0].email) {
-                                    const validator = $("#signUpForm").validate();
-                                    validator.showErrors({
-                                        "email": "Email is already taken."
-                                    });
+setTimeout(() => {
+    $(document).ready(function () {
+        $("#signUpForm").validate({
+            onclick: false,
+            errorClass: "uk-text-danger",
+            validClass: "uk-text-success",
+            rules: {
+                email: {
+                    email: true,
+                    depends: function (email) {
+                        const regExpression = /^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/
+                        if (email.value.match(regExpression)) {
+                            const emailCheckResponse = checkEmailExist(email.value);
+                            emailCheckResponse.then((element) => {
+                                if (element.length != 0) {
+                                    if (email.value === element[0].email) {
+                                        const validator = $("#signUpForm").validate();
+                                        validator.showErrors({
+                                            "email": "Email is already taken."
+                                        });
+                                    }
+                                } else {
+                                    console.log("email does not exist")
                                 }
-                            } else {
-                                console.log("email does not exist")
-                            }
-                        });
-                    } else if (!email.value.match(regExpression)) {
-                        const validator = $("#signUpForm").validate();
-                        validator.showErrors({
-                            "email": "Email has wrong format."
-                        });
+                            });
+                        } else if (!email.value.match(regExpression)) {
+                            const validator = $("#signUpForm").validate();
+                            validator.showErrors({
+                                "email": "Email has wrong format."
+                            });
+                        }
                     }
+                },
+                userName: {
+                    depends: function (userName) {
+                        const regExpression = /^[a-z0-9_.]+$/;
+                        if (userName.value.match(regExpression)) {
+                            const userNameCheckResponse = checkUserNameExist(userName.value);
+                            userNameCheckResponse.then((element) => {
+                                if (element.length != 0) {
+                                    if (userName.value === element[0].username) {
+                                        const validator = $("#signUpForm").validate();
+                                        validator.showErrors({
+                                            "userName": "Username is already taken."
+                                        });
+                                    }
+                                } else {
+                                    console.log("username does not exist")
+                                }
+                            });
+                        } else if (!userName.value.match(regExpression) && userName.value.length >= 6) {
+                            const validator = $("#signUpForm").validate();
+                            validator.showErrors({
+                                "userName": "Username must be lowercase."
+                            });
+                        }
+                    }
+                },
+            },
+            messages: {
+                firstName: {
+                    required: "Please enter your first name.",
+                    min: "First name must have at least 3 characters.",
+                    max: "Maximum length is 30 characters."
+                },
+                lastName: {
+                    required: "Please enter your last name.",
+                    min: "Last name must have at least 3 characters.",
+                    max: "Maximum length is 30 characters."
+                },
+                userName: {
+                    required: "Please enter your username.",
+                    min: "Username must be at least 6 characters.",
+                    max: "Maximum length is 30 characters."
+                },
+                email: {
+                    required: "Please enter your email.",
+                    email: "Email must be a valid email.",
+                },
+                password: {
+                    required: "Please enter your password.",
+                    min: "Password must be at least 6 characters.",
+                    max: "Maximum password length is 18 characters."
                 }
             },
-            userName: {
-                depends: function (userName) {
-                    const regExpression = /^[a-z0-9_.]+$/;
-                    if (userName.value.match(regExpression)) {
-                        const userNameCheckResponse = checkUserNameExist(userName.value);
-                        userNameCheckResponse.then((element) => {
-                            if (element.length != 0) {
-                                if (userName.value === element[0].username) {
-                                    const validator = $("#signUpForm").validate();
-                                    validator.showErrors({
-                                        "userName": "Username is already taken."
-                                    });
-                                }
-                            } else {
-                                console.log("username does not exist")
-                            }
-                        });
-                    } else if (!userName.value.match(regExpression) && userName.value.length >= 6) {
-                        const validator = $("#signUpForm").validate();
-                        validator.showErrors({
-                            "userName": "Username must be lowercase."
-                        });
-                    }
-                }
-            },
-        },
-        messages: {
-            firstName: {
-                required: "Please enter your first name.",
-                min: "First name must have at least 3 characters.",
-                max: "Maximum length is 30 characters."
-            },
-            lastName: {
-                required: "Please enter your last name.",
-                min: "Last name must have at least 3 characters.",
-                max: "Maximum length is 30 characters."
-            },
-            userName: {
-                required: "Please enter your username.",
-                min: "Username must be at least 6 characters.",
-                max: "Maximum length is 30 characters."
-            },
-            email: {
-                required: "Please enter your email.",
-                email: "Email must be a valid email.",
-            },
-            password: {
-                required: "Please enter your password.",
-                min: "Password must be at least 6 characters.",
-                max: "Maximum password length is 18 characters."
+            submitHandler: function (form, event) {
+                event.preventDefault();
+                const response = dispatchUserDetails(form.firstName.value, form.lastName.value, form.userName.value, form.email.value, form.password.value);
+                storeUserDetailsLocallyForGaming(response)
             }
-        },
-        submitHandler: function (form, event) {
-            event.preventDefault();
-            const response = dispatchUserDetails(form.firstName.value, form.lastName.value, form.userName.value, form.email.value, form.password.value);
-            storeUserDetailsLocallyForGaming(response)
-        }
+        });
     });
-});
+}, 300);
 
 async function storeUserDetailsLocallyForGaming(response) {
     response.then((element) => {
@@ -100,7 +102,8 @@ async function storeUserDetailsLocallyForGaming(response) {
             localStorage.setItem("lastname", element.user.lastname);
             localStorage.setItem("username", element.user.username);
             localStorage.setItem("token", element.jwt)
-            localStorage.setItem("isAuthenticated", true);
+            localStorage.setItem("isAuthenticated", "true");
+            location.reload();
         }
     })
 }

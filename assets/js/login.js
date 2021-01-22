@@ -1,38 +1,40 @@
+import { loadCorrectPage } from "./index.js";
 
-
-$(document).ready(function () {
-    $("#loginForm").validate({
-        onclick: false,
-        errorClass: "uk-text-danger",
-        validClass: "uk-text-success",
-        messages: {
-            userNameLogin: {
-                required: "Please enter your username."
+setTimeout(() => {
+    $(document).ready(function () {
+        $("#loginForm").validate({
+            onclick: false,
+            errorClass: "uk-text-danger",
+            validClass: "uk-text-success",
+            messages: {
+                userNameLogin: {
+                    required: "Please enter your username."
+                },
+                passwordLogin: {
+                    required: "Please enter your password."
+                }
             },
-            passwordLogin: {
-                required: "Please enter your password."
+            submitHandler: function (form, event) {
+                event.preventDefault();
+                const loginResponse = dispatchUserDetailsForAuthentication(form.userNameLogin.value, form.passwordLogin.value);
+                storeUserDetailsLocally(loginResponse);
             }
-        },
-        submitHandler: function (form, event) {
-            event.preventDefault();
-            const loginResponse = dispatchUserDetailsForAuthentication(form.userNameLogin.value, form.passwordLogin.value);
-            storeUserDetailsLocally(loginResponse);
-        }
+        });
     });
-});
+}, 100);
 
 async function storeUserDetailsLocally(response) {
-
     response.then((element) => {
         if (element.status === 400 && element.statusText === "Bad Request") {
             console.log("Invalid Username or/and Password.", element);
         } else {
-            console.log("Successfully received user details.", element) 
+            console.log("Successfully received user details.", element)
             localStorage.setItem("firstname", element.user.firstname);
             localStorage.setItem("lastname", element.user.lastname);
             localStorage.setItem("username", element.user.username);
             localStorage.setItem("token", element.jwt)
             localStorage.setItem("isAuthenticated", true);
+            location.reload();
         }
     })
 }
