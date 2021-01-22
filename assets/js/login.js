@@ -16,26 +16,25 @@ $(document).ready(function () {
         submitHandler: function (form, event) {
             event.preventDefault();
             const loginResponse = dispatchUserDetailsForAuthentication(form.userNameLogin.value, form.passwordLogin.value);
-            console.log(loginResponse);
-            //storeUserDetailsLocally(loginResponse);
+            storeUserDetailsLocally(loginResponse);
         }
     });
 });
 
 async function storeUserDetailsLocally(response) {
 
-    // response.then((element) => {
-    //     console.log("local storage", element)
-    //     if (element.status === 400 && element.statusText === "Bad Request") {
-    //         console.log("Email or Username already exists.", element);
-    //     } else {
-    //         console.log("Successfully received user details.", element)
-    //         localStorage.setItem("username", element.user.username);
-    //         localStorage.setItem("firstname", element.user.firstname);
-    //         localStorage.setItem("lastname", element.user.lastname);
-    //         localStorage.setItem("isLoggedIn", true);
-    //     }
-    // })
+    response.then((element) => {
+        if (element.status === 400 && element.statusText === "Bad Request") {
+            console.log("Invalid Username or/and Password.", element);
+        } else {
+            console.log("Successfully received user details.", element) 
+            localStorage.setItem("firstname", element.user.firstname);
+            localStorage.setItem("lastname", element.user.lastname);
+            localStorage.setItem("username", element.user.username);
+            localStorage.setItem("token", element.jwt)
+            localStorage.setItem("isAuthenticated", true);
+        }
+    })
 }
 
 async function dispatchUserDetailsForAuthentication(userName, password) {

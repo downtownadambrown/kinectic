@@ -92,15 +92,15 @@ $(document).ready(function () {
 
 async function storeUserDetailsLocallyForGaming(response) {
     response.then((element) => {
-        console.log("local storage", element)
         if (element.status === 400 && element.statusText === "Bad Request") {
             console.log("Email or Username already exists.", element);
         } else {
             console.log("Successfully received user details.", element)
-            localStorage.setItem("username", element.user.username);
             localStorage.setItem("firstname", element.user.firstname);
             localStorage.setItem("lastname", element.user.lastname);
-            localStorage.setItem("isLoggedIn", true);
+            localStorage.setItem("username", element.user.username);
+            localStorage.setItem("token", element.jwt)
+            localStorage.setItem("isAuthenticated", true);
         }
     })
 }
