@@ -1,8 +1,17 @@
-const loadCorrectPage = () => { 
+const loadCorrectPage = () => {
     const isAuthenticated = localStorage.getItem("isAuthenticated")
-    if (isAuthenticated === true) {
-        
-    } else {
-
+    console.log(typeof isAuthenticated);
+    if (isAuthenticated === "true") {
+        $("#loadPage").load("gamepage.html");
+    } else if (isAuthenticated === "false") {
+        $("#loadPage").load("homepage.html");
     }
 }
+
+
+
+
+$(document).ready(function () {
+    console.log("ready!");
+    loadCorrectPage();
+});
