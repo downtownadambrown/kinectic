@@ -8,10 +8,20 @@ const loadCorrectPage = () => {
     }
 }
 
-
-
-
-$(document).ready(function () {
-    console.log("ready!");
+window.addEventListener('load', () => {
     loadCorrectPage();
+    setTimeout(() => {
+        logOutUser();
+    }, 100);
 });
+
+const logOutUser = () => {
+    const logOutButton = document.querySelector("#logOut");
+    logOutButton.addEventListener("click", () => {
+        localStorage.setItem("isAuthenticated" , false);
+        const logOut = localStorage.getItem("isAuthenticated")
+        if (logOut === "false") {
+            loadCorrectPage();
+        }
+    });
+}
