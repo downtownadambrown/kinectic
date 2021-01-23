@@ -15,26 +15,31 @@ setTimeout(() => {
             submitHandler: function (form, event) {
                 event.preventDefault();
                 const loginResponse = dispatchUserDetailsForAuthentication(form.userNameLogin.value, form.passwordLogin.value);
-                storeUserDetailsLocally(loginResponse);
+                loginResponse.then((element) => {
+                    if (element.status === 400 && element.statusText === "Bad Request") {
+                        console.log("Invalid Username or/and Password.", element);
+                        const validator = $("#loginForm").validate();
+                        validator.showErrors({
+                            "userNameLogin": "Username and/or password incorrect.",
+                            "passwordLogin": "Username and/or password incorrect."
+
+                        });
+                    } else {
+                        storeUserDetailsLocally(element);
+
+                    }
+                })
             }
         });
     });
-}, 100);
+}, 300);
 
-async function storeUserDetailsLocally(response) {
-    response.then((element) => {
-        if (element.status === 400 && element.statusText === "Bad Request") {
-            console.log("Invalid Username or/and Password.", element);
-        } else {
-            console.log("Successfully received user details.", element)
-            localStorage.setItem("firstname", element.user.firstname);
-            localStorage.setItem("lastname", element.user.lastname);
-            localStorage.setItem("username", element.user.username);
-            localStorage.setItem("token", element.jwt)
-            localStorage.setItem("isAuthenticated", true);
-            location.reload();
-        }
-    })
+async function storeUserDetailsLocally(element) {
+    console.log("Successfully received user details.", element)
+    localStorage.setItem("firstname", element.user.firstname);
+    localStorage.setItem("username", element.user.username);
+    localStorage.setItem("isAuthenticated", true);
+    location.reload();
 }
 
 async function dispatchUserDetailsForAuthentication(userName, password) {

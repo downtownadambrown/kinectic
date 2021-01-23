@@ -5,7 +5,7 @@ window.addEventListener('load', () => {
         setTimeout(() => {
             welcomeUser();
             logOutUser();
-        }, 300);
+        }, 100);
     } else {
         loadLoggedOutContent();
     }

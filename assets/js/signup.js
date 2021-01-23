@@ -99,9 +99,7 @@ async function storeUserDetailsLocallyForGaming(response) {
         } else {
             console.log("Successfully received user details.", element)
             localStorage.setItem("firstname", element.user.firstname);
-            localStorage.setItem("lastname", element.user.lastname);
             localStorage.setItem("username", element.user.username);
-            localStorage.setItem("token", element.jwt)
             localStorage.setItem("isAuthenticated", "true");
             location.reload();
         }
