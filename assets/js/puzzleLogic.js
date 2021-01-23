@@ -3,7 +3,7 @@
  * randomly placing the words in the grid. The UI script will only have to 
  * give this class's constructor a
  */
-class WordSearchLogic {
+class PuzzleLogic {
     constructor(wordList, settings) {
         const puzzle = this.generatePuzzle(wordList, settings);
         const orientations = this.getOrientations();
@@ -515,6 +515,6 @@ const settings = {};
  * create a class by passing to constructor word array and settings object
  * return a puzzle
  */
-const game = new WordSearchLogic(wordList, settings);
+const game = new PuzzleLogic(wordList, settings);
 
 console.table(game.puzzle)
