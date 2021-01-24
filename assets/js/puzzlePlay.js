@@ -1,3 +1,5 @@
+import * as puzzleUI from "./puzzleUI.js";
+
 setTimeout(() => {
     document.querySelectorAll('.category').forEach(item => {
         item.addEventListener('click', event => {
@@ -6,13 +8,13 @@ setTimeout(() => {
             const wordsAndSettings = puzzleWordsAndSettings(category, difficultySelected.innerText);
             playPuzzleGame(wordsAndSettings)
 
-
         });
     });
 }, 300);
 
 const playPuzzleGame = (wordsAndSettings) => {
-    console.log(wordsAndSettings)
+    const gameCanvas = document.getElementById("container");
+    console.log(gameCanvas)
 }
 
 const splitAndJoinCategory = (category) => {
@@ -84,7 +86,7 @@ const checkDuplicatedWords = (words, level) => {
                 wordList.push(randomWord.word);
             }
         }
-    } 
+    }
     return wordList;
 }
 
