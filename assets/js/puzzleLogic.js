@@ -170,6 +170,7 @@ class PuzzleLogic {
                     return j.length - i.length;
                 }),
             ];
+            console.log("words:" , wordList);
             wordListLength = wordList[0].length;
             userPuzzleConfigs = this.puzzleConfiguration(configs, wordListLength);
             puzzle = this.returnFilledPuzzle(wordList, userPuzzleConfigs);
@@ -404,7 +405,21 @@ class PuzzleLogic {
                 }
             }
         }
-        return locations;
+        return settings.preferWordOverlap
+            ? removeLocations(locations, maxOverlap)
+            : locations;
+    };
+
+    removeLocations = (locations, overlap) => {
+        let pruned = [];
+        console.table(pruned);
+        for (let i = 0, len = locations.length; i < len; i++) {
+            if (locations[i].overlap >= overlap) {
+                pruned.push(locations[i]);
+            }
+        }
+        console.log(pruned)
+        return pruned;
     };
 
     /** STEP 10
@@ -441,6 +456,7 @@ class PuzzleLogic {
      * 
      */
     fillGridEmptySpaces = (puzzle, settings) => {
+        console.table(puzzle)
         if (settings.fillEmptySquareSpaces) {
             let generatedLettersForPuzzle;
             generatedLettersForPuzzle = this.generateLettersForGrid(settings);

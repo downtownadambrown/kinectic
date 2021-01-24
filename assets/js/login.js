@@ -16,7 +16,8 @@ setTimeout(() => {
                 event.preventDefault();
                 const loginResponse = dispatchUserDetailsForAuthentication(form.userNameLogin.value, form.passwordLogin.value);
                 loginResponse.then((element) => {
-                    if (element.status === 400 && element.statusText === "Bad Request") {
+                    console.log(element)
+                    if (element.status === 400 || element.statusText === "Bad Request") {
                         console.log("Invalid Username or/and Password.", element);
                         const validator = $("#loginForm").validate();
                         validator.showErrors({
