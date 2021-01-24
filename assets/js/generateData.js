@@ -1,5 +1,5 @@
 async function postDataToAPI(word, category) {
-    axios.post('http://localhost:1337/puzzles', {
+    axios.post('https://api.kinectic.io/puzzles', {
         word: word,
         category: category
     })
@@ -306,7 +306,7 @@ const populateData = (countries, animals, placesAndBeaches, tv, movies, foodAndD
 //populateData(countries, animals, placesAndBeaches, tv, movies, foodAndDrinks)
 
 async function getDataFromAPI(category) {
-    axios.get('http://localhost:1337/puzzles', {
+    axios.get('https://api.kinectic.io/puzzles', {
         params: {
             category: category
         }

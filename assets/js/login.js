@@ -50,7 +50,7 @@ async function dispatchUserDetailsForAuthentication(userName, password) {
 async function checkLoginDetailsExist(username, password) {
     console.log(`Username: ${username} and Password: ${password}`)
     const response = axios
-        .post('http://localhost:1337/auth/local', {
+        .post('https://api.kinectic.io/auth/local', {
             identifier: username,
             password: password,
         })

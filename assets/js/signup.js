@@ -122,7 +122,7 @@ async function checkUserNameExist(userName) {
 
 async function addUserDetailsToDatabase(firstName, lastName, userName, email, password) {
     const res = axios
-        .post('http://localhost:1337/auth/local/register', {
+        .post('https://api.kinectic.io/auth/local/register', {
             firstname: firstName,
             lastname: lastName,
             username: userName,
@@ -146,7 +146,7 @@ async function addUserDetailsToDatabase(firstName, lastName, userName, email, pa
 
 async function checkExistingUserEmail(email) {
     const res = axios
-        .get('http://localhost:1337/users', {
+        .get('https://api.kinectic.io/users', {
             params: {
                 email: email,
             }
@@ -167,7 +167,7 @@ async function checkExistingUserEmail(email) {
 
 async function checkExistingUserName(username) {
     const res = axios
-        .get('http://localhost:1337/users', {
+        .get('https://api.kinectic.io/users', {
             params: {
                 username: username,
             }
