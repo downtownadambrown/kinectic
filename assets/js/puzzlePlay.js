@@ -27,22 +27,23 @@ const puzzleWordsAndSettings = async (category, difficulty) => {
         if (difficulty === "EASY") {
             const wordListEasy = [...checkDuplicatedWords(element, EASY)];
             return {
-                words: wordListEasy, 
-                settings: { orientation: ["horizontal", "vertical"], 
-                            level: "easy",
-                            category: category
-                        } 
+                words: wordListEasy,
+                settings: {
+                    orientation: ["horizontal", "vertical"],
+                    level: "easy",
+                    category: category
+                }
             };
         } else if (difficulty === "MEDIUM") {
             const wordListMedium = [...checkDuplicatedWords(element, MEDIUM)];
             return {
-                words: wordListMedium, 
+                words: wordListMedium,
                 settings: {
                     orientation: [
                         "horizontal",
                         "horizontalBack",
                         "vertical",
-                        "verticalUp",], 
+                        "verticalUp",],
                     level: "medium",
                     category: category
                 },
@@ -51,7 +52,7 @@ const puzzleWordsAndSettings = async (category, difficulty) => {
         } else if (difficulty === "HARD") {
             const wordListHard = [...checkDuplicatedWords(element, HARD)];
             return {
-                words: wordListHard, 
+                words: wordListHard,
                 settings: {
                     orientation: [
                         "horizontal",
@@ -61,7 +62,7 @@ const puzzleWordsAndSettings = async (category, difficulty) => {
                         "diagonal",
                         "diagonalUp",
                         "diagonalBack",
-                        "diagonalUpBack",], 
+                        "diagonalUpBack",],
                     level: "hard",
                     category: category
                 },
@@ -76,14 +77,14 @@ const checkDuplicatedWords = (words, level) => {
     for (let index = 0; index < words.length; index++) {
         let randomWord = words[Math.floor(Math.random() * words.length)]
         let checkedDuplicatedWord = wordList.filter(word => word === randomWord.word)
-        if (checkedDuplicatedWord.length > 0) {
-            console.log("Duplicated word.");
-        } else if (wordList.length === level) {
-            break;
-        } else if (wordList.length !== level) {
-            wordList.push(randomWord.word);
+        if (!(checkedDuplicatedWord.length > 0)) {
+            if (wordList.length === level) {
+                break;
+            } else if (wordList.length !== level) {
+                wordList.push(randomWord.word);
+            }
         }
-    }
+    } 
     return wordList;
 }
 
