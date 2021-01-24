@@ -3,16 +3,38 @@ setTimeout(() => {
         item.addEventListener('click', event => {
             const category = event.target.getAttribute("name");
             const splitCategory = category.split("-");
-            const joinCategory = splitCategory.join("_");            
+            const joinCategory = splitCategory.join("_");
             const difficultySelected = event.target.parentElement.querySelector(".difficulty > .uk-active");
-            puzzleWordsAndSettings(joinCategory, difficultySelected);
+            puzzleWordsAndSettings(joinCategory, difficultySelected.innerText);
         });
     });
 }, 300);
 
 const puzzleWordsAndSettings = (category, difficulty) => {
-    const puzzleWords = processCategoryRequest(category);
-    console.log(puzzleWords);
+    const response = processCategoryRequest(category);
+    const words = [];
+    response.then((item) => {
+        if (difficulty === "EASY") {
+            const randomElement = [];
+            for (let index = 0; index < item.length; index++) {
+                let randomWord = item[Math.floor(Math.random() * item.length)]
+                let checkWordsArray = randomElement.filter(word => word === randomWord.word)
+                if (checkWordsArray.length > 0 || randomElement.length === 9) {
+                    break;
+                } else if (randomElement.length !== 10){
+                    randomElement.push(randomWord.word);
+                }                
+            }
+            console.log(randomElement)
+        } else if (difficulty === "MEDIUM") {
+            console.log("MEDIUM")
+        } else if (difficulty === "HARD") {
+            console.log("HARD")
+        }
+        item.map((item) => {
+            words.push(item.word);
+        })
+    });
 
 }
 
