@@ -1,18 +1,31 @@
 setTimeout(() => {
     document.querySelectorAll('.category').forEach(item => {
         item.addEventListener('click', event => {
-            console.log(event.target.getAttribute("name"));
+            const category = event.target.getAttribute("name");
+            const splitCategory = category.split("-");
+            const joinCategory = splitCategory.join("_");            
             const difficultySelected = event.target.parentElement.querySelector(".difficulty > .uk-active");
-            console.log(difficultySelected.innerText);
+            puzzleWordsAndSettings(joinCategory, difficultySelected);
         });
     });
 }, 300);
 
-async function checkExistingUserName() {
+const puzzleWordsAndSettings = (category, difficulty) => {
+    const puzzleWords = processCategoryRequest(category);
+    console.log(puzzleWords);
+
+}
+
+async function processCategoryRequest(category) {
+    const promiseResponse = await getCategoryWords(category);
+    return promiseResponse;
+}
+
+async function getCategoryWords(category) {
     const res = axios
-        .get('http://localhost:1337/word-categories', {
+        .get('http://localhost:1337/puzzles', {
             params: {
-                username: username,
+                category: category
             }
         })
         .then(response => {
