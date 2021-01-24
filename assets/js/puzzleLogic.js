@@ -506,15 +506,16 @@ const wordList = [
     "provoke",
 ];
 
+export default { PuzzleLogic };
 /**
- * Settings object
- */
-const settings = {};
+//  * Settings object
+//  */
+// const settings = {};
 
-/**
- * create a class by passing to constructor word array and settings object
- * return a puzzle
- */
-const game = new PuzzleLogic(wordList, settings);
+// /**
+//  * create a class by passing to constructor word array and settings object
+//  * return a puzzle
+//  */
+// const game = new PuzzleLogic(wordList, settings);
 
-console.table(game.puzzle)
+// console.table(game.puzzle)

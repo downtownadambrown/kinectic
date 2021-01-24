@@ -1,3 +1,55 @@
+@import url('https://fonts.googleapis.com/css2?family=Balsamiq+Sans:wght@400;700&family=MuseoModerno:wght@400;600&display=swap');
+:root {
+  --grid-cols: 1;
+  --grid-rows: 1;
+}
+
+#container {
+  display: grid;
+  grid-gap: 0;
+  grid-template-rows: repeat(var(--grid-rows), 1fr);
+  grid-template-columns: repeat(var(--grid-cols), 1fr);
+  border: 1px solid #ddd;
+  font-family: 'Balsamiq Sans', cursive;
+  font-size: larger;
+
+}
+
+.grid-item {
+  padding: 0.5em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+#container .selected {
+  background-color:lightgray;
+}
+
+#container .found {
+  background-color:lightblue;
+  color:green;
+  font-weight: 600;
+}
+#container .found:hover {
+  background-color:lightblue;
+
+}
+#container .solved {
+  background-color: purple;
+  color: white;
+}
+#container .complete {
+  background-color: green;
+}
+.wordFound {
+  text-decoration: line-through;
+  color: green;
+
+}
+
+body{
+  user-select: none; 
+}
 .uk-navbar{
     background-color: black;
 }

@@ -13,8 +13,13 @@ setTimeout(() => {
 }, 300);
 
 const playPuzzleGame = (wordsAndSettings) => {
-    const gameCanvas = document.getElementById("container");
-    console.log(gameCanvas)
+    const gameCanvas = document.querySelector("#container");
+    wordsAndSettings.then((obj) => {
+        const settings = {
+            orientation: obj.settings.orientation
+        }
+        puzzleUI.generateUIForPuzzle(gameCanvas, obj.words, settings);
+    })
 }
 
 const splitAndJoinCategory = (category) => {
