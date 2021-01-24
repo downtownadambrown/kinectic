@@ -5,7 +5,7 @@ window.addEventListener('load', () => {
         setTimeout(() => {
             welcomeUser();
             logOutUser();
-        }, 100);
+        }, 300);
     } else {
         loadLoggedOutContent();
     }
@@ -37,6 +37,7 @@ const welcomeUser = () => {
     const welcomeUser = document.querySelector("#welcomeUser");
     const userFirstName = localStorage.getItem("firstname");
     const capitalizedName = capitalizeFirstLetter(userFirstName);
+    console.log(welcomeUser)
     welcomeUser.textContent = capitalizedName;
 }
 
