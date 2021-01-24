@@ -11,8 +11,8 @@ setTimeout(() => {
     });
 }, 300);
 
-const playPuzzleGame = (wordlist) => {
-    console.log(wordListPromise)
+const playPuzzleGame = (wordsAndSettings) => {
+    console.log(wordsAndSettings)
 }
 
 const splitAndJoinCategory = (category) => {
@@ -26,24 +26,34 @@ const puzzleWordsAndSettings = async (category, difficulty) => {
     const wordListArray = await response.then((element) => {
         if (difficulty === "EASY") {
             const wordListEasy = [...checkDuplicatedWords(element, EASY)];
-            return { wordListEasy, settings = { orientation =["horizontal", "vertical"] }, difficulty };
+            return {
+                words: wordListEasy, 
+                settings: { orientation: ["horizontal", "vertical"], 
+                            level: "easy",
+                            category: category
+                        } 
+            };
         } else if (difficulty === "MEDIUM") {
             const wordListMedium = [...checkDuplicatedWords(element, MEDIUM)];
             return {
-                wordListMedium, settings = {
-                    orientation =[
+                words: wordListMedium, 
+                settings: {
+                    orientation: [
                         "horizontal",
                         "horizontalBack",
                         "vertical",
-                        "verticalUp",]
+                        "verticalUp",], 
+                    level: "medium",
+                    category: category
                 },
-                difficulty
+
             };
         } else if (difficulty === "HARD") {
             const wordListHard = [...checkDuplicatedWords(element, HARD)];
             return {
-                wordListHard, settings = {
-                    orientation =[
+                words: wordListHard, 
+                settings: {
+                    orientation: [
                         "horizontal",
                         "horizontalBack",
                         "vertical",
@@ -51,9 +61,10 @@ const puzzleWordsAndSettings = async (category, difficulty) => {
                         "diagonal",
                         "diagonalUp",
                         "diagonalBack",
-                        "diagonalUpBack",]
+                        "diagonalUpBack",], 
+                    level: "hard",
+                    category: category
                 },
-                difficulty
             };
         }
     })
@@ -96,7 +107,7 @@ async function getCategoryWords(category) {
         })
         .catch(error => {
             // Handle error.
-            //console.log('An error occurred, whilst checking username.', error.response);
+            console.log('An error occurred, whilst checking username.', error.response);
             return error.response;
         });
     return res;
