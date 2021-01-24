@@ -1,41 +1,79 @@
 setTimeout(() => {
     document.querySelectorAll('.category').forEach(item => {
         item.addEventListener('click', event => {
-            const category = event.target.getAttribute("name");
-            const splitCategory = category.split("-");
-            const joinCategory = splitCategory.join("_");
+            const category = splitAndJoinCategory(event.target.getAttribute("name"));
             const difficultySelected = event.target.parentElement.querySelector(".difficulty > .uk-active");
-            puzzleWordsAndSettings(joinCategory, difficultySelected.innerText);
+            const wordsAndSettings = puzzleWordsAndSettings(category, difficultySelected.innerText);
+            playPuzzleGame(wordsAndSettings)
+
+
         });
     });
 }, 300);
 
-const puzzleWordsAndSettings = (category, difficulty) => {
-    const response = processCategoryRequest(category);
-    const words = [];
-    response.then((item) => {
-        if (difficulty === "EASY") {
-            const randomElement = [];
-            for (let index = 0; index < item.length; index++) {
-                let randomWord = item[Math.floor(Math.random() * item.length)]
-                let checkWordsArray = randomElement.filter(word => word === randomWord.word)
-                if (checkWordsArray.length > 0 || randomElement.length === 9) {
-                    break;
-                } else if (randomElement.length !== 10){
-                    randomElement.push(randomWord.word);
-                }                
-            }
-            console.log(randomElement)
-        } else if (difficulty === "MEDIUM") {
-            console.log("MEDIUM")
-        } else if (difficulty === "HARD") {
-            console.log("HARD")
-        }
-        item.map((item) => {
-            words.push(item.word);
-        })
-    });
+const playPuzzleGame = (wordlist) => {
+    console.log(wordListPromise)
+}
 
+const splitAndJoinCategory = (category) => {
+    const splitCategory = category.split("-");
+    const joinCategory = splitCategory.join("_");
+    return joinCategory;
+}
+
+const puzzleWordsAndSettings = async (category, difficulty) => {
+    const EASY = 10, MEDIUM = 15, HARD = 20, response = processCategoryRequest(category);
+    const wordListArray = await response.then((element) => {
+        if (difficulty === "EASY") {
+            const wordListEasy = [...checkDuplicatedWords(element, EASY)];
+            return { wordListEasy, settings = { orientation =["horizontal", "vertical"] }, difficulty };
+        } else if (difficulty === "MEDIUM") {
+            const wordListMedium = [...checkDuplicatedWords(element, MEDIUM)];
+            return {
+                wordListMedium, settings = {
+                    orientation =[
+                        "horizontal",
+                        "horizontalBack",
+                        "vertical",
+                        "verticalUp",]
+                },
+                difficulty
+            };
+        } else if (difficulty === "HARD") {
+            const wordListHard = [...checkDuplicatedWords(element, HARD)];
+            return {
+                wordListHard, settings = {
+                    orientation =[
+                        "horizontal",
+                        "horizontalBack",
+                        "vertical",
+                        "verticalUp",
+                        "diagonal",
+                        "diagonalUp",
+                        "diagonalBack",
+                        "diagonalUpBack",]
+                },
+                difficulty
+            };
+        }
+    })
+    return wordListArray;
+}
+
+const checkDuplicatedWords = (words, level) => {
+    const wordList = [];
+    for (let index = 0; index < words.length; index++) {
+        let randomWord = words[Math.floor(Math.random() * words.length)]
+        let checkedDuplicatedWord = wordList.filter(word => word === randomWord.word)
+        if (checkedDuplicatedWord.length > 0) {
+            console.log("Duplicated word.");
+        } else if (wordList.length === level) {
+            break;
+        } else if (wordList.length !== level) {
+            wordList.push(randomWord.word);
+        }
+    }
+    return wordList;
 }
 
 async function processCategoryRequest(category) {
@@ -45,7 +83,7 @@ async function processCategoryRequest(category) {
 
 async function getCategoryWords(category) {
     const res = axios
-        .get('http://localhost:1337/puzzles', {
+        .get('https://api.kinectic.io/puzzles', {
             params: {
                 category: category
             }
