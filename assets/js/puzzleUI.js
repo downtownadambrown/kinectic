@@ -1,8 +1,8 @@
 import puzzleLogic from "./puzzleLogic.js";
 
 let game, selectedSquare,
-  selectedSquares = [],
-  currentWord = "";
+    selectedSquares = [],
+    currentWord = "";
 
 const generateUIForPuzzle = (htmlContainer, wordList, settings) => {
     game = new puzzleLogic.PuzzleLogic(wordList, settings);
@@ -30,8 +30,6 @@ const drawPuzzle = (el, puzzle, words) => {
     }
 };
 
-
-
 const addEventListenersToGrid = () => {
     document.querySelectorAll('.grid-item').forEach(item => {
         if (window.navigator.msPointerEnabled) {
@@ -40,7 +38,7 @@ const addEventListenersToGrid = () => {
             item.addEventListener('pointerdown', turnEnd);
         } else {
             item.addEventListener('mousedown', turnStart);
-            item.addEventListener('mouseenter', selectLetters);
+            item.addEventListener('mouseenter', mouseMove);
             item.addEventListener('mouseup', turnEnd)
             item.addEventListener('touchstart', turnStart);
             item.addEventListener('touchmove', selectLetters);
@@ -49,15 +47,40 @@ const addEventListenersToGrid = () => {
     });
 }
 
+const mouseMove = function (event) {
+  select(event);
+};
+
 let turnStart = (event) => {
     event.target.className += " selected";
     selectedSquare = event.target.innerText;
     selectedSquares.push(event.target.innerText);
-    currentWord= event.target.innerText;
+    currentWord = event.target.innerText;
     console.log(`${selectedSquare}${selectedSquares}${currentWord}`);
 }
 
-const selectLetters = (event) => { console.log(event.target) }
+const selectLetters = (target) => {
+    if (!selectedSquare) {
+        return;
+    }
+    let previousSquare = selectedSquares[selectedSquares.length - 1];
+    if (previousSquare == target) {
+        return;
+    }
+    let backTo;
+    for (let i = 0, len = selectedSquares.length; i < len; i++) {
+        if (selectedSquares[i] == target) {
+            backTo = i + 1;
+            break;
+        }
+    }
+    while (backTo < selectedSquares.length) {
+        $(selectedSquares[selectedSquares.length - 1]).removeClass("selected");
+        selectedSquares.splice(backTo, 1);
+        currentWord = currentWord.substr(0, currentWord.length - 1);
+    }
+   
+}
 const turnEnd = (event) => { console.log(event.target) }
 
 
