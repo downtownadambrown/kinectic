@@ -58,6 +58,17 @@ const calculateOrientation = function (x1, y1, x2, y2) {
   return null;
 };
 
+const playTurn = function (square) {
+  for (let i = 0, len = wordList.length; i < len; i++) {
+    if (wordList[i].indexOf(currentWord + square.innerText) === 0) {
+      square.target.className += " selected";
+      selectedSquares.push(square);
+      currentWord += square.innerText;
+      break;
+    }
+  }
+};
+
 const mouseMovement = function (event) {
   select(event);
 };
@@ -120,6 +131,8 @@ const selectLetters = (target) => {
         playTurn(target);
     }
 }
+
+
 
 const turnEnd = (event) => { console.log(event.target) }
 
