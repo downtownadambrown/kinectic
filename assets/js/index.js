@@ -53,7 +53,9 @@ const welcomeUser = () => {
     const welcomeUser = document.querySelector("#welcomeUser");
     const userFirstName = localStorage.getItem("firstname");
     const capitalizedName = capitalizeFirstLetter(userFirstName);
-    welcomeUser.textContent = capitalizedName;
+    // if (!(welcomeUser === null)) {
+    //     welcomeUser.textContent = capitalizedName;
+    // }
 }
 
 const capitalizeFirstLetter = (firstName) => {

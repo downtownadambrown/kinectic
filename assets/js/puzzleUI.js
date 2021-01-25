@@ -6,6 +6,7 @@ const generateUIForPuzzle = (htmlContainer, wordList, settings) => {
     game = new puzzleLogic.PuzzleLogic(wordList, settings);
     console.table(game.puzzle)
     drawPuzzle(htmlContainer, game.puzzle, wordList);
+    addEventListenersToGrid();
 };
 
 const drawPuzzle = (el, puzzle, words) => {
@@ -28,17 +29,17 @@ const drawPuzzle = (el, puzzle, words) => {
 };
 
 
-
-window.addEventListener('load', () => {
-   if (window.navigator.msPointerEnabled) {
+const addEventListenersToGrid = () => {
     document.querySelectorAll('.grid-item').forEach(item => {
-        item.addEventListener('click', event => {
-          
-        });
+        item.addEventListener('onmousedown', startSelectGridSquare);
+        item.addEventListener('onmouseover', selectedGridSquares);
+        item.addEventListener('onmousedown', endselectedGirdSquares);
     });
-  } else {
-  
-  }
-});
+}
+
+const startSelectGridSquare = () => { console.log("down") }
+const selectedGridSquares = () => { console.log("over") }
+const endselectedGirdSquares = () => { console.log("up") }
+
 
 export { generateUIForPuzzle };

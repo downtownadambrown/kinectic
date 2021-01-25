@@ -7,8 +7,8 @@ const playPuzzleGame = (wordsAndSettings) => {
             orientation: obj.settings.orientation
         }
         puzzleUI.generateUIForPuzzle(gameCanvas, obj.words, settings);
-    })
-}
+    });
+};
 
 const splitAndJoinCategory = (category) => {
     const splitCategory = category.split("-");
@@ -108,4 +108,4 @@ async function getCategoryWords(category) {
         });
     return res;
 }
-export {puzzleWordsAndSettings, playPuzzleGame, splitAndJoinCategory};
+export { puzzleWordsAndSettings, playPuzzleGame, splitAndJoinCategory };
