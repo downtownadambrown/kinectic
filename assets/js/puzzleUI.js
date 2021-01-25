@@ -31,15 +31,24 @@ const drawPuzzle = (el, puzzle, words) => {
 
 const addEventListenersToGrid = () => {
     document.querySelectorAll('.grid-item').forEach(item => {
-        item.addEventListener('onmousedown', startSelectGridSquare);
-        item.addEventListener('onmouseover', selectedGridSquares);
-        item.addEventListener('onmousedown', endselectedGirdSquares);
+        if (window.navigator.msPointerEnabled) {
+            item.addEventListener('pointerdown', startSquare);
+            item.addEventListener('pointerover', selectedSquares);
+            item.addEventListener('pointerdown', endSquare);
+        } else {
+            item.addEventListener('mousedown', startSquare);
+            item.addEventListener('mouseenter', selectedSquares);
+            item.addEventListener('mouseup', endSquare);
+            item.addEventListener('touchstart', startSquare);
+            item.addEventListener('touchmove', selectedSquares);
+            item.addEventListener('touchend', endSquare);
+        }
     });
 }
 
-const startSelectGridSquare = () => { console.log("down") }
-const selectedGridSquares = () => { console.log("over") }
-const endselectedGirdSquares = () => { console.log("up") }
+const startSquare = (event) => { console.log(event.target) }
+const selectedSquares = (event) => { console.log(event.target) }
+const endSquare = (event) => { console.log(event.target) }
 
 
 export { generateUIForPuzzle };
