@@ -38,7 +38,7 @@ const addEventListenersToGrid = () => {
             item.addEventListener('pointerdown', turnEnd);
         } else {
             item.addEventListener('mousedown', turnStart);
-            item.addEventListener('mouseenter', mouseMove);
+            item.addEventListener('mouseenter', mouseMovement);
             item.addEventListener('mouseup', turnEnd)
             item.addEventListener('touchstart', turnStart);
             item.addEventListener('touchmove', selectLetters);
@@ -47,7 +47,18 @@ const addEventListenersToGrid = () => {
     });
 }
 
-const mouseMove = function (event) {
+const calculateOrientation = function (x1, y1, x2, y2) {
+  for (let orientation in game.orientations) {
+    let nextFn = game.orientations[orientation];
+    let nextPos = nextFn(x1, y1, 1);
+    if (nextPos.x === x2 && nextPos.y === y2) {
+      return orientation;
+    }
+  }
+  return null;
+};
+
+const mouseMovement = function (event) {
   select(event);
 };
 
@@ -75,12 +86,41 @@ const selectLetters = (target) => {
         }
     }
     while (backTo < selectedSquares.length) {
-        $(selectedSquares[selectedSquares.length - 1]).removeClass("selected");
+        selectedSquares[selectedSquares.length - 1].classList.remove("selected");
         selectedSquares.splice(backTo, 1);
         currentWord = currentWord.substr(0, currentWord.length - 1);
     }
-   
+    let newOrientation = calculateOrientation(
+        selectedSquare.getAttibute("x") - 0,
+        selectedSquare.getAttibute("y") - 0,
+        target.getAttibute("x") - 0,
+        target.getAttibute("y") - 0);
+
+    if (newOrientation) {
+        selectedSquares = [selectedSquare];
+        currentWord = selectedSquare.innerText;
+        if (previousSquare !== selectedSquare) {
+            previousSquare.classList.remove("selected");
+            previousSquare = selectedSquare;
+        }
+        curOrientation = newOrientation;
+    }
+    let orientation = calculateOrientation(
+        previousSquare.getAttibute("x") - 0,
+        previousSquare.getAttibute("y") - 0,
+        target.getAttibute("x") - 0,
+        target.getAttibute("y") - 0
+    );
+
+    if (!orientation) {
+        return;
+    }
+    if (!curOrientation || curOrientation === orientation) {
+        curOrientation = orientation;
+        playTurn(target);
+    }
 }
+
 const turnEnd = (event) => { console.log(event.target) }
 
 
