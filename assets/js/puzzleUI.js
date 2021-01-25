@@ -48,40 +48,41 @@ const addEventListenersToGrid = () => {
 }
 
 const calculateOrientation = function (x1, y1, x2, y2) {
-  for (let orientation in game.orientations) {
-    let nextFn = game.orientations[orientation];
-    let nextPos = nextFn(x1, y1, 1);
-    if (nextPos.x === x2 && nextPos.y === y2) {
-      return orientation;
+    for (let orientation in game.orientations) {
+        let nextFn = game.orientations[orientation];
+        let nextPos = nextFn(x1, y1, 1);
+        if (nextPos.x === x2 && nextPos.y === y2) {
+            return orientation;
+        }
     }
-  }
-  return null;
+    return null;
 };
 
 const playTurn = function (square) {
-  for (let i = 0, len = wordList.length; i < len; i++) {
-    if (wordList[i].indexOf(currentWord + square.innerText) === 0) {
-      square.target.className += " selected";
-      selectedSquares.push(square);
-      currentWord += square.innerText;
-      break;
+    for (let i = 0, len = wordList.length; i < len; i++) {
+        if (wordList[i].indexOf(currentWord + square.innerText) === 0) {
+            square.target.className += " selected";
+            selectedSquares.push(square);
+            currentWord += square.innerText;
+            break;
+        }
     }
-  }
 };
 
 const mouseMovement = function (event) {
-  select(event);
+    selectLetters(event.target);
 };
 
 let turnStart = (event) => {
     event.target.className += " selected";
-    selectedSquare = event.target.innerText;
-    selectedSquares.push(event.target.innerText);
+    selectedSquare = event.target;
+    selectedSquares.push(event.target);
     currentWord = event.target.innerText;
-    console.log(`${selectedSquare}${selectedSquares}${currentWord}`);
+    //console.log(`${selectedSquare}${selectedSquares}${currentWord}`);
 }
 
 const selectLetters = (target) => {
+    console.log("target",event.target)
     if (!selectedSquare) {
         return;
     }
@@ -101,11 +102,13 @@ const selectLetters = (target) => {
         selectedSquares.splice(backTo, 1);
         currentWord = currentWord.substr(0, currentWord.length - 1);
     }
+    console.log("selected",selectedSquare)
+
     let newOrientation = calculateOrientation(
-        selectedSquare.getAttibute("x") - 0,
-        selectedSquare.getAttibute("y") - 0,
-        target.getAttibute("x") - 0,
-        target.getAttibute("y") - 0);
+        selectedSquare.getAttribute("x") - 0,
+        selectedSquare.getAttribute("y") - 0,
+        target.getAttribute("x") - 0,
+        target.getAttribute("y") - 0);
 
     if (newOrientation) {
         selectedSquares = [selectedSquare];
@@ -117,10 +120,10 @@ const selectLetters = (target) => {
         curOrientation = newOrientation;
     }
     let orientation = calculateOrientation(
-        previousSquare.getAttibute("x") - 0,
-        previousSquare.getAttibute("y") - 0,
-        target.getAttibute("x") - 0,
-        target.getAttibute("y") - 0
+        previousSquare.getAttribute("x") - 0,
+        previousSquare.getAttribute("y") - 0,
+        target.getAttribute("x") - 0,
+        target.getAttribute("y") - 0
     );
 
     if (!orientation) {
@@ -134,7 +137,7 @@ const selectLetters = (target) => {
 
 
 
-const turnEnd = (event) => { console.log(event.target) }
+const turnEnd = (event) => { }
 
 
 export { generateUIForPuzzle };
