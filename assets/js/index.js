@@ -1,3 +1,5 @@
+import * as puzzlePlay from "./puzzlePlay.js";
+
 window.addEventListener('load', () => {
     const isAuthenticated = localStorage.getItem("isAuthenticated")
     if (isAuthenticated === "true") {
@@ -9,8 +11,19 @@ window.addEventListener('load', () => {
     } else {
         loadLoggedOutContent();
     }
-    
 });
+
+setTimeout(() => {
+    document.querySelectorAll('.category').forEach(item => {
+        item.addEventListener('click', event => {
+            const category = puzzlePlay.splitAndJoinCategory(event.target.getAttribute("name"));
+            const difficultySelected = event.target.parentElement.querySelector(".difficulty > .uk-active");
+            const wordsAndSettings = puzzlePlay.puzzleWordsAndSettings(category, difficultySelected.innerText);
+            puzzlePlay.playPuzzleGame(wordsAndSettings)
+
+        });
+    });
+}, 300);
 
 const loadLoggedInContent = () => {
     $("#app-root").load("gamepage.html");
@@ -47,9 +60,4 @@ const capitalizeFirstLetter = (firstName) => {
     }).join(" ");
     return capitalizedName;
 }
-
-
-
-
-
 
