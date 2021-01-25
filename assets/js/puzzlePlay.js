@@ -1,17 +1,5 @@
 import * as puzzleUI from "./puzzleUI.js";
 
-setTimeout(() => {
-    document.querySelectorAll('.category').forEach(item => {
-        item.addEventListener('click', event => {
-            const category = splitAndJoinCategory(event.target.getAttribute("name"));
-            const difficultySelected = event.target.parentElement.querySelector(".difficulty > .uk-active");
-            const wordsAndSettings = puzzleWordsAndSettings(category, difficultySelected.innerText);
-            playPuzzleGame(wordsAndSettings)
-
-        });
-    });
-}, 300);
-
 const playPuzzleGame = (wordsAndSettings) => {
     const gameCanvas = document.querySelector("#container");
     wordsAndSettings.then((obj) => {
@@ -120,3 +108,4 @@ async function getCategoryWords(category) {
         });
     return res;
 }
+export {puzzleWordsAndSettings, playPuzzleGame, splitAndJoinCategory};
