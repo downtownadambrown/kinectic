@@ -12,7 +12,7 @@ class PuzzleLogic {
     }
 
     getLetters = (letter) => {
-        const LETTERS = "abcdefghijklmnoprstuvwy";
+        const LETTERS = "ABCDEFGHIJKLMNOPRSTUVWY";
         if (letter) {
             return LETTERS[letter];
         } else {
@@ -477,13 +477,14 @@ class PuzzleLogic {
         if (typeof settings.fillEmptySquares === "function") {
             extraLetterGenerator = settings.fillEmptySquares;
         } else if (typeof settings.fillEmptySquares === "string") {
-            lettersToAdd = settings.fillEmptySquares.toLowerCase().split("");
+            lettersToAdd = settings.fillEmptySquares.toUpperCase().split("");
             extraLetterGenerator = () =>
                 lettersToAdd.pop() || (fillingBlanksCount++ && "");
         } else {
             extraLetterGenerator = () =>
                 this.getLetters([Math.floor(Math.random() * this.getLetters().length)]);
         }
+        console.log(extraLetterGenerator)
         return extraLetterGenerator;
     }
 

@@ -23,6 +23,7 @@
 
 #container .selected {
   background-color:lightgray;
+  text-transform: uppercase;
 }
 
 #container .found {

@@ -1,6 +1,8 @@
 import puzzleLogic from "./puzzleLogic.js";
 
-let game;
+let game, selectedSquare,
+  selectedSquares = [],
+  currentWord = "";
 
 const generateUIForPuzzle = (htmlContainer, wordList, settings) => {
     game = new puzzleLogic.PuzzleLogic(wordList, settings);
@@ -29,26 +31,34 @@ const drawPuzzle = (el, puzzle, words) => {
 };
 
 
+
 const addEventListenersToGrid = () => {
     document.querySelectorAll('.grid-item').forEach(item => {
         if (window.navigator.msPointerEnabled) {
-            item.addEventListener('pointerdown', startSquare);
-            item.addEventListener('pointerover', selectedSquares);
-            item.addEventListener('pointerdown', endSquare);
+            item.addEventListener('pointerdown', turnStart);
+            item.addEventListener('pointerover', selectLetters);
+            item.addEventListener('pointerdown', turnEnd);
         } else {
-            item.addEventListener('mousedown', startSquare);
-            item.addEventListener('mouseenter', selectedSquares);
-            item.addEventListener('mouseup', endSquare);
-            item.addEventListener('touchstart', startSquare);
-            item.addEventListener('touchmove', selectedSquares);
-            item.addEventListener('touchend', endSquare);
+            item.addEventListener('mousedown', turnStart);
+            item.addEventListener('mouseenter', selectLetters);
+            item.addEventListener('mouseup', turnEnd)
+            item.addEventListener('touchstart', turnStart);
+            item.addEventListener('touchmove', selectLetters);
+            item.addEventListener('touchend', turnEnd);
         }
     });
 }
 
-const startSquare = (event) => { console.log(event.target) }
-const selectedSquares = (event) => { console.log(event.target) }
-const endSquare = (event) => { console.log(event.target) }
+let turnStart = (event) => {
+    event.target.className += " selected";
+    selectedSquare = event.target.innerText;
+    selectedSquares.push(event.target.innerText);
+    currentWord= event.target.innerText;
+    console.log(`${selectedSquare}${selectedSquares}${currentWord}`);
+}
+
+const selectLetters = (event) => { console.log(event.target) }
+const turnEnd = (event) => { console.log(event.target) }
 
 
 export { generateUIForPuzzle };
