@@ -16,11 +16,14 @@ window.addEventListener('load', () => {
 setTimeout(() => {
     document.querySelectorAll('.category').forEach(item => {
         item.addEventListener('click', event => {
+            const categoriesElements = document.querySelector("#categories");
             const category = puzzlePlay.splitAndJoinCategory(event.target.getAttribute("name"));
             const difficultySelected = event.target.parentElement.querySelector(".difficulty > .uk-active");
             const wordsAndSettings = puzzlePlay.puzzleWordsAndSettings(category, difficultySelected.innerText);
             puzzlePlay.playPuzzleGame(wordsAndSettings)
-
+            while (categoriesElements.firstChild) {
+                categoriesElements.removeChild(categoriesElements.lastChild);
+            }
         });
     });
 }, 300);

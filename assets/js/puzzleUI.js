@@ -26,4 +26,19 @@ const drawPuzzle = (el, puzzle, words) => {
         }
     }
 };
+
+
+
+window.addEventListener('load', () => {
+   if (window.navigator.msPointerEnabled) {
+    document.querySelectorAll('.grid-item').forEach(item => {
+        item.addEventListener('click', event => {
+          
+        });
+    });
+  } else {
+  
+  }
+});
+
 export { generateUIForPuzzle };
