@@ -4,11 +4,13 @@ let game, startGridItem,
     selectedGridItem = [],
     currentWord = "",
     currentOrientation,
-    wordList = [];
+    wordList = [],
+    score = 0,
+    difficultyLevel;
 
 const generateUIForPuzzle = (htmlContainer, wordList, settings) => {
+    console.log(settings)
     game = new puzzleLogic.PuzzleLogic(wordList, settings);
-    console.table(game.puzzle)
     drawPuzzle(htmlContainer, game.puzzle, wordList);
     addEventListenersToGrid();
     displayWordList(wordList);
@@ -175,12 +177,16 @@ const endGameTurn = function () {
 
 const displayWordList = function (wordList) {
     let output = "";
+    const wordListElement = document.querySelector("#wordList");
+    wordListElement.classList.add("uk-column-1-2");
+    wordListElement.classList.add("uk-padding-large");
+    wordListElement.classList.add("uk-text-center");
     wordList.forEach(function (value) {
-        output += "<div class=" + "words" + " " + "uk-padding-large" + " id=" + `${value}` + ">";
+        output += "<div class=" + "words" + " id=" + `${value}` + ">";
         output += `${value}`;
         output += "</div>";
     });
-    $("#wordList").append(output);
+    wordListElement.innerHTML = output;
 };
 
 
@@ -205,6 +211,14 @@ const startTimer = function () {
             return valueString;
         }
     }
+};
+
+const addScore = () => {
+  const displayScore = document.getElementById("score");
+  score += 10;
+  console.log(score);
+  $("#score").empty();
+  displayScore.innerText = score.toString();
 };
 
 

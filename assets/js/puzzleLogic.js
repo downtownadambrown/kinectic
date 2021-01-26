@@ -170,7 +170,6 @@ class PuzzleLogic {
                     return j.length - i.length;
                 }),
             ];
-            console.log("words:" , wordList);
             wordListLength = wordList[0].length;
             userPuzzleConfigs = this.puzzleConfiguration(configs, wordListLength);
             puzzle = this.returnFilledPuzzle(wordList, userPuzzleConfigs);
@@ -270,8 +269,6 @@ class PuzzleLogic {
                 puzzle[i].push("");
             }
         }
-        console.table(puzzle)
-
         return puzzle;
     };
 
@@ -411,15 +408,13 @@ class PuzzleLogic {
     };
 
     removeLocations = (locations, overlap) => {
-        let pruned = [];
-        console.table(pruned);
+        let removedLocations = [];
         for (let i = 0, len = locations.length; i < len; i++) {
             if (locations[i].overlap >= overlap) {
-                pruned.push(locations[i]);
+                removedLocations.push(locations[i]);
             }
         }
-        console.log(pruned)
-        return pruned;
+        return removedLocations;
     };
 
     /** STEP 10
@@ -456,7 +451,6 @@ class PuzzleLogic {
      * 
      */
     fillGridEmptySpaces = (puzzle, settings) => {
-        console.table(puzzle)
         if (settings.fillEmptySquareSpaces) {
             let generatedLettersForPuzzle;
             generatedLettersForPuzzle = this.generateLettersForGrid(settings);
@@ -505,34 +499,3 @@ class PuzzleLogic {
     };
 };
 
-
-/**
- * array with words
- */
-const wordList = [
-    "love",
-    "you",
-    "bus",
-    "goat",
-    "jazz",
-    "apple",
-    "university",
-    "pipe",
-    "joke",
-    "player",
-    "provoke",
-];
-
-export default { PuzzleLogic };
-/**
-//  * Settings object
-//  */
-// const settings = {};
-
-// /**
-//  * create a class by passing to constructor word array and settings object
-//  * return a puzzle
-//  */
-// const game = new PuzzleLogic(wordList, settings);
-
-// console.table(game.puzzle)

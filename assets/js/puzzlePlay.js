@@ -10,7 +10,7 @@ const playPuzzleGame = (wordsAndSettings) => {
         }
         logo.parentNode.removeChild(logo);
         welcomeUser.parentNode.removeChild(welcomeUser);
-        puzzleUI.generateUIForPuzzle(gameCanvas, obj.words, settings);
+        puzzleUI.generateUIForPuzzle(gameCanvas, obj.words, obj.settings);
     });
 };
 
