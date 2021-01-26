@@ -171,7 +171,7 @@ class PuzzleLogic {
                 }),
             ];
             wordListLength = wordList[0].length;
-            userPuzzleConfigs = this.puzzleConfiguration(configs, wordListLength);
+            userPuzzleConfigs = this.puzzleConfiguration(configs, wordListLength, wordList.length);
             puzzle = this.returnFilledPuzzle(wordList, userPuzzleConfigs);
             this.fillGridEmptySpaces(puzzle, userPuzzleConfigs);
             return puzzle;
@@ -180,19 +180,30 @@ class PuzzleLogic {
 
     /** STEP 2
      *
-     * This is where puzzle configuration will be set for the grid generation
+     * This is where puzzle configuration will be set for the grid generation.
+     * Check if the biggest word length is bigger than array size or if array size 
+     * is bigger, depending on that pass the grid zise for construction.
      */
-    puzzleConfiguration = (configs, wordListLength) => {
+    puzzleConfiguration = (configs, longestWordLength, wordListArrayLength) => {
+        console.log(configs, longestWordLength, wordListArrayLength);
+        let gridHeightLength = 0, gridWidthLength = 0;
+        if (longestWordLength > wordListArrayLength) {
+            gridHeightLength = longestWordLength;
+            gridWidthLength = longestWordLength;
+        } else{
+            gridHeightLength = wordListArrayLength;
+            gridWidthLength = wordListArrayLength;
+        }
         const settings = {
-            gridHeight: configs.gridHeight || wordListLength,
-            gridWidth: configs.gridHeight || wordListLength,
-            orientations: configs.orientations || this.getAllOrientations(),
+            gridHeight: configs.gridHeight || gridHeightLength,
+            gridWidth: configs.gridHeight || gridWidthLength,
+            orientations: configs.orientation || this.getAllOrientations(),
             maxGridGrowth: 20,
             maxGridGenerationAttempts: 20,
             fillEmptySquareSpaces: true,
             optionalOverlap: false,
         };
-        //console.log(settings);
+        console.log(settings);
         return settings;
     };
 
@@ -478,7 +489,6 @@ class PuzzleLogic {
             extraLetterGenerator = () =>
                 this.getLetters([Math.floor(Math.random() * this.getLetters().length)]);
         }
-        console.log(extraLetterGenerator)
         return extraLetterGenerator;
     }
 
@@ -499,3 +509,4 @@ class PuzzleLogic {
     };
 };
 
+export default { PuzzleLogic };

@@ -9,12 +9,13 @@ let game, startGridItem,
     difficultyLevel;
 
 const generateUIForPuzzle = (htmlContainer, wordList, settings) => {
-    console.log(settings)
+    console.log(settings.level)
     game = new puzzleLogic.PuzzleLogic(wordList, settings);
     drawPuzzle(htmlContainer, game.puzzle, wordList);
     addEventListenersToGrid();
     displayWordList(wordList);
     startTimer();
+    difficultyLevel = settings.level;
 };
 
 const drawPuzzle = (el, puzzle, words) => {
@@ -157,6 +158,7 @@ const endGameTurn = function () {
             wordList.splice(index, 1);
             document.querySelectorAll("#" + currentWord).forEach((el) => {
                 el.classList.add("wordFound")
+                addScore(difficultyLevel);
             });;
             //addScore
         }
@@ -213,12 +215,22 @@ const startTimer = function () {
     }
 };
 
-const addScore = () => {
-  const displayScore = document.getElementById("score");
-  score += 10;
-  console.log(score);
-  $("#score").empty();
-  displayScore.innerText = score.toString();
+const addScore = (difficultyLevel) => {
+    const displayScore = document.querySelector("#score");
+    if (difficultyLevel === "easy") {
+        score += 10;
+        $("#score").empty();
+        displayScore.innerText = score.toString();
+    } else if (difficultyLevel === "medium") {
+        score += 25;
+        $("#score").empty();
+        displayScore.innerText = score.toString();
+    } else if (difficultyLevel === "hard") {
+        score += 50;
+        $("#score").empty();
+        displayScore.innerText = score.toString();
+    }
+
 };
 
 
