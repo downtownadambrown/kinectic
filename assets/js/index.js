@@ -20,10 +20,9 @@ setTimeout(() => {
             const category = puzzlePlay.splitAndJoinCategory(event.target.getAttribute("name"));
             const difficultySelected = event.target.parentElement.querySelector(".difficulty > .uk-active");
             const wordsAndSettings = puzzlePlay.puzzleWordsAndSettings(category, difficultySelected.innerText);
-            puzzlePlay.playPuzzleGame(wordsAndSettings)
-            while (categoriesElements.firstChild) {
-                categoriesElements.removeChild(categoriesElements.lastChild);
-            }
+            puzzlePlay.playPuzzleGame(wordsAndSettings);
+            removeElements(categoriesElements);
+
         });
     });
 }, 300);
@@ -49,13 +48,19 @@ const logOutUser = () => {
     }
 }
 
+const removeElements = (categoriesElements) => {
+    while (categoriesElements.firstChild) {
+        categoriesElements.removeChild(categoriesElements.lastChild);
+    }
+}
+
 const welcomeUser = () => {
     const welcomeUser = document.querySelector("#welcomeUser");
     const userFirstName = localStorage.getItem("firstname");
     const capitalizedName = capitalizeFirstLetter(userFirstName);
-    // if (!(welcomeUser === null)) {
-    //     welcomeUser.textContent = capitalizedName;
-    // }
+    if (!(welcomeUser === null)) {
+        welcomeUser.textContent = capitalizedName;
+    }
 }
 
 const capitalizeFirstLetter = (firstName) => {
@@ -65,4 +70,5 @@ const capitalizeFirstLetter = (firstName) => {
     }).join(" ");
     return capitalizedName;
 }
+
 

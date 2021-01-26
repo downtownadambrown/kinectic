@@ -6,16 +6,16 @@ let game, startGridItem,
     currentOrientation,
     wordList = [],
     score = 0,
-    difficultyLevel;
+    difficultyLevel,
+    totalPlayedSeconds = 0;
 
 const generateUIForPuzzle = (htmlContainer, wordList, settings) => {
-    console.log(settings.level)
+    difficultyLevel = settings.level;
     game = new puzzleLogic.PuzzleLogic(wordList, settings);
     drawPuzzle(htmlContainer, game.puzzle, wordList);
     addEventListenersToGrid();
     displayWordList(wordList);
     startTimer();
-    difficultyLevel = settings.level;
 };
 
 const drawPuzzle = (el, puzzle, words) => {
@@ -82,18 +82,18 @@ const selectingSquares = (targetElement) => {
     if (previousSquare == targetElement) {
         return;
     }
-    let backTo;
+    let backToPreviousSquare;
     for (let i = 0, len = selectedGridItem.length; i < len; i++) {
         if (selectedGridItem[i] == targetElement) {
-            backTo = i + 1;
+            backToPreviousSquare = i + 1;
             break;
         }
     }
-    while (backTo < selectedGridItem.length) {
+    while (backToPreviousSquare < selectedGridItem.length) {
         selectedGridItem[selectedGridItem.length - 1].forEach((el) => {
             el.classList.remove("selected");
         })
-        selectedGridItem.splice(backTo, 1);
+        selectedGridItem.splice(backToPreviousSquare, 1);
         currentWord = currentWord.substr(0, currentWord.length - 1);
     }
     let newOrientation = calculateOrientation(
@@ -160,12 +160,12 @@ const endGameTurn = function () {
                 el.classList.add("wordFound")
                 addScore(difficultyLevel);
             });;
-            //addScore
         }
         if (wordList.length === 0) {
             document.querySelectorAll(".grid-item").forEach((el) => {
                 el.classList.add("complete")
             });;
+            saveCompletedGameToDatabase(score, totalPlayedSeconds)
         }
     });
     document.querySelectorAll(".selected").forEach((el) => {
@@ -195,14 +195,12 @@ const displayWordList = function (wordList) {
 const startTimer = function () {
     const minutes = document.querySelector("#minutes");
     const seconds = document.querySelector("#seconds");
-    let totalSeconds = 0;
-
     setInterval(setTimeToElement, 1000);
 
     function setTimeToElement() {
-        ++totalSeconds;
-        seconds.innerHTML = splitTimeValues(totalSeconds % 60);
-        minutes.innerHTML = splitTimeValues(parseInt(totalSeconds / 60));
+        ++totalPlayedSeconds;
+        seconds.innerHTML = splitTimeValues(totalPlayedSeconds % 60);
+        minutes.innerHTML = splitTimeValues(parseInt(totalPlayedSeconds / 60));
     }
 
     function splitTimeValues(value) {
@@ -232,6 +230,32 @@ const addScore = (difficultyLevel) => {
     }
 
 };
+
+const saveCompletedGameToDatabase = (score, totalPlayedSeconds) => {
+    console.log(score, totalPlayedSeconds);
+      const res = axios
+        .post('https://api.kinectic.io/leaderboards', {
+            score: firstName,
+            time: lastName,
+            username: userName
+        })
+        .then(response => {
+            // Handle success.
+            //console.log('Registering User!');
+            //console.log('User profile', response.data.user);
+            return response.data;
+        })
+        .catch(error => {
+            // Handle error.
+            //console.log('An error occurred, whilst registering a user.', error.response);
+            return error.response;
+        });
+
+    return res;
+
+}
+
+saveCompletedGameToDatabase(300, 300, "noxx123")
 
 
 export { generateUIForPuzzle };
