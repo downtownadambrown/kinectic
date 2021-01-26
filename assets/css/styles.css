@@ -40,7 +40,7 @@
   color: white;
 }
 #container .complete {
-  background-color: green;
+  background-color: lightgray;
 }
 .wordFound {
   text-decoration: line-through;
