@@ -11,6 +11,7 @@ const generateUIForPuzzle = (htmlContainer, wordList, settings) => {
     console.table(game.puzzle)
     drawPuzzle(htmlContainer, game.puzzle, wordList);
     addEventListenersToGrid();
+    displayWordList(wordList);
 };
 
 const drawPuzzle = (el, puzzle, words) => {
@@ -20,6 +21,7 @@ const drawPuzzle = (el, puzzle, words) => {
     }
     for (let i = 0, height = puzzle.length; i < height; i++) {
         el.style.setProperty("--grid-rows", puzzle.length);
+        el.classList.add("uk-padding-large")
         let row = puzzle[i];
         for (let j = 0, width = row.length; j < width; j++) {
             el.style.setProperty("--grid-cols", row.length);
@@ -170,15 +172,15 @@ const endGameTurn = function () {
     currentOrientation = null;
 };
 
-// const displayWordList = function (wordList) {
-//     let output = "";
-//     wordList.forEach(function (value) {
-//         output += "<div class=" + "words" + " id=" + `${value}` + ">";
-//         output += `${value}`;
-//         output += "</div>";
-//     });
-//     $("#wordList").append(output);
-// };
+const displayWordList = function (wordList) {
+    let output = "";
+    wordList.forEach(function (value) {
+        output += "<div class=" + "words" + " " + "uk-padding-large" + " id=" + `${value}` + ">";
+        output += `${value}`;
+        output += "</div>";
+    });
+    $("#wordList").append(output);
+};
 
 
 export { generateUIForPuzzle };

@@ -2,10 +2,14 @@ import * as puzzleUI from "./puzzleUI.js";
 
 const playPuzzleGame = (wordsAndSettings) => {
     const gameCanvas = document.querySelector("#container");
+    const logo = document.querySelector(".uk-logo");
+    const welcomeUser = document.querySelector("#welcomeUserContainer");
     wordsAndSettings.then((obj) => {
         const settings = {
             orientation: obj.settings.orientation
         }
+        logo.parentNode.removeChild(logo);
+        welcomeUser.parentNode.removeChild(welcomeUser);
         puzzleUI.generateUIForPuzzle(gameCanvas, obj.words, settings);
     });
 };

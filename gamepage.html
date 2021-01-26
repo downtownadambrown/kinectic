@@ -31,6 +31,7 @@
     </nav>
 </header>
 <section>
+    <!-- Welcome user and instructions container. -->
     <div class="uk-section uk-section-secondary uk-light" id="welcomeUserContainer">
         <div class="uk-container">
             <h3>Welcome <span id="welcomeUser"></span>,</h3>
@@ -49,11 +50,15 @@
                     </p>
                 </div>
             </div>
-
         </div>
     </div>
+    <!-- Word puzzle holder -->
     <div id="container"></div>
     <hr class="uk-divider-icon">
+    <!-- Word list holder -->
+    <div class="uk-column-1-2 uk-padding-large uk-text-center" id="wordList">
+    </div>
+    <!-- All Categories that a user can choose to play. -->
     <div class="uk-child-width-1-2@s uk-grid-match uk-padding-small" id="categories" uk-grid>
         <div>
             <div class="uk-card uk-card-default uk-card-hover uk-card-body">
@@ -93,7 +98,7 @@
         </div>
         <div>
             <div class="uk-card uk-card-default uk-card-hover uk-card-body">
-                <h3 class="uk-card-title">Game Of Thrones</h3>
+                <h3 class="uk-card-title">TV Shows</h3>
                 <h4 class="uk-heading-bullet">Difficulty</h4>
                 <ul uk-tab class="difficulty">
                     <li><a href="#">Easy</a></li>
@@ -129,6 +134,7 @@
         </div>
 
     </div>
+    <!-- All modals for the menu sandwich -->
     <div id="informationModal" class="uk-flex-top" uk-modal>
         <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
             <button class="uk-modal-close-default" type="button" uk-close></button>
