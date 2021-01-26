@@ -12,6 +12,7 @@ const generateUIForPuzzle = (htmlContainer, wordList, settings) => {
     drawPuzzle(htmlContainer, game.puzzle, wordList);
     addEventListenersToGrid();
     displayWordList(wordList);
+    startTimer();
 };
 
 const drawPuzzle = (el, puzzle, words) => {
@@ -180,6 +181,30 @@ const displayWordList = function (wordList) {
         output += "</div>";
     });
     $("#wordList").append(output);
+};
+
+
+const startTimer = function () {
+    const minutes = document.querySelector("#minutes");
+    const seconds = document.querySelector("#seconds");
+    let totalSeconds = 0;
+
+    setInterval(setTimeToElement, 1000);
+
+    function setTimeToElement() {
+        ++totalSeconds;
+        seconds.innerHTML = splitTimeValues(totalSeconds % 60);
+        minutes.innerHTML = splitTimeValues(parseInt(totalSeconds / 60));
+    }
+
+    function splitTimeValues(value) {
+        var valueString = value + "";
+        if (valueString.length < 2) {
+            return "0" + valueString;
+        } else {
+            return valueString;
+        }
+    }
 };
 
 
