@@ -190,17 +190,17 @@ const displayWordList = (wordList) => {
     wordListElement.innerHTML = output;
 };
 
+var interval;
 
-const startTimer = (stopTime) => {
-    console.log(stopTimer)
+function stop() {
+    clearInterval(interval);
+}
+
+const startTimer = () => {
     const minutes = document.querySelector("#minutes");
     const seconds = document.querySelector("#seconds");
-    const interval = setInterval(setTimeToElement, 1000);
-    const timerBollean = stopTime;
-    console.log(timerBollean)
-    if (timerBollean === false) {
-        stopTimer();
-    }
+    interval = setInterval(setTimeToElement, 1000);
+
     function setTimeToElement() {
 
         ++totalPlayedSeconds;
@@ -208,17 +208,14 @@ const startTimer = (stopTime) => {
         minutes.innerHTML = splitTimeValues(parseInt(totalPlayedSeconds / 60));
     }
 
-    function stopTimer() {
-        clearInterval(interval);
-    }
-
-    function splitTimeValues(value) {
-        var valueString = value + "";
+    const splitTimeValues = (value) => {
+        let valueString = value + "";
         if (valueString.length < 2) {
             return "0" + valueString;
         } else {
             return valueString;
         }
+
     }
 };
 
@@ -308,7 +305,7 @@ const saveCompletedGameToDatabase = async (score, totalPlayedSeconds) => {
 }
 
 const endGameModal = () => {
-    startTimer(false)
+
     let completionBonus = 0, timeBonus = 0;
     const elTimeCompleted = document.querySelector("#timeCompleted");
     const elScoreAchieved = document.querySelector("#scoreAchieved");
@@ -318,7 +315,7 @@ const endGameModal = () => {
     const elTotalScore = document.querySelector("#totalScore");
     const minutes = document.querySelector("#minutes");
     const seconds = document.querySelector("#seconds");
-
+    startTimer(false)
     if (difficultyLevel === "easy") {
         completionBonus = 10;
     } else if (difficultyLevel === "medium") {
