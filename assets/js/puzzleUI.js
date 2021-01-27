@@ -90,9 +90,7 @@ const selectingSquares = (targetElement) => {
         }
     }
     while (backToPreviousSquare < selectedGridItem.length) {
-        selectedGridItem[selectedGridItem.length - 1].forEach((el) => {
-            el.classList.remove("selected");
-        })
+        selectedGridItem[selectedGridItem.length - 1].classList.remove("selected");
         selectedGridItem.splice(backToPreviousSquare, 1);
         currentWord = currentWord.substr(0, currentWord.length - 1);
     }
@@ -178,7 +176,7 @@ const endGameTurn = function () {
     currentOrientation = null;
 };
 
-const displayWordList = function (wordList) {
+const displayWordList = (wordList) => {
     let output = "";
     const wordListElement = document.querySelector("#wordList");
     wordListElement.classList.add("uk-column-1-2");
@@ -193,22 +191,25 @@ const displayWordList = function (wordList) {
 };
 
 
-const startTimer = function (stopTimer) {
+const startTimer = (stopTime) => {
     console.log(stopTimer)
     const minutes = document.querySelector("#minutes");
     const seconds = document.querySelector("#seconds");
     const interval = setInterval(setTimeToElement, 1000);
-    const timerBollean = stopTimer;
+    const timerBollean = stopTime;
     console.log(timerBollean)
-
-
+    if (timerBollean === false) {
+        stopTimer();
+    }
     function setTimeToElement() {
-        if (timerBollean === false) {
-            clearInterval(interval);
-        }
+
         ++totalPlayedSeconds;
         seconds.innerHTML = splitTimeValues(totalPlayedSeconds % 60);
         minutes.innerHTML = splitTimeValues(parseInt(totalPlayedSeconds / 60));
+    }
+
+    function stopTimer() {
+        clearInterval(interval);
     }
 
     function splitTimeValues(value) {
@@ -308,30 +309,47 @@ const saveCompletedGameToDatabase = async (score, totalPlayedSeconds) => {
 
 const endGameModal = () => {
     startTimer(false)
-    let bonus = 0;
+    let completionBonus = 0, timeBonus = 0;
     const elTimeCompleted = document.querySelector("#timeCompleted");
     const elScoreAchieved = document.querySelector("#scoreAchieved");
-    const elBonusAmount = document.querySelector("#bonusAmount");
-    const elBonusCollected = document.querySelector("#bonusCollected");
+    const elTimeBonusAmount = document.querySelector("#timeBonusAmount");
+    const elCompletionlBonusAmount = document.querySelector("#completionBonusAmount");
+    const elTotalBonusCollected = document.querySelector("#totalBonusCollected");
     const elTotalScore = document.querySelector("#totalScore");
     const minutes = document.querySelector("#minutes");
     const seconds = document.querySelector("#seconds");
 
     if (difficultyLevel === "easy") {
-        bonus = 100;
+        completionBonus = 10;
     } else if (difficultyLevel === "medium") {
-        bonus = 200;
+        completionBonus = 20;
     } else if (difficultyLevel === "hard") {
-        bonus = 300;
+        completionBonus = 30;
+    }
+
+    if (totalPlayedSeconds <= 60 && difficultyLevel === "easy") {
+        timeBonus = 50;
+    } else if (totalPlayedSeconds <= 120 && difficultyLevel === "medium") {
+        timeBonus = 150;
+    } else if (totalPlayedSeconds <= 180 && difficultyLevel === "hard") {
+        timeBonus = 200;
     }
 
     elTimeCompleted.innerText = minutes.innerText + ":" + seconds.innerText;
     elScoreAchieved.innerText = score.toString(10);
-    elBonusAmount.innerText = bonus.toString(10);
-    elBonusCollected.innerText = bonus.toString(10);
-    elTotalScore.innerText = (bonus + score).toString(10);
+    elTimeBonusAmount.innerText = timeBonus.toString(10);
+    elCompletionlBonusAmount.innerText = completionBonus.toString(10);
+    elTotalBonusCollected.innerText = (timeBonus + completionBonus).toString(10);
+    elTotalScore.innerText = (timeBonus + completionBonus + score).toString(10);
+
     UIkit.modal("#endOfGameModal").show();
+    UIkit.util.on('#endOfGameModal', 'click', function (e) {
+        e.preventDefault();
+        e.target.blur();
+        location.reload();
+    });
 }
+
 
 
 
