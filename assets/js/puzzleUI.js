@@ -24,7 +24,7 @@ const addTimerAndScoreUI = () => {
     const timerAndScore = document.querySelector("#navBarTimerAndScore");
     let output = "";
     output += `<li>`;
-    output += `<label id="timeElement">` + `Timer:` + `<label id="minutes">` + `00` + `</label>` + `:` + `<label id="seconds">` + `00` + `  </label>` + `</label >`;
+    output += `<label id="timeElement">` + `Timer: ` + `<label id="minutes">` + `00` + `</label>` + `:` + `<label id="seconds">` + `00` + `  </label>` + `</label >`;
     output += `</li>`;
     output += `<li>`;
     output += `<label class="uk-margin-left" id = "scoreElement" > Score: <label id="score">0</label></label >`;

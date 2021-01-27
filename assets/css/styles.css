@@ -47,11 +47,7 @@
   color: green;
 
 }
-
-body{
-  user-select: none; 
-}
-.uk-navbar{
+.uk-navbar-container{
     background-color: black;
 }
 
@@ -60,6 +56,9 @@ body{
 }
 
 body{
+    user-select: none;
     background-color: whitesmoke;
+    font-family: 'Balsamiq Sans', cursive;
+    letter-spacing: 2px;
 }
 
