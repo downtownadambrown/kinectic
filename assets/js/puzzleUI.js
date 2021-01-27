@@ -131,10 +131,11 @@ const mouseMovement = function (event) {
 };
 
 const touchMovement = function (event) {
-    let xPos = event.originalEvent.touches[0].pageX;
-    let yPos = event.originalEvent.touches[0].pageY;
-    let targetElement = document.elementFromPoint(xPos, yPos);
-    selectingSquares(targetElement);
+    let xPos = event.touches[0].pageX;
+    let yPos = event.touches[0].pageY;
+    let target = document.elementFromPoint(xPos, yPos);
+    console.log(target)
+    selectingSquares(target);
 };
 
 const playGameTurn = function (square) {
