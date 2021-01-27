@@ -134,7 +134,7 @@ const touchMovement = function (event) {
     let xPos = event.originalEvent.touches[0].pageX;
     let yPos = event.originalEvent.touches[0].pageY;
     let targetElement = document.elementFromPoint(xPos, yPos);
-    select(targetElement);
+    selectingSquares(targetElement);
 };
 
 const playGameTurn = function (square) {
