@@ -231,31 +231,71 @@ const addScore = (difficultyLevel) => {
 
 };
 
-const saveCompletedGameToDatabase = (score, totalPlayedSeconds) => {
-    console.log(score, totalPlayedSeconds);
-      const res = axios
-        .post('https://api.kinectic.io/leaderboards', {
-            score: firstName,
-            time: lastName,
-            username: userName
+const saveCompletedGameToDatabase = async (score, totalPlayedSeconds) => {
+    
+    /**
+     * Get user ID locally and 
+     */
+    const userID = localStorage.getItem("id");
+    const userLeaderboard = JSON.stringify({
+        score: score,
+        time: totalPlayedSeconds,
+        username: userID,
+    })
+
+    /**
+     * Add user leaderboard
+     */
+    const response = await axios
+        .post('https://api.kinectic.io/leaderboards', userLeaderboard, {
+            headers: {
+                // Overwrite Axios's automatically set Content-Type
+                'Content-Type': 'application/json'
+            }
         })
         .then(response => {
             // Handle success.
-            //console.log('Registering User!');
-            //console.log('User profile', response.data.user);
+            console.log('Leaderboards', response.data);
             return response.data;
         })
         .catch(error => {
             // Handle error.
-            //console.log('An error occurred, whilst registering a user.', error.response);
+            console.log('An error occurred, whilst registering a user.', error.response);
             return error.response;
         });
 
-    return res;
+    /**
+     * Get all user existing leaderboards
+     */
+    const allUserLeaderboards = response.username.leaderboards;
+    allUserLeaderboards.push(response.id)
+    
+    /**
+     * pre-serialize all user leaderboards 
+     */
+    const leaderBoardJSON = JSON.stringify({
+        leaderboards: allUserLeaderboards,
+    });
 
+    /**
+     * Update user leaderboard
+     */
+    axios
+        .put('https://api.kinectic.io/users/' + userID, leaderBoardJSON, {
+            headers: {
+                'Content-Type': 'application/json',
+                //'Authorization': token
+            }
+        })
+        .then(response => {
+            console.log('User data', response.data);
+            return response.data;
+        })
+        .catch(error => {
+            // Handle error.
+            console.log('An error occurred, whilst registering a user.', error.response);
+            return error.response;
+        });
 }
-
-saveCompletedGameToDatabase(300, 300, "noxx123")
-
 
 export { generateUIForPuzzle };
