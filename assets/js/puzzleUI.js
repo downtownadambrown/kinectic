@@ -165,7 +165,8 @@ const endGameTurn = function () {
             document.querySelectorAll(".grid-item").forEach((el) => {
                 el.classList.add("complete")
             });;
-            saveCompletedGameToDatabase(score, totalPlayedSeconds)
+            saveCompletedGameToDatabase(score, totalPlayedSeconds);
+            endGameModal();
         }
     });
     document.querySelectorAll(".selected").forEach((el) => {
@@ -232,7 +233,7 @@ const addScore = (difficultyLevel) => {
 };
 
 const saveCompletedGameToDatabase = async (score, totalPlayedSeconds) => {
-    
+
     /**
      * Get user ID locally and 
      */
@@ -269,7 +270,7 @@ const saveCompletedGameToDatabase = async (score, totalPlayedSeconds) => {
      */
     const allUserLeaderboards = response.username.leaderboards;
     allUserLeaderboards.push(response.id)
-    
+
     /**
      * pre-serialize all user leaderboards 
      */
@@ -297,5 +298,27 @@ const saveCompletedGameToDatabase = async (score, totalPlayedSeconds) => {
             return error.response;
         });
 }
+
+const endGameModal = () => {
+    const bonus = 100;
+    const elTimeCompleted = document.querySelector("#timeCompleted");
+    const elScoreAchieved = document.querySelector("#scoreAchieved");
+    const elBonusAmount = document.querySelector("#bonusAmount");
+    const elBonusCollected = document.querySelector("#bonusCollected");
+    const elTotalScore = document.querySelector("#totalScore");
+    const minutes = document.querySelector("#minutes");
+    const seconds = document.querySelector("#seconds");
+    elTimeCompleted.innerText = minutes.innerText + ":" + seconds.innerText;
+    elScoreAchieved.innerText = toString(score);
+    elBonusAmount.innerText = toString(bonus);
+    elBonusCollected.innerText = toString(bonus);
+    elTotalScore.innerText = toString(bonus + score);
+    UIkit.modal("#endOfGameModal").show();
+
+}
+setTimeout(() => {
+    endGameModal()
+}, 500);
+
 
 export { generateUIForPuzzle };

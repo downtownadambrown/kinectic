@@ -11,7 +11,7 @@
                     <label>Timer: <label id="minutes">0</label>:<label id="seconds">00</label></label>
                 </li>
                 <li>
-                    <label class="uk-margin-left">Score: <label id="score">00</label></label>
+                    <label class="uk-margin-left">Score: <label id="score">0</label></label>
                 </li>
             </ul>
         </div>
@@ -144,8 +144,26 @@
     <div id="endOfGameModal" class="uk-flex-top" uk-modal>
         <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
             <button class="uk-modal-close-default" type="button" uk-close></button>
-            
-
+            <div>
+                <div class="uk-card uk-card-default">
+                    <div class="uk-card-body">
+                        <h3 class="uk-card-title">Game Completed</h3>
+                        <p>Well done! You have completed the game, below you will see a game summary:
+                        </p>
+                        <ul class="uk-list">
+                            <li>Puzzle completed in <span id="timeCompleted">0</span></li>
+                            <li>Score Achieved <span id="scoreAchieved">0</span></li>
+                            <li>Bonus Amount: <span id="bonusAmount">100</span></li>
+                            <li>Bonus Collected: <span id="bonusCollected">0</span></li>
+                            <li><hr class="uk-divider-icon"></li>                            
+                            <li>Total Score: <span id="totalScore">0</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="uk-margin">
+                <button class="uk-button uk-button-primary" id="login">Login</button>
+            </div>
         </div>
     </div>
     <div id="informationModal" class="uk-flex-top" uk-modal>
