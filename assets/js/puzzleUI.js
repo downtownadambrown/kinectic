@@ -193,12 +193,19 @@ const displayWordList = function (wordList) {
 };
 
 
-const startTimer = function () {
+const startTimer = function (stopTimer) {
+    console.log(stopTimer)
     const minutes = document.querySelector("#minutes");
     const seconds = document.querySelector("#seconds");
-    setInterval(setTimeToElement, 1000);
+    const interval = setInterval(setTimeToElement, 1000);
+    const timerBollean = stopTimer;
+    console.log(timerBollean)
+
 
     function setTimeToElement() {
+        if (timerBollean === false) {
+            clearInterval(interval);
+        }
         ++totalPlayedSeconds;
         seconds.innerHTML = splitTimeValues(totalPlayedSeconds % 60);
         minutes.innerHTML = splitTimeValues(parseInt(totalPlayedSeconds / 60));
@@ -300,7 +307,8 @@ const saveCompletedGameToDatabase = async (score, totalPlayedSeconds) => {
 }
 
 const endGameModal = () => {
-    const bonus = 100;
+    startTimer(false)
+    let bonus = 0;
     const elTimeCompleted = document.querySelector("#timeCompleted");
     const elScoreAchieved = document.querySelector("#scoreAchieved");
     const elBonusAmount = document.querySelector("#bonusAmount");
@@ -308,17 +316,23 @@ const endGameModal = () => {
     const elTotalScore = document.querySelector("#totalScore");
     const minutes = document.querySelector("#minutes");
     const seconds = document.querySelector("#seconds");
-    elTimeCompleted.innerText = minutes.innerText + ":" + seconds.innerText;
-    elScoreAchieved.innerText = toString(score);
-    elBonusAmount.innerText = toString(bonus);
-    elBonusCollected.innerText = toString(bonus);
-    elTotalScore.innerText = toString(bonus + score);
-    UIkit.modal("#endOfGameModal").show();
 
+    if (difficultyLevel === "easy") {
+        bonus = 100;
+    } else if (difficultyLevel === "medium") {
+        bonus = 200;
+    } else if (difficultyLevel === "hard") {
+        bonus = 300;
+    }
+
+    elTimeCompleted.innerText = minutes.innerText + ":" + seconds.innerText;
+    elScoreAchieved.innerText = score.toString(10);
+    elBonusAmount.innerText = bonus.toString(10);
+    elBonusCollected.innerText = bonus.toString(10);
+    elTotalScore.innerText = (bonus + score).toString(10);
+    UIkit.modal("#endOfGameModal").show();
 }
-setTimeout(() => {
-    endGameModal()
-}, 500);
+
 
 
 export { generateUIForPuzzle };
