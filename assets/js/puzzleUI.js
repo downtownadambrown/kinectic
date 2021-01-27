@@ -7,7 +7,8 @@ let game, startGridItem,
     wordList = [],
     score = 0,
     difficultyLevel,
-    totalPlayedSeconds = 0;
+    totalPlayedSeconds = 0,
+    interval;
 
 const generateUIForPuzzle = (htmlContainer, wordList, settings) => {
     difficultyLevel = settings.level;
@@ -190,9 +191,7 @@ const displayWordList = (wordList) => {
     wordListElement.innerHTML = output;
 };
 
-var interval;
-
-function stop() {
+function stopTimer() {
     clearInterval(interval);
 }
 
@@ -315,7 +314,7 @@ const endGameModal = () => {
     const elTotalScore = document.querySelector("#totalScore");
     const minutes = document.querySelector("#minutes");
     const seconds = document.querySelector("#seconds");
-    startTimer(false)
+    stopTimer();
     if (difficultyLevel === "easy") {
         completionBonus = 10;
     } else if (difficultyLevel === "medium") {
