@@ -19,17 +19,20 @@
             <ul class="uk-navbar-nav">
                 <li>
                     <a href="#"><i class="fas fa-bars" style="font-size:38px;"></i></a>
-                    <div class="uk-navbar-dropdown">
-                        <ul class="uk-nav uk-navbar-dropdown-nav uk-nav-center">
-                            <li><a href="#informationModal" style="font-size:38px;" uk-toggle><i
-                                        class="fas fa-info"></i></a></li>
-                            <li><a href="#dashboardModal" style="font-size:38px;" uk-toggle><i
-                                        class="fas fa-tachometer-alt"></i></a></li>
-                            <li><a href="#settingsModal" style="font-size:38px;" uk-toggle><i
-                                        class="fas fa-cog"></i></a></li>
-                            <li><a href="#" id="logOut" style="font-size:38px;"><i class="fas fa-sign-out-alt"></i></a>
-                            </li>
-                        </ul>
+                    <div uk-dropdown="pos: bottom-left">
+                        <div class="uk-navbar-dropdown">
+                            <ul class="uk-nav uk-navbar-dropdown-nav uk-nav-center">
+                                <li><a href="#informationModal" style="font-size:38px;" uk-toggle><i
+                                            class="fas fa-info"></i></a></li>
+                                <li><a href="#dashboardModal" style="font-size:38px;" uk-toggle><i
+                                            class="fas fa-tachometer-alt"></i></a></li>
+                                <li><a href="#settingsModal" style="font-size:38px;" uk-toggle><i
+                                            class="fas fa-cog"></i></a></li>
+                                <li><a href="#" id="logOut" style="font-size:38px;"><i
+                                            class="fas fa-sign-out-alt"></i></a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </li>
             </ul>
@@ -158,7 +161,7 @@
                             <li>Total Bonus Collected: <span id="totalBonusCollected">0</span></li>
                             <li>
                                 <hr class="uk-divider-icon">
-                            </li>                            
+                            </li>
                             <li>Total End Score: <span id="totalScore">0</span></li>
                         </ul>
                     </div>
