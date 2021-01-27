@@ -109,4 +109,5 @@ async function getCategoryWords(category) {
         });
     return res;
 }
+
 export { puzzleWordsAndSettings, playPuzzleGame, splitAndJoinCategory };
