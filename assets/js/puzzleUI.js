@@ -8,10 +8,12 @@ let game, startGridItem,
     score = 0,
     difficultyLevel,
     totalPlayedSeconds = 0,
-    interval;
+    interval,
+    category;
 
 const generateUIForPuzzle = (htmlContainer, wordList, settings) => {
     difficultyLevel = settings.level;
+    category = settings.category;
     game = new puzzleLogic.PuzzleLogic(wordList, settings);
     drawPuzzle(htmlContainer, game.puzzle, wordList);
     addTimerAndScoreUI();
@@ -260,6 +262,7 @@ const saveCompletedGameToDatabase = async (score, totalPlayedSeconds) => {
     const userLeaderboard = JSON.stringify({
         score: score,
         time: totalPlayedSeconds,
+        category: category,
         username: userID,
     })
 

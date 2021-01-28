@@ -29,6 +29,7 @@ setTimeout(() => {
 
 const loadLoggedInContent = () => {
     $("#app-root").load("gamepage.html");
+    displayDashBoardContent();
 }
 
 const loadLoggedOutContent = () => {
@@ -71,6 +72,32 @@ const capitalizeFirstLetter = (firstName) => {
     return capitalizedName;
 }
 
+const displayDashBoardContent = () => {
+    let allScores = 0, user = "", allTime = 0, category = "";
+    const allUserPerformance = [];
+    const response = puzzlePlay.getDashboards();
+    response.then((item) => {
+        item.forEach(element => {
+            const singleUserPerformance = {
+                username: element.username.username,
+                allScores: element.score,
+                allTime: element.time,
+                category: element.category,
+            }
+            allUserPerformance.push(singleUserPerformance)
+        });
+        // $("#dashboardModal tbody").append(
+        //     "<tr>" +
+        //     "<td>" + element.username.username + "</td>" +
+        //     "<td>" + element.score + "</td>" +
+        //     "<td>" + element.time + "</td>" +
+        //     "<td>" + element.category + "</td>"
+        //     + "</tr>"
+        // );
+    });
+    console.log(allUserPerformance)
+    allUserPerformance.filter((item) => {
+        console.log(item)
+    });
 
-
-
+}

@@ -110,4 +110,21 @@ async function getCategoryWords(category) {
     return res;
 }
 
-export { puzzleWordsAndSettings, playPuzzleGame, splitAndJoinCategory };
+async function getDashboards() {
+    const res = await axios
+        .get('https://api.kinectic.io/leaderboards', {})
+        .then(response => {
+            // Handle success.
+            //console.log('Username Check!');
+            //console.log('Username Checked Response', response.data);
+            return response.data;
+        })
+        .catch(error => {
+            // Handle error.
+            console.log('An error occurred, whilst checking username.', error.response);
+            return error.response;
+        });
+    return res;
+}
+
+export { puzzleWordsAndSettings, playPuzzleGame, splitAndJoinCategory, getDashboards };
