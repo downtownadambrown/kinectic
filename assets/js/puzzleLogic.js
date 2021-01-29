@@ -201,7 +201,7 @@ class PuzzleLogic {
             maxGridGrowth: 20,
             maxGridGenerationAttempts: 20,
             fillEmptySquareSpaces: true,
-            optionalOverlap: false,
+            optionalOverlap: true,
         };
         console.log(settings);
         return settings;
@@ -376,8 +376,7 @@ class PuzzleLogic {
             gridHeight = settings.gridHeight,
             gridWidth = settings.gridWidth,
             wordLength = word.length,
-            maxWordOverlap
-                = 0;
+            maxWordOverlap = 0;
         for (let i = 0, len = settings.orientations.length; i < len; i++) {
             let orientation = settings.orientations[i],
                 checkPossibleOrientation = this.getCheckedOrientations([orientation]),
@@ -413,8 +412,8 @@ class PuzzleLogic {
                 }
             }
         }
-        return settings.preferWordOverlap
-            ? removeLocations(locations, maxOverlap)
+        return settings.optionalOverlap
+            ? this.removeLocations(locations, maxWordOverlap)
             : locations;
     };
 

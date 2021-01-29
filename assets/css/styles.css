@@ -64,6 +64,13 @@ body{
     overscroll-behavior-x: contain;
 }
 
+.uk-list li{
+    font-weight: 600;
+}
+.uk-list span{
+    font-weight: 400;
+}
+
 @media only screen and (max-width: 450px) {
   #container {
     font-size: small;
