@@ -10,9 +10,10 @@
   grid-template-rows: repeat(var(--grid-rows), 1fr);
   grid-template-columns: repeat(var(--grid-cols), 1fr);
   border: 1px solid #ddd;
-  font-family: 'Balsamiq Sans', cursive;
   font-size: larger;
   overflow-y: hidden;
+  background-color: black;
+
 
 }
 
@@ -23,19 +24,16 @@
 }
 
 #container .selected {
-  background-color:lightgray;
+  color:white;
   text-transform: uppercase;
 }
 
 #container .found {
-  background-color:lightblue;
   color:green;
-  font-weight: 600;
+  font-weight: 800;
+  transition: color 2000ms ease-in;
 }
-#container .found:hover {
-  background-color:lightblue;
 
-}
 #container .solved {
   background-color: purple;
   color: white;
@@ -46,6 +44,8 @@
 .wordFound {
   text-decoration: line-through;
   color: green;
+   
+  transition: color 2000ms ease-in;
 
 }
 .uk-navbar-container{
@@ -55,10 +55,16 @@
 .uk-text-danger{
     margin-top: 25px
 }
+#wordList {
+    background-color: black;
+}
 
+#timeElement {
+    padding-left: 20px;
+}
 body{
     user-select: none;
-    background-color: whitesmoke;
+    background-color: lightcyan;
     font-family: 'Balsamiq Sans', cursive;
     letter-spacing: 2px;
     overscroll-behavior-x: contain;
