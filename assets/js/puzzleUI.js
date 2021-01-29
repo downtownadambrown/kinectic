@@ -181,7 +181,6 @@ const endGameTurn = function () {
             document.querySelectorAll(".grid-item").forEach((el) => {
                 el.classList.add("complete")
             });;
-            saveCompletedGameToDatabase(score, totalPlayedSeconds);
             endGameModal();
         }
     });
@@ -258,12 +257,13 @@ const saveCompletedGameToDatabase = async (score, totalPlayedSeconds) => {
     /**
      * Get user ID locally and 
      */
+    console.log(score)
     const userID = localStorage.getItem("id");
     const userLeaderboard = JSON.stringify({
         score: score,
         time: totalPlayedSeconds,
         category: category,
-        username: userID,
+        user: userID,
     })
 
     /**
@@ -279,39 +279,6 @@ const saveCompletedGameToDatabase = async (score, totalPlayedSeconds) => {
         .then(response => {
             // Handle success.
             console.log('Leaderboards', response.data);
-            return response.data;
-        })
-        .catch(error => {
-            // Handle error.
-            console.log('An error occurred, whilst registering a user.', error.response);
-            return error.response;
-        });
-
-    /**
-     * Get all user existing leaderboards
-     */
-    const allUserLeaderboards = response.username.leaderboards;
-    allUserLeaderboards.push(response.id)
-
-    /**
-     * pre-serialize all user leaderboards 
-     */
-    const leaderBoardJSON = JSON.stringify({
-        leaderboards: allUserLeaderboards,
-    });
-
-    /**
-     * Update user leaderboard
-     */
-    axios
-        .put('https://api.kinectic.io/users/' + userID, leaderBoardJSON, {
-            headers: {
-                'Content-Type': 'application/json',
-                //'Authorization': token
-            }
-        })
-        .then(response => {
-            console.log('User data', response.data);
             return response.data;
         })
         .catch(error => {
@@ -355,6 +322,7 @@ const endGameModal = () => {
     elCompletionlBonusAmount.innerText = completionBonus.toString(10);
     elTotalBonusCollected.innerText = (timeBonus + completionBonus).toString(10);
     elTotalScore.innerText = (timeBonus + completionBonus + score).toString(10);
+    saveCompletedGameToDatabase((timeBonus + completionBonus + score), totalPlayedSeconds);
 
     UIkit.modal("#endOfGameModal").show();
     UIkit.util.on('#endOfGameModal', 'click', function (e) {

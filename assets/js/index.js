@@ -29,7 +29,7 @@ setTimeout(() => {
 
 const loadLoggedInContent = () => {
     $("#app-root").load("gamepage.html");
-    displayDashBoardContent();
+    displayLeaderBoardContent();
 }
 
 const loadLoggedOutContent = () => {
@@ -72,32 +72,56 @@ const capitalizeFirstLetter = (firstName) => {
     return capitalizedName;
 }
 
-const displayDashBoardContent = () => {
-    let allScores = 0, user = "", allTime = 0, category = "";
-    const allUserPerformance = [];
-    const response = puzzlePlay.getDashboards();
-    response.then((item) => {
-        item.forEach(element => {
-            const singleUserPerformance = {
-                username: element.username.username,
-                allScores: element.score,
-                allTime: element.time,
-                category: element.category,
-            }
-            allUserPerformance.push(singleUserPerformance)
-        });
-        // $("#dashboardModal tbody").append(
-        //     "<tr>" +
-        //     "<td>" + element.username.username + "</td>" +
-        //     "<td>" + element.score + "</td>" +
-        //     "<td>" + element.time + "</td>" +
-        //     "<td>" + element.category + "</td>"
-        //     + "</tr>"
-        // );
-    });
-    console.log(allUserPerformance)
-    allUserPerformance.filter((item) => {
-        console.log(item)
-    });
+const getLeaderBoardContent = async () => {
+    const response = puzzlePlay.getUsersLeaderboards();
+    const allUserPerformance = await response.then((user) => {
+        let userLeaderboards = user.map((user) => {
+            return { username: user.username, leaderboard: user.leaderboards }
+        }).map((user) => {
+            let addedLeaderBoardPerUser = {
+                user: user.username,
 
+                score: user.leaderboard.map((item) => {
+                    return item.score;
+                }).reduce((acc, result) => { return acc + result }),
+
+                time: user.leaderboard.map((item) => {
+                    return item.time;
+                }).reduce((acc, result) => { return acc + result }),
+
+                category: user.leaderboard.map((item) => {
+                    return item.category;
+                }).reduce((acc, result) => {
+                    return acc.includes(result) ? acc : acc + ", " + result
+                })
+            };
+            return addedLeaderBoardPerUser
+        })
+        return userLeaderboards;
+    });
+    return allUserPerformance;
 }
+
+const displayLeaderBoardContent = () => {
+    const leaderboardsByUser = getLeaderBoardContent();
+    leaderboardsByUser.then((element) => {
+        element.map((element) => {
+            console.log(element.time)
+            const hours = Math.floor(element.time / 60 / 60);
+            const minutes = Math.floor(element.time / 60) - (hours * 60);
+            const seconds = element.time % 60;
+            console.log(`${hours}:${minutes}:${seconds}`)
+
+            $("#dashboardModal tbody").append(
+                "<tr>" +
+                "<td>" + element.user + "</td>" +
+                "<td>" + element.score + "</td>" +
+                "<td>" + `${hours}:${minutes}:${seconds}` + "</td>" +
+                "<td>" + element.category + "</td>"
+                + "</tr>"
+            );
+        })
+    })
+}
+
+

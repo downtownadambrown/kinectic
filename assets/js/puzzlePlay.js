@@ -110,9 +110,9 @@ async function getCategoryWords(category) {
     return res;
 }
 
-async function getDashboards() {
+async function getUsersLeaderboards() {
     const res = await axios
-        .get('https://api.kinectic.io/leaderboards', {})
+        .get('https://api.kinectic.io/users', {})
         .then(response => {
             // Handle success.
             //console.log('Username Check!');
@@ -127,4 +127,4 @@ async function getDashboards() {
     return res;
 }
 
-export { puzzleWordsAndSettings, playPuzzleGame, splitAndJoinCategory, getDashboards };
+export { puzzleWordsAndSettings, playPuzzleGame, splitAndJoinCategory, getUsersLeaderboards };
