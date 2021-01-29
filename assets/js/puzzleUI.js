@@ -42,7 +42,7 @@ const drawPuzzle = (el, puzzle, words) => {
     }
     for (let i = 0, height = puzzle.length; i < height; i++) {
         el.style.setProperty("--grid-rows", puzzle.length);
-        //el.classList.add("uk-padding-small")
+        el.classList.add("uk-padding-large")
         let row = puzzle[i];
         for (let j = 0, width = row.length; j < width; j++) {
             el.style.setProperty("--grid-cols", row.length);
