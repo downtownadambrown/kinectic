@@ -317,11 +317,11 @@ const endGameModal = () => {
     }
 
     elTimeCompleted.innerText = minutes.innerText + ":" + seconds.innerText;
-    elScoreAchieved.innerText = score.toString(10);
-    elTimeBonusAmount.innerText = timeBonus.toString(10);
-    elCompletionlBonusAmount.innerText = completionBonus.toString(10);
-    elTotalBonusCollected.innerText = (timeBonus + completionBonus).toString(10);
-    elTotalScore.innerText = (timeBonus + completionBonus + score).toString(10);
+    elScoreAchieved.innerText = score.toString(10) + " points";
+    elTimeBonusAmount.innerText = timeBonus.toString(10) + " points";
+    elCompletionlBonusAmount.innerText = completionBonus.toString(10) + " points";
+    elTotalBonusCollected.innerText = (timeBonus + completionBonus).toString(10) + " points";
+    elTotalScore.innerText = (timeBonus + completionBonus + score).toString(10) + " points";
     saveCompletedGameToDatabase((timeBonus + completionBonus + score), totalPlayedSeconds);
 
     UIkit.modal("#endOfGameModal").show();
