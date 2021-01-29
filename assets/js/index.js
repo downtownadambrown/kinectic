@@ -105,18 +105,16 @@ const getLeaderBoardContent = async () => {
 const displayLeaderBoardContent = () => {
     const leaderboardsByUser = getLeaderBoardContent();
     leaderboardsByUser.then((element) => {
+        element.sort((a, b) => (a.score < b.score) ? 1 : -1)
         element.map((element) => {
             console.log(element.time)
-            const hours = Math.floor(element.time / 60 / 60);
-            const minutes = Math.floor(element.time / 60) - (hours * 60);
-            const seconds = element.time % 60;
-            console.log(`${hours}:${minutes}:${seconds}`)
-
+            const played = calculatePlayedSeconds(element.time);
+            console.log(played)
             $("#dashboardModal tbody").append(
                 "<tr>" +
                 "<td>" + element.user + "</td>" +
                 "<td>" + element.score + "</td>" +
-                "<td>" + `${hours}:${minutes}:${seconds}` + "</td>" +
+                "<td>" + `${played.hours}:${played.minutes}:${played.seconds}` + "</td>" +
                 "<td>" + element.category + "</td>"
                 + "</tr>"
             );
@@ -124,4 +122,20 @@ const displayLeaderBoardContent = () => {
     })
 }
 
+const calculatePlayedSeconds = (element) => {
+    const hours = splitTimeValues(Math.floor(element / 60 / 60))
+    const minutes = splitTimeValues(Math.floor(element / 60) - (hours * 60));
+    const seconds = splitTimeValues(element % 60);
+    return { hours: hours, minutes: minutes, seconds: seconds }
+}
+
+const splitTimeValues = (value) => {
+    let valueString = value + "";
+    if (valueString.length < 2) {
+        return "0" + valueString;
+    } else {
+        return valueString;
+    }
+
+}
 
