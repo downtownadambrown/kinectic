@@ -33,7 +33,7 @@ const loadLoggedInContent = () => {
     setTimeout(() => {
         getResolution();
         disableDifficulty();
-    }, 500);
+    }, 1000);
 
 }
 
@@ -56,14 +56,10 @@ const disableDifficulty = () => {
         })
     } else if (screenSize === "medium") {
         disableDifficulty.forEach((item) => {
-            if (item.innerText === "MEDIUM") {
-                item.classList.add("uk-disabled")
-
-            } else if (item.innerText === "HARD") {
+            if (item.innerText === "HARD") {
                 item.classList.add("uk-disabled")
             }
         })
-
     } else {
         disableDifficulty.forEach((item) => {
             item.classList.remove("uk-disabled");
@@ -75,12 +71,17 @@ function getResolution() {
     const username = localStorage.getItem("firstname");
     if (window.outerWidth < 600) {
         localStorage.setItem("screenSize", "small");
-        UIkit.modal.alert(`Hello ${username}, due to the screen size Medium and Hard difficulties has been disabled.`).then(function () {
-        });
+        if (!localStorage.getItem("screenSize")) {
+            UIkit.modal.alert(`Hello ${username}, due to the screen size Medium and Hard difficulties has been disabled.`).then(function () {
+            });
+        }
     } else if (window.outerWidth >= 601 && window.outerWidth <= 765) {
         localStorage.setItem("screenSize", "medium");
-        UIkit.modal.alert(`Hello ${username}, due to the screen size Hard difficulties has been disabled.`).then(function () {
-        });
+        if (!localStorage.getItem("screenSize")) {
+            UIkit.modal.alert(`Hello ${username}, due to the screen size Hard difficulties has been disabled.`).then(function () {
+            });
+        }
+    } else {
         if (localStorage.getItem("screenSize")) {
             localStorage.removeItem("screenSize");
         }
