@@ -51,6 +51,7 @@
 
 #wordList {
     background-color: black;
+    padding: 10px 10px 10px 10px;
 }
 
 #timeElement {
@@ -62,6 +63,8 @@ body{
     font-family: 'Balsamiq Sans', cursive;
     letter-spacing: 2px;
     overscroll-behavior-x: contain;
+    overscroll-behavior-y: contain;
+
 }
 
 .uk-list li{
