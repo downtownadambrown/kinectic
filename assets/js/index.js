@@ -7,6 +7,7 @@ window.addEventListener('load', () => {
         setTimeout(() => {
             welcomeUser();
             logOutUser();
+            getResolution();
         }, 300);
     } else {
         loadLoggedOutContent();
@@ -30,11 +31,6 @@ setTimeout(() => {
 const loadLoggedInContent = () => {
     $("#app-root").load("gamepage.html");
     displayLeaderBoardContent();
-    setTimeout(() => {
-        getResolution();
-        disableDifficulty();
-    }, 1000);
-
 }
 
 const loadLoggedOutContent = () => {
@@ -69,18 +65,21 @@ const disableDifficulty = () => {
 
 function getResolution() {
     const username = localStorage.getItem("firstname");
-    if (window.outerWidth < 600) {
-        localStorage.setItem("screenSize", "small");
-        if (!localStorage.getItem("screenSize")) {
+    if (window.outerWidth < 500) {
+        if (!(localStorage.getItem("screenSize") === "small")) {
             UIkit.modal.alert(`Hello ${username}, due to the screen size Medium and Hard difficulties has been disabled.`).then(function () {
             });
         }
-    } else if (window.outerWidth >= 601 && window.outerWidth <= 765) {
-        localStorage.setItem("screenSize", "medium");
-        if (!localStorage.getItem("screenSize")) {
+        localStorage.setItem("screenSize", "small");
+        disableDifficulty()
+    } else if (window.outerWidth >= 501 && window.outerWidth <= 765) {
+        console.log(window.outerWidth)
+        if (!(localStorage.getItem("screenSize") === "medium")) {
             UIkit.modal.alert(`Hello ${username}, due to the screen size Hard difficulties has been disabled.`).then(function () {
             });
         }
+        localStorage.setItem("screenSize", "medium");
+        disableDifficulty()
     } else {
         if (localStorage.getItem("screenSize")) {
             localStorage.removeItem("screenSize");
