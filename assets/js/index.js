@@ -107,9 +107,7 @@ const displayLeaderBoardContent = () => {
     leaderboardsByUser.then((element) => {
         element.sort((a, b) => (a.score < b.score) ? 1 : -1)
         element.map((element) => {
-            console.log(element.time)
             const played = calculatePlayedSeconds(element.time);
-            console.log(played)
             $("#dashboardModal tbody").append(
                 "<tr>" +
                 "<td>" + element.user + "</td>" +

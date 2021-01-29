@@ -12,7 +12,7 @@
   border: 1px solid #ddd;
   font-family: 'Balsamiq Sans', cursive;
   font-size: larger;
-overflow-y: hidden;
+  overflow-y: hidden;
 
 }
 
@@ -61,7 +61,12 @@ body{
     background-color: whitesmoke;
     font-family: 'Balsamiq Sans', cursive;
     letter-spacing: 2px;
+    overscroll-behavior-x: contain;
+}
 
-overscroll-behavior-y: contain;
+@media only screen and (max-width: 450px) {
+  #container {
+    font-size: small;
+  }
 }
 
