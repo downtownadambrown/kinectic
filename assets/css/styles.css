@@ -74,6 +74,30 @@ body{
     color:  #9b4193 ;
 }
 
+.uk-progress {
+    border: 3px solid rgb(218,104,235) ;
+}
+
+.uk-progress.progress-purple::-webkit-progress-value {
+   
+    background: rgb(218,104,235);
+    background: radial-gradient(circle, rgba(218,104,235,1) 0%, rgba(155,62,177,1) 61%, rgba(154,45,186,1) 100%);
+}
+
+.uk-progress.progress-purple::-moz-progress-bar {
+    background: rgb(218,104,235);
+    background: radial-gradient(circle, rgba(218,104,235,1) 0%, rgba(155,62,177,1) 61%, rgba(154,45,186,1) 100%);
+}
+
+.uk-progress.progress-purple::-ms-fill {
+    background: rgb(218,104,235);
+    background: radial-gradient(circle, rgba(218,104,235,1) 0%, rgba(155,62,177,1) 61%, rgba(154,45,186,1) 100%);
+}
+
+#progressBarHeading {
+    color: #9b4193;
+}
+
 #newGame{
     background-color:#9b4193 ;
 }

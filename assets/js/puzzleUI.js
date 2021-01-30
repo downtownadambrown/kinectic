@@ -192,6 +192,7 @@ const endGameTurn = function () {
                 el.classList.add("wordFound")
                 el.classList.add("uk-animation-shake")
                 addScore(difficultyLevel);
+                progressBarForWordFound();
             });;
         }
         if (wordList.length === 0) {
@@ -213,9 +214,11 @@ const endGameTurn = function () {
 const displayWordList = (wordList) => {
     let output = "";
     const wordListElement = document.querySelector("#wordList");
+    const progressbarLength = wordList.length * 10;
     wordListElement.classList.add("uk-padding-large");
     wordListElement.classList.add("uk-text-center");
-    output += `<progress id="js-progressbar" class="uk-progress" value="0" max="` + `${wordList.length}` + `"></progress>`
+    output += `<h3 class="` + `uk-heading-line uk-text-center uk-column-1-1 ` + `" id="` + `progressBarHeading` + `">` + "<span>" + `Progress` + "</span>" + `</h3>`;
+    output += `<progress id="progressBar" class="uk-progress progress-purple" value="0" max="` + `${progressbarLength}` + `"></progress>`
     output += `<h3 class="` + `uk-heading-line uk-text-center uk-column-1-1 ` + `" id="` + `wordListHeading` + `">` + "<span>" + `Word List` + "</span>" + `</h3>`;
     output += "<div class=" + "uk-column-1-2" + ">";
     wordList.forEach(function (value) {
@@ -230,21 +233,12 @@ const displayWordList = (wordList) => {
     wordListElement.setAttribute("uk-scrollspy", "target: > div; cls: uk-animation-fade; delay: 1000");
 };
 
-UIkit.util.ready(function () {
-
-    let bar = document.getElementById('js-progressbar');
-    bar += bar * 100;
-    let animate = setInterval(function () {
-
-        bar.value += 10;
-
-        if (bar.value >= bar.max) {
-            clearInterval(animate);
-        }
-
-    }, 1000);
-
-});
+const progressBarForWordFound = () => {
+    UIkit.util.ready(function () {
+        let barInProgress = document.querySelector('#progressBar');
+        barInProgress.value += 10;
+    });
+}
 
 function stopTimer() {
     clearInterval(interval);
