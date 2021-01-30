@@ -19,7 +19,9 @@ const generateUIForPuzzle = (htmlContainer, wordList, settings) => {
     addTimerAndScoreUI();
     addEventListenersToGrid();
     displayWordList(wordList);
-    startTimer();
+    setTimeout(() => {
+        startTimer();
+    }, 3000);
     newGame();
 };
 
@@ -60,11 +62,14 @@ const drawPuzzle = (el, puzzle, words) => {
             let divElement = document.createElement("div");
             divElement.setAttribute("x", j);
             divElement.setAttribute("y", i);
+
             divElement.innerText = row[j] || "&nbsp;";
             divElement.className = "grid-item";
             el.appendChild(divElement);
         }
     }
+    el.setAttribute("uk-scrollspy", "target: > div; cls: uk-animation-fade ; delay: 10");
+
 };
 
 const addEventListenersToGrid = () => {
@@ -185,6 +190,7 @@ const endGameTurn = function () {
             wordList.splice(index, 1);
             document.querySelectorAll("#" + currentWord).forEach((el) => {
                 el.classList.add("wordFound")
+                el.classList.add("uk-animation-shake")
                 addScore(difficultyLevel);
             });;
         }
@@ -209,6 +215,7 @@ const displayWordList = (wordList) => {
     const wordListElement = document.querySelector("#wordList");
     wordListElement.classList.add("uk-padding-large");
     wordListElement.classList.add("uk-text-center");
+    output += `<progress id="js-progressbar" class="uk-progress" value="0" max="` + `${wordList.length}` + `"></progress>`
     output += `<h3 class="` + `uk-heading-line uk-text-center uk-column-1-1 ` + `" id="` + `wordListHeading` + `">` + "<span>" + `Word List` + "</span>" + `</h3>`;
     output += "<div class=" + "uk-column-1-2" + ">";
     wordList.forEach(function (value) {
@@ -220,7 +227,24 @@ const displayWordList = (wordList) => {
     });
     output += "</div>";
     wordListElement.innerHTML = output;
+    wordListElement.setAttribute("uk-scrollspy", "target: > div; cls: uk-animation-fade; delay: 1000");
 };
+
+UIkit.util.ready(function () {
+
+    let bar = document.getElementById('js-progressbar');
+    bar += bar * 100;
+    let animate = setInterval(function () {
+
+        bar.value += 10;
+
+        if (bar.value >= bar.max) {
+            clearInterval(animate);
+        }
+
+    }, 1000);
+
+});
 
 function stopTimer() {
     clearInterval(interval);
