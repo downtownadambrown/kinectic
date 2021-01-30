@@ -13,7 +13,7 @@
   font-size: larger;
   overflow-y: hidden;
   margin-top: 20px;
-background-image: linear-gradient(315deg, #9921e8 0%, #b54af3 74%);
+  background-image: linear-gradient(315deg, #9b4193 0%, #ab59db 74%);
 }
 
 .grid-item {
@@ -97,3 +97,45 @@ body{
   }
 }
 
+@media only screen and (min-width: 1450px) and (max-width: 2500px) {
+  #container {
+    font-size: larger;
+    margin-left: 350px;
+    margin-right: 350px;
+
+  }
+  #wordList {
+    font-size: larger;
+    padding: 50px 250px 50px 250px;
+  }
+
+}
+
+@media only screen and (min-width: 1000px) and (max-width: 1439px) {
+  #container {
+    font-size: larger;
+    margin-left: 125px;
+    margin-right: 125px;
+
+  }
+  #wordList {
+    font-size: larger;
+    padding: 50px 150px 50px 150px;
+  }
+
+}
+
+
+@media only screen and (min-width: 766px) and (max-width: 999px) {
+  #container {
+    font-size: large;
+    margin-left: 25px;
+    margin-right: 25px;
+
+  }
+  #wordList {
+    font-size: large;
+    padding: 50px 50px 50px 50px;
+  }
+
+}
