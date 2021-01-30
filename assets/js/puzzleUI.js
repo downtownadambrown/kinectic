@@ -195,15 +195,21 @@ const endGameTurn = function () {
 
 const displayWordList = (wordList) => {
     let output = "";
+
     const wordListElement = document.querySelector("#wordList");
-    wordListElement.classList.add("uk-column-1-2");
+    //wordListElement.classList.add("uk-column-1-2");
     wordListElement.classList.add("uk-padding-large");
     wordListElement.classList.add("uk-text-center");
+    output += `<h3 class="` + `uk-heading-line uk-text-center uk-column-1-1 ` + `">` + "<span>" + `Word List`+ "</span>" + `</h3>`;
+    output += "<div class=" + "uk-column-1-2" + ">";
     wordList.forEach(function (value) {
+
         output += "<div class=" + "words" + " id=" + `${value}` + ">";
         output += `${value}`;
         output += "</div>";
+
     });
+    output += "</div>";
     wordListElement.innerHTML = output;
 };
 
@@ -269,7 +275,7 @@ const saveCompletedGameToDatabase = async (score, totalPlayedSeconds) => {
     /**
      * Add user leaderboard
      */
-    const response = await axios
+    await axios
         .post('https://api.kinectic.io/leaderboards', userLeaderboard, {
             headers: {
                 // Overwrite Axios's automatically set Content-Type
