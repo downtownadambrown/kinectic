@@ -12,24 +12,25 @@
   border: 1px solid #ddd;
   font-size: larger;
   overflow-y: hidden;
-  background-color: black;
-
-
+  margin-top: 20px;
+background-image: linear-gradient(315deg, #9921e8 0%, #b54af3 74%);
 }
 
 .grid-item {
   padding: 0.5em;
   text-align: center;
   text-transform: uppercase;
+  color: white;
 }
 
 #container .selected {
-  color:white;
+  color:black;
   text-transform: uppercase;
+  font-weight: 600;
 }
 
 #container .found {
-  color:green;
+  color:black;
   font-weight: 800;
   transition: color 2000ms ease-in;
 }
@@ -39,10 +40,9 @@
 }
 .wordFound {
   text-decoration: line-through;
-  color: green;
-   
+  color: black;
+  font-weight: 600;
   transition: color 2000ms ease-in;
-
 }
 
 .uk-text-danger{
@@ -50,8 +50,9 @@
 }
 
 #wordList {
-    background-color: black;
+    background-color: whitesmoke;
     padding: 10px 10px 10px 10px;
+    font-size: 25px;
 }
 
 #timeElement {
