@@ -13,14 +13,14 @@
             <ul class="uk-navbar-nav">
                 <li>
                     <a href="#menu"><i class="fas fa-bars" style="font-size:38px;"></i></a>
-                        <div class="uk-navbar-dropdown" uk-dropdown="pos: left-bottom" id="menu">
-                            <ul class="uk-nav uk-navbar-dropdown-nav uk-nav-center">
-                                <li><a href="#loginModal" uk-toggle><i class="fas fa-sign-in-alt"
-                                            style="font-size:38px;"></i></a></li>
-                                <li><a href="#signUpModal" uk-toggle><i class="fas fa-user-plus"
-                                            style="font-size:38px;"></i></a></li>
-                            </ul>
-                        </div>
+                    <div class="uk-navbar-dropdown" uk-dropdown="pos: left-bottom" id="menu">
+                        <ul class="uk-nav uk-navbar-dropdown-nav uk-nav-center">
+                            <li><a href="#loginModal" uk-toggle><i class="fas fa-sign-in-alt"
+                                        style="font-size:38px;"></i></a></li>
+                            <li><a href="#signUpModal" uk-toggle><i class="fas fa-user-plus"
+                                        style="font-size:38px;"></i></a></li>
+                        </ul>
+                    </div>
                 </li>
             </ul>
         </div>
@@ -30,15 +30,21 @@
     <div class="uk-child-width-1-1@m" uk-grid>
         <div>
             <div class="uk-card uk-card-default">
-                <div class="uk-card-body">
-                    <h3 class="uk-card-title">Word Search Game</h3>
-                    <p>This is a word search game where you will be given a square for the user to search
-                        for each word.
+                <div class="uk-card-body uk-align-center">
+                    <h3 class="uk-card-title uk-align-center">Word Search Game</h3>
+                    <p>Welcome to <strong>KINECTIC</strong>! This is a word search game where you will find challenging
+                        puzzles, the trivial part is that the word search puzzle was originally designed and published 
+                        by Norman E. Gibat in the Selenby Digest on March 1, 1968, in Norman, Oklahoma, 
+                        although the Spanish puzzle creator Pedro Ocón de Oro was 
+                        publishing "Sopas de letras" (Spanish "Soup of Letters") before that date. History aside, 
+                        below you will find a gameplay demo.
                     </p>
                 </div>
             </div>
         </div>
     </div>
+    <img class="uk-align-center" data-src="https://ik.imagekit.io/2a1in3cldn/MS2/gameplay/game_demo_2_DeBhlK6pO.gif"
+        width="1000" height="500" alt="Gameplay Demo" uk-img>
     <div id="loginModal" class="uk-flex-top" uk-modal>
         <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
             <button class="uk-modal-close-default" type="button" uk-close></button>
