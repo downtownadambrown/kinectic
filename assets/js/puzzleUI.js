@@ -20,19 +20,30 @@ const generateUIForPuzzle = (htmlContainer, wordList, settings) => {
     addEventListenersToGrid();
     displayWordList(wordList);
     startTimer();
+    newGame();
 };
 
 const addTimerAndScoreUI = () => {
     const timerAndScore = document.querySelector("#navBarTimerAndScore");
     let output = "";
     output += `<li>`;
-    output += `<label id="timeElement">` + `Timer: ` + `<label id="minutes">` + `00` + `</label>` + `:` + `<label id="seconds">` + `00` + `  </label>` + `</label >`;
+    output += `<label class="uk-margin-left"><button class="uk-button uk-button-primary category" id="newGame">New Game</button></label >`;
     output += `</li>`;
     output += `<li>`;
-    output += `<label class="uk-margin-left" id = "scoreElement" > Score: <label id="score">0</label></label >`;
+    output += `<label class="uk-margin-left uk-margin-top uk-text-center" id="timeElement">` + `Timer: ` + `<label id="minutes">` + `00` + `</label>` + `:` + `<label id="seconds">` + `00` + `  </label>` + `</label >`;
+    output += `</li>`;
+    output += `<li>`;
+    output += `<label class="uk-margin-left uk-margin-top uk-text-center" id = "scoreElement" > Score: <label id="score">0</label></label >`;
     output += `</li>`;
     timerAndScore.innerHTML = output;
 
+}
+
+const newGame = () => {
+    const newGame = document.querySelector("#newGame");
+    newGame.addEventListener("click", () => {
+        location.reload();
+    });
 }
 
 const drawPuzzle = (el, puzzle, words) => {
@@ -195,12 +206,10 @@ const endGameTurn = function () {
 
 const displayWordList = (wordList) => {
     let output = "";
-
     const wordListElement = document.querySelector("#wordList");
-    //wordListElement.classList.add("uk-column-1-2");
     wordListElement.classList.add("uk-padding-large");
     wordListElement.classList.add("uk-text-center");
-    output += `<h3 class="` + `uk-heading-line uk-text-center uk-column-1-1 ` + `">` + "<span>" + `Word List`+ "</span>" + `</h3>`;
+    output += `<h3 class="` + `uk-heading-line uk-text-center uk-column-1-1 ` + `" id="` + `wordListHeading` + `">` + "<span>" + `Word List` + "</span>" + `</h3>`;
     output += "<div class=" + "uk-column-1-2" + ">";
     wordList.forEach(function (value) {
 

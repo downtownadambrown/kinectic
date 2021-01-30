@@ -1,4 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Balsamiq+Sans:wght@400;700&family=MuseoModerno:wght@400;600&display=swap');
+
+body{
+    user-select: none;
+    background-color: whitesmoke;
+    font-family: 'Balsamiq Sans', cursive;
+    letter-spacing: 2px;
+    overscroll-behavior-x: contain;
+    overscroll-behavior-y: contain;
+
+}
+
 :root {
   --grid-cols: 1;
   --grid-rows: 1;
@@ -58,19 +69,23 @@
 #timeElement {
     padding-left: 20px;
 }
-body{
-    user-select: none;
-    background-color: whitesmoke;
-    font-family: 'Balsamiq Sans', cursive;
-    letter-spacing: 2px;
-    overscroll-behavior-x: contain;
-    overscroll-behavior-y: contain;
 
+#wordListHeading, .words {
+    color:  #9b4193 ;
+}
+
+#newGame{
+    background-color:#9b4193 ;
+}
+
+#scoreElement, #timeElement{
+    padding-top: 30px;
 }
 
 .uk-list li{
     font-weight: 600;
 }
+
 .uk-list span{
     font-weight: 400;
 }
@@ -97,7 +112,7 @@ body{
   }
 }
 
-@media only screen and (min-width: 1450px) and (max-width: 2500px) {
+@media only screen and (min-width: 1450px) and (max-width: 4500px) {
   #container {
     font-size: larger;
     margin-left: 350px;
@@ -106,7 +121,7 @@ body{
   }
   #wordList {
     font-size: larger;
-    padding: 50px 250px 50px 250px;
+    padding: 0px 250px 0px 250px;
   }
 
 }
@@ -120,7 +135,7 @@ body{
   }
   #wordList {
     font-size: larger;
-    padding: 50px 150px 50px 150px;
+    padding: 0px 150px 0px 150px;
   }
 
 }
@@ -135,7 +150,7 @@ body{
   }
   #wordList {
     font-size: large;
-    padding: 50px 50px 50px 50px;
+    padding: 0px 50px 0px 50px;
   }
 
 }
