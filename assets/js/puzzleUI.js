@@ -60,6 +60,7 @@ const drawPuzzle = (el, puzzle, words) => {
         el.classList.add("uk-box-shadow-right");
         el.classList.add("uk-box-shadow-top");
         el.classList.add("uk-box-shadow-xlarge");
+         el.classList.add("uk-margin");
         let row = puzzle[i];
         for (let j = 0, width = row.length; j < width; j++) {
             el.style.setProperty("--grid-cols", row.length);
@@ -73,6 +74,8 @@ const drawPuzzle = (el, puzzle, words) => {
         }
     }
     el.setAttribute("uk-scrollspy", "target: > div; cls: uk-animation-fade ; delay: 10");
+   
+
 
 };
 
@@ -234,7 +237,7 @@ const displayWordList = (wordList) => {
     });
     output += "</div>";
     wordListElement.innerHTML = output;
-    wordListElement.setAttribute("uk-scrollspy", "target: > div; cls: uk-animation-fade; delay: 1000");
+    wordListElement.setAttribute("uk-scrollspy", "target: > div; cls: uk-animation-fade; delay: 500");
 };
 
 const progressBarForWordFound = () => {
