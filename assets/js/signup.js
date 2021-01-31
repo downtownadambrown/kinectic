@@ -12,7 +12,7 @@ setTimeout(() => {
                         if (email.value.match(regExpression)) {
                             const emailCheckResponse = checkEmailExist(email.value);
                             emailCheckResponse.then((element) => {
-                                if (element.length != 0) {
+                                if (element.length === 1) {
                                     if (email.value === element[0].email) {
                                         const validator = $("#signUpForm").validate();
                                         validator.showErrors({
@@ -20,7 +20,8 @@ setTimeout(() => {
                                         });
                                     }
                                 } else {
-                                    console.log("email does not exist")
+                                    return $(email).is(":checked");
+
                                 }
                             });
                         } else if (!email.value.match(regExpression)) {
@@ -37,7 +38,7 @@ setTimeout(() => {
                         if (userName.value.match(regExpression)) {
                             const userNameCheckResponse = checkUserNameExist(userName.value);
                             userNameCheckResponse.then((element) => {
-                                if (element.length != 0) {
+                                if (element.length === 1) {
                                     if (userName.value === element[0].username) {
                                         const validator = $("#signUpForm").validate();
                                         validator.showErrors({
@@ -45,7 +46,7 @@ setTimeout(() => {
                                         });
                                     }
                                 } else {
-                                    console.log("username does not exist")
+                                    return $(userName).is(":checked");
                                 }
                             });
                         } else if (!userName.value.match(regExpression) && userName.value.length >= 6) {
@@ -86,11 +87,30 @@ setTimeout(() => {
             submitHandler: function (form, event) {
                 event.preventDefault();
                 const response = dispatchUserDetails(form.firstName.value, form.lastName.value, form.userName.value, form.email.value, form.password.value);
+                location.reload();
                 storeUserDetailsLocallyForGaming(response)
+
             }
         });
     });
 }, 300);
+
+
+$("#signUpForm").validate({
+    invalidHandler: function (event, validator) {
+        // 'this' refers to the form
+        const errors = validator.numberOfInvalids();
+        if (errors) {
+            const message = errors == 1
+                ? 'You missed 1 field. It has been highlighted'
+                : 'You missed ' + errors + ' fields. They have been highlighted';
+            $("div.error span").html(message);
+            $("div.error").show();
+        } else {
+            $("div.error").hide();
+        }
+    }
+});
 
 async function storeUserDetailsLocallyForGaming(response) {
     response.then((element) => {
@@ -103,7 +123,6 @@ async function storeUserDetailsLocallyForGaming(response) {
             localStorage.setItem("token", element.jwt);
             localStorage.setItem("id", element.user.id);
             localStorage.setItem("isAuthenticated", "true");
-            location.reload();
         }
     })
 }
@@ -133,13 +152,13 @@ async function addUserDetailsToDatabase(firstName, lastName, userName, email, pa
         })
         .then(response => {
             // Handle success.
-            //console.log('Registering User!');
-            //console.log('User profile', response.data.user);
+            console.log('Registering User!');
+            console.log('User profile', response.data.user);
             return response.data;
         })
         .catch(error => {
             // Handle error.
-            //console.log('An error occurred, whilst registering a user.', error.response);
+            console.log('An error occurred, whilst registering a user.', error.response);
             return error.response;
         });
 
@@ -155,13 +174,13 @@ async function checkExistingUserEmail(email) {
         })
         .then(response => {
             // Handle success.
-            // console.log('Email Check!');
-            //console.log('User Email Checked Response', response.data);
+            console.log('Email Check!');
+            console.log('User Email Checked Response', response.data);
             return response.data;
         })
         .catch(error => {
             // Handle error.
-            //console.log('An error occurred, whilst checking email.', error.response);
+            console.log('An error occurred, whilst checking email.', error.response);
             return error.response;
         });
     return res;
@@ -176,13 +195,13 @@ async function checkExistingUserName(username) {
         })
         .then(response => {
             // Handle success.
-            //console.log('Username Check!');
-            //console.log('Username Checked Response', response.data);
+            console.log('Username Check!');
+            console.log('Username Checked Response', response.data);
             return response.data;
         })
         .catch(error => {
             // Handle error.
-            //console.log('An error occurred, whilst checking username.', error.response);
+            console.log('An error occurred, whilst checking username.', error.response);
             return error.response;
         });
     return res;

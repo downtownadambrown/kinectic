@@ -127,11 +127,13 @@ const getLeaderBoardContent = async () => {
     const response = puzzlePlay.getUsersLeaderboards();
     const allUserPerformance = await response.then((user) => {
         let userLeaderboards = user.map((user) => {
+            if (user.leaderboards.length === 0) {
+                return { username: user.username, leaderboard: [{ score: 0, time: 0, category: "No Category played." }] };
+            }
             return { username: user.username, leaderboard: user.leaderboards }
         }).map((user) => {
             let addedLeaderBoardPerUser = {
                 user: user.username,
-
                 score: user.leaderboard.map((item) => {
                     return item.score;
                 }).reduce((acc, result) => { return acc + result }),
