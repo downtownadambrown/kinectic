@@ -20,7 +20,7 @@ setTimeout(() => {
                                         });
                                     }
                                 } else {
-                                    return $(email).is(":checked");
+                                    console.log(email)
 
                                 }
                             });
@@ -46,7 +46,7 @@ setTimeout(() => {
                                         });
                                     }
                                 } else {
-                                    return $(userName).is(":checked");
+                                    console.log(userName)
                                 }
                             });
                         } else if (!userName.value.match(regExpression) && userName.value.length >= 6) {
@@ -87,34 +87,17 @@ setTimeout(() => {
             submitHandler: function (form, event) {
                 event.preventDefault();
                 const response = dispatchUserDetails(form.firstName.value, form.lastName.value, form.userName.value, form.email.value, form.password.value);
-                location.reload();
+                $('#signUpForm').trigger("reset");
                 storeUserDetailsLocallyForGaming(response)
-
             }
         });
     });
 }, 300);
 
-
-$("#signUpForm").validate({
-    invalidHandler: function (event, validator) {
-        // 'this' refers to the form
-        const errors = validator.numberOfInvalids();
-        if (errors) {
-            const message = errors == 1
-                ? 'You missed 1 field. It has been highlighted'
-                : 'You missed ' + errors + ' fields. They have been highlighted';
-            $("div.error span").html(message);
-            $("div.error").show();
-        } else {
-            $("div.error").hide();
-        }
-    }
-});
-
 async function storeUserDetailsLocallyForGaming(response) {
+    console.log(response)
     response.then((element) => {
-        if (element.status === 400 && element.statusText === "Bad Request") {
+        if (element.status === 400 || element.statusText === "Bad Request") {
             console.log("Email or Username already exists.", element);
         } else {
             console.log("Successfully received user details.", element)
@@ -123,6 +106,7 @@ async function storeUserDetailsLocallyForGaming(response) {
             localStorage.setItem("token", element.jwt);
             localStorage.setItem("id", element.user.id);
             localStorage.setItem("isAuthenticated", "true");
+            location.reload();
         }
     })
 }
@@ -133,10 +117,16 @@ async function dispatchUserDetails(firstName, lastName, userName, email, passwor
 }
 
 async function checkEmailExist(email) {
+    if (localStorage.getItem("isAuthenticated") === "true") {
+        location.reload()
+    }
     const promiseResponse = await checkExistingUserEmail(email);
     return promiseResponse;
 }
 async function checkUserNameExist(userName) {
+    if (localStorage.getItem("isAuthenticated") === "true") {
+        location.reload()
+    }
     const promiseResponse = await checkExistingUserName(userName);
     return promiseResponse;
 }
