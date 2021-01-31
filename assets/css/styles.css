@@ -32,7 +32,6 @@ body{
   text-align: center;
   text-transform: uppercase;
   color: black;
-  border: 1px solid black;
 }
 
 #container .selected {
@@ -148,45 +147,30 @@ i{
   }
 }
 
-/* @media only screen and (min-width: 1450px) and (max-width: 4500px) {
+@media only screen and (min-width: 1450px) and (max-width: 4500px) {
   #container {
-    font-size: larger;
-    margin-left: 350px;
-    margin-right: 350px;
+    font-size: large;
+    margin-left:250px;
+    margin-right: 250px;
 
   }
-  #wordList {
-    font-size: larger;
-    padding: 10px 250px 10px 250px;
-  }
-
-}
+} 
 
 @media only screen and (min-width: 1000px) and (max-width: 1439px) {
   #container {
-    font-size: larger;
+    font-size: large;
     margin-left: 125px;
     margin-right: 125px;
 
   }
-  #wordList {
-    font-size: larger;
-    padding: 10px 150px 10px 150px;
-  }
-
 }
 
 
 @media only screen and (min-width: 766px) and (max-width: 999px) {
   #container {
     font-size: large;
-    margin-left: 25px;
-    margin-right: 25px;
+    margin-left: 75px;
+    margin-right: 75px;
 
   }
-  #wordList {
-    font-size: large;
-    padding: 10px 50px 10px 50px;
-  }
-
-} */
+}

@@ -26,8 +26,10 @@ const generateUIForPuzzle = (htmlContainer, wordList, settings) => {
 };
 
 const addTimerAndScoreUI = () => {
-    const timerAndScore = document.querySelector("#navBarTimerAndScore");
+    const timerAndScore = document.querySelector("#navBarTimerAndScore"); 
     let output = "";
+   
+    output += `<li><label class="uk-margin-left"><button class="uk-button uk-button-primary category" id="wordsAndProgress">Words and Progress</button><div class="uk-navbar-dropdown uk-navbar-dropdown-width-2"><div id="wordList"></div></div></label></li>`;
     output += `<li>`;
     output += `<label class="uk-margin-left"><button class="uk-button uk-button-primary category" id="newGame">New Game</button></label >`;
     output += `</li>`;
@@ -55,12 +57,10 @@ const drawPuzzle = (el, puzzle, words) => {
     }
     for (let i = 0, height = puzzle.length; i < height; i++) {
         el.style.setProperty("--grid-rows", puzzle.length);
-        el.classList.add("uk-padding-medium")
         el.classList.add("uk-box-shadow-left");
         el.classList.add("uk-box-shadow-right");
         el.classList.add("uk-box-shadow-top");
         el.classList.add("uk-box-shadow-xlarge");
-         el.classList.add("uk-margin");
         let row = puzzle[i];
         for (let j = 0, width = row.length; j < width; j++) {
             el.style.setProperty("--grid-cols", row.length);
@@ -227,7 +227,7 @@ const displayWordList = (wordList) => {
     output += `<h3 class="` + `uk-heading-line uk-text-center uk-column-1-1 uk-padding` + `" id="` + `progressBarHeading` + `">` + "<span>" + `Progress` + "</span>" + `</h3>`;
     output += `<progress id="progressBar" class="uk-progress progress-purple" value="0" max="` + `${progressbarLength}` + `"></progress>`
     output += `<h3 class="` + `uk-heading-line uk-text-center uk-column-1-1 ` + `" id="` + `wordListHeading` + `">` + "<span>" + `Word List` + "</span>" + `</h3>`;
-    output += "<div class=" + "uk-column-1-2" + ">";
+    output += "<div class=" + "uk-column-1-1" + ">";
     wordList.forEach(function (value) {
 
         output += "<div class=" + "words" + " id=" + `${value}` + ">";
