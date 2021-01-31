@@ -98,11 +98,16 @@ body{
     color: #9b4193;
 }
 
-#newGame{
+#newGame , #playAgain, .category{
     background-color:#9b4193 ;
 }
 
+.category:hover, #playAgain:hover, #newGame:hover{
+background-color:#853a7e ;
+}
+
 #scoreElement, #timeElement{
+    color: #853a7e;
     padding-top: 30px;
 }
 
