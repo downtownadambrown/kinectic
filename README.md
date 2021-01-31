@@ -1,3 +1,20 @@
+Table Of Contents
+
+
+
+- [User Experience Design - UX](#user-experience-design---ux)
+  - [Strategy](#strategy)
+  - [Scope](#scope)
+  - [Structure & Skeleton](#structure--skeleton)
+  - [Surface](#surface)
+- [Technologies](#technologies)
+- [Resources](#resources)
+- [Implementation](#implementation)
+  - [HTML & CSS](#html--css)
+  - [jQuery & Javascript](#jquery--javascript)
+  - [Strapi & MongoDB](#strapi--mongodb)
+
+
 # User Experience Design - UX
 
   
@@ -48,23 +65,14 @@ I have designed the structure and skeleton using Balsamiq to layout how I would 
 
 -  **Wireframes & Sitemap**
  
-	- Main Screen Logged Out - [view](https://ik.imagekit.io/2a1in3cldn/MS2/Wireframes_and_Sitemap/Main_Screen_Logged_Out_Mt2S110tz.png)
-  	- Main Screen Logged In - [view](https://ik.imagekit.io/2a1in3cldn/MS2/Wireframes_and_Sitemap/Main_Screen_Logged_In_YADaJTpebfjQ.png)
-	- Login Form Modal - [view](https://ik.imagekit.io/2a1in3cldn/MS2/Wireframes_and_Sitemap/Login_Form_Modal_6LcRlEsUU.png)
-	- Sign Up Form Modal - [view](https://ik.imagekit.io/2a1in3cldn/MS2/Wireframes_and_Sitemap/Signup_Form_Modal_cuQSQu3yu.png)
-	- Dashboard Modal - [view](https://ik.imagekit.io/2a1in3cldn/MS2/Wireframes_and_Sitemap/Dashboard_Modal_3vZLrvOmH0qg.png)
-	- Settings Modal - [view](https://ik.imagekit.io/2a1in3cldn/MS2/Wireframes_and_Sitemap/Seetings_Modal_qBj6bc3Ouaij.png)
-	- Information and Guide modal - [view](https://ik.imagekit.io/2a1in3cldn/MS2/Wireframes_and_Sitemap/Information_and_Guide_Modal_Fll1qTwg_3qU.png)
-	- Game Screen - [view](https://ik.imagekit.io/2a1in3cldn/MS2/Wireframes_and_Sitemap/Game_Screen_V6A-5elm8.png)
-
+	- All wireframes and sitemap can be visualize in the following link - [view]()
 
 	
 - **API Routes**
 
->     - GET	/categories
 >     - GET	/users
->     - GET	/words
->     - GET	/leaderboard
+>     - GET	/puzzles
+>     - GET	/leaderboards
 
 ## Surface
 
@@ -81,55 +89,6 @@ At this stage I have chosen the Colours, Typography, Logo and Images.
 	- **Logo** - I used [Canva](https://www.canva.com) to design logo and favicon. You can view this under **Resources** in this document.  The fonts used for the logo are Mont Thin and Alta which both are also from canva.
 	
 	- **Icons** - I will be using icons from Font Awesome. more in the **Resources** section in this document.
-
-## Algorithms and Data Structure
-
-## Data Structure
-
-- The proposed plan for the Data Structure will be to use an Object composed of several arrays, all arrays must have equal sizes.
-  Each array will have sets of letters which will form a grid where the puzzle will be filled. When I think about it these are the challanges that come to mind:
-    - Game Logic Thoughts
-      - How many words will it be able to fill inside the grid?
-      - How will I trasverse the arrays to find the best location to fill a word?
-      - What happens when there are no words?
-      - How can the grid dynamically fill the words?
-      - How will empty spaces be filled?
-      - How do I not saturate a grid with too many words?
-      - How can orientations be checked and which orientations are allowed?
-      - How can I map every single UI square in the grid with the actual puzzle?
-      - What is the biggest word possible for the game?
-      - How big can the grid grow?
-      - How overlapping words will be filled in grid?How many is a sensible number?
-      - If grid is too small what will happen to the words? Can grid increase in size depending on the length of a word?
-      - How will I name variables?
-    - Generic Game Thoughts
-      - Where will be the words for a particular category be stored? And How can I make this easily edited rather than hard coded?
-      - How will the dashboard data be stored?
-      - How will user sign up data be stored?
-      - How will use sign up data be stored?
-      - How will sound be played and How can user switch it off?
-      - How will events for the grid be tracked?
-      - How will I have the code written in one file? Or split into sevral ones? 
-- The above questions are initially what came to me when I think about it, my inital thought is to use 3 dimensional array and this is where I will start it.
-
-
-## Algorithms
-
-- When thinking about how to generate the puzzle this is where my starting point. This is my initial PseudoCode to get things started.
-
-- Program Start
-- Initialise Words Array
-- Initialise Puzzle Array
-- generatePuzzle (Words Array){
-  - If (Words Array Has Length AND Puzzle Array Does Not Exist)
-    - While (Puzzle Array Does not Exist)
-      - Fill Puzzle Array With Words Array
-      - If (Puzzle Does not Exist)
-        - Increase Array Size
-    - Fill Empty Spaces With Random Letters  
-    - Return Puzzle 
-- }
-- generatePuzzle(Words Array)
 
 # Technologies
 
@@ -186,6 +145,133 @@ At this stage I have chosen the Colours, Typography, Logo and Images.
 	
 	- This [tool](https://responsivedesignchecker.com/) in conjunction with Am I Responsive were used for responsive testing.
 
+# Resources
 
 
+- **Font Awesome & Iconify**
+	- I had initially not planned to use [Iconify](https://iconify.design/) but during the mockup stage I have used Iconify for it and for some icons during implementation. In addition, [Font Awesome](https://fontawesome.com/) was also used for most of the icons.
+	
+- **Canva** 
+	
+	- I have used canva to design some iterations of the logo which you can view them [here](https://www.canva.com/design/DAEJMth8LoU/S4D2xtRz3mKmKW6sMpT09A/view?utm_content=DAEJMth8LoU&utm_campaign=designshare&utm_medium=link&utm_source=sharebutton).
 
+- **StackEdit**
+
+	- I have come across this small website called [StackEdit](https://stackedit.io) where it makes editing of markdown content easily by having a split window where you write your markdown and to visualise updates as you change it.
+
+- **UIKIT**
+
+	- I have used UIKIT  [documentation](https://getuikit.com/docs/introduction), extensively through out this project, so this piece of resource has been crucial to it. Please, check **implementation** section in this document for more details.
+	
+- **jQuery**
+
+	-  I have used jQuery [documentation](https://api.jquery.com/) to remind myself how some of these functions work on this framework. 
+
+- **Javascript**
+	- I have also used javascript [documentation](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference) as a refresher and reference.
+
+- **HTML**
+
+	- I have also referenced to the HTML [documentation](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference) during implementation as a refresher. 	
+  
+ - **CSS**
+ 
+ 	 - I have referred to the CSS [documentation](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference) during this project.
+ 
+ - **ImageKit** 
+  
+	 - This [resource](https://imagekit.io/) was used to store all images and video for faster loading.
+
+- **Auto CSS Prefixer**
+	- I have used auto-prefixer in this project to enhance compatibility with browsers, it can be found [here](https://autoprefixer.github.io/). 
+
+- **Auto Minifier** 
+	-  I have used this website to minify my CSS and JS to improve loading times. I have preserved the un-minified versions. The auto minifier can be found [here](https://www.minifier.org/).
+
+# Implementation
+
+
+## HTML & CSS
+
+I have coded the HTML side of the project by starting from the home page. The first section was the header, once I was happy with that section I moved on to the next section. During implementation I took some decisions that I believed it would contribute to a better user experience. All the UI was created using UIKIT framework similar to Bootstrap.
+
+- **index.html**  
+		 
+	- I have decided to have the **index.html** to hold a **div** where all content would be served by the index.js. This is an attempt to keep code isolated and easily to read and maintain. All it contains is the bare bones to support everything else.
+
+- **homepage.html**  
+		 
+	-  This page is the most basic and it is the entry point of the puzzle. There the user must login or signup an account which then will load the game page. Furthermore, It contains a menu with Login and Logout buttons and once click a form modal will pop up with the respective form. I have done this way, so it minimizes the amount of pages and repeated code.
+			
+- **gamepage.html**
+			
+	- This page is the one that holds the most amount of **HTML code** as it holds not only the game but all necessary code for playing a new game, such as the categories difficulties and so on. The menu is basic, it has a information modal about the game and its rules, a leaderboard for users to see how well they are doing against others and a logout button. 
+
+## jQuery & Javascript  
+
+- **index.js**
+ 
+	-	This JavaScript file is where it all starts by looking if the user has already logged, and it keeps user logged in until user logs out or deletes all local storage. In addition it deals with loading the leaderboard after logged in as well as personalising the logged in gamepage with welcoming user.
+
+- **generateData.js**
+ 
+	-	This file is for populating data to the database via Strapi APIs, I have done it this way to avoid adding entry by entry to the database, in this case I have one file that if needed can be reused and modified as often as necessary.
+
+- **login.js**
+ 
+	-	This is where all the login logic happens, I took the decision to have split files for login and logout to make more easier to debug, read and maintain. I use a library called **axios** to do all **CRUD** operations through **Strapi API**, in this case **Strapi** comes with a built in User API that can be used to create new users and also login new users, more Information can be found in the **Strapi** section below this document. The validation uses the jQuery Validation Plugin, I have decided to use this as I have greater flexibility for the things I wanted to do rather than creating one from scratch, this was due to time constrains and avoidance to write from zero when its there ready to use., and it also have more advanced validation features than the one I initially wanted to build.
+
+
+- **signup.js**
+ 
+	-	The signup form also uses Strapi API to register users and this is also done with **axios**. When signing up the username and email must be unique so I have implemented the validation for these two to happen as the user enters the information rather than after wards when form is submitted. I have also used **axios** to the **CRUD operation**, and the jQuery validation plugin to help with validation, particularly verifying existing username and email.
+
+
+- **puzzlePlay.js**
+ 
+	-	This is where game settings are gathered to be passed to the **puzzleUI.js**. These settings are puzzle orientation, words list, difficulty level and process category request which is pulling all words for a particular category selected by the user. Once all this information is obtained it is then passed to the **puzzleUI.js** for game generation.
+
+- **puzzleUI.js**
+ 
+	-	In this file you find all UI generation for the game. I use **CSS Grid** to create squares for each puzzle letter as they are quite responsive. The responsibility of puzzleUI.js is to get the settings received from from **puzzlePlay.js** and pass them to **puzzleLogic.js** to create a 2 dimensional array containing the puzzle, once **puzzleUI.js** receives the puzzle it will generate the **UI**, and map all array indexes to each grid square by using html attributes, and also add all adequate event listeners. In addition, it will add the timer and and score for the game to track user performance, then when user  has successfully completed puzzle it also has the responsibility to display user with a modal summarizing all user performance and finally registering it to the database.
+
+- **puzzleLogic.js**
+ 
+	-	This is the brains of the puzzle, but it starts by taking settings from **puzzleUI.js** and it will generate an empty array in two ways either by using the word list array length or by using the biggest word in the array, whichever is bigger. Once the empty array is generated, it will take the word list find best fitting location and also calculate overlapping one word at a time starting from the biggest word and orientation, then it inserts each word. Once the puzzle have all words list the remaining empty spaces are filled with letters randomly. Finally, this array is returned to **puzzleUI.js** for game generation.
+	
+	- The code is wrapped in a class as for me I see a puzzle as one object so my approach was towards Object Oriented Programming (OOP), I have done this way because I have some coding background and I know OOP is more maintainable and readable. Also, it makes it easy to be used by other files as all is needed is to create an instance of the class and pass all settings required.
+
+## Strapi & MongoDB
+
+
+- **MongoDB**
+ 
+	-	I have chosen to us **MongoDB** as a personal preference and also because of **MangoDB Atlas** which is a great **PaaS**. In order to setup **Strapi**, but **Mongo** has to be setup first. I have done so by doing the following steps:
+	
+		-	**STEP 1** Create cluster project
+![enter image description here](https://ik.imagekit.io/2a1in3cldn/MS2/mongo_strapi/mongoDB_setup_part_1_fbk2OzG_xPCb.gif)
+
+
+		-	**STEP 2** Create Database User and Setup Network Access.
+![enter image description here](https://ik.imagekit.io/2a1in3cldn/MS2/mongo_strapi/mongoDB_setup_part_1_fbk2OzG_xPCb.gif)
+
+		-	**STEP 3** Get database credentials.
+![enter image description here](https://ik.imagekit.io/2a1in3cldn/MS2/mongo_strapi/mongoDB_setup_part_3_AjIeUVHn-.gif)
+
+- **Strapi**
+ 
+	-	Once we have the credentials is pretty straight forward to setup Strapi locally, as long as Node.js is installed in the operating system. I have taken this step to set it up: 
+	
+		-	**STEP 3** Get database credentials.
+![enter image description here](https://ik.imagekit.io/2a1in3cldn/MS2/mongo_strapi/strapi_setup_part_1_Wr_h-DFTb.gif)
+
+		- 	**STEP 2** Change to the respective directory where it was installed and do **yarn develop**.
+		 ![enter image description here](https://ik.imagekit.io/2a1in3cldn/MS2/mongo_strapi/strapi_setup_part_2_yC4ej6V_D.png)
+		- 	**STEP 3** Open the local URL to setup admin credentials.
+![enter image description here](https://ik.imagekit.io/2a1in3cldn/MS2/mongo_strapi/strapi_setup_part_3_GodHLTCzk97I.png)
+		-	**STEP 4** Navigate to Content Type Builder to build the schemas and fields.
+		![enter image description here](https://ik.imagekit.io/2a1in3cldn/MS2/mongo_strapi/strapi_setup_part_4_m8awI3_PVog5.png)
+		-	**STEP 5** Set what kind of CRUD operations the HTTP request will be allowed.
+![enter image description here](https://ik.imagekit.io/2a1in3cldn/MS2/mongo_strapi/strapi_setup_part_5_6n8y_YhdQ.png)
+
+	- Once all this is done the APIs can be consumed.
