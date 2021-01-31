@@ -56,13 +56,17 @@ const drawPuzzle = (el, puzzle, words) => {
     for (let i = 0, height = puzzle.length; i < height; i++) {
         el.style.setProperty("--grid-rows", puzzle.length);
         el.classList.add("uk-padding-medium")
+        el.classList.add("uk-box-shadow-left");
+        el.classList.add("uk-box-shadow-right");
+        el.classList.add("uk-box-shadow-top");
+        el.classList.add("uk-box-shadow-xlarge");
         let row = puzzle[i];
         for (let j = 0, width = row.length; j < width; j++) {
             el.style.setProperty("--grid-cols", row.length);
             let divElement = document.createElement("div");
             divElement.setAttribute("x", j);
             divElement.setAttribute("y", i);
-
+            divElement.classList.add("uk-box-shadow-large")
             divElement.innerText = row[j] || "&nbsp;";
             divElement.className = "grid-item";
             el.appendChild(divElement);
@@ -217,7 +221,7 @@ const displayWordList = (wordList) => {
     const progressbarLength = wordList.length * 10;
     wordListElement.classList.add("uk-padding-large");
     wordListElement.classList.add("uk-text-center");
-    output += `<h3 class="` + `uk-heading-line uk-text-center uk-column-1-1 ` + `" id="` + `progressBarHeading` + `">` + "<span>" + `Progress` + "</span>" + `</h3>`;
+    output += `<h3 class="` + `uk-heading-line uk-text-center uk-column-1-1 uk-padding` + `" id="` + `progressBarHeading` + `">` + "<span>" + `Progress` + "</span>" + `</h3>`;
     output += `<progress id="progressBar" class="uk-progress progress-purple" value="0" max="` + `${progressbarLength}` + `"></progress>`
     output += `<h3 class="` + `uk-heading-line uk-text-center uk-column-1-1 ` + `" id="` + `wordListHeading` + `">` + "<span>" + `Word List` + "</span>" + `</h3>`;
     output += "<div class=" + "uk-column-1-2" + ">";
@@ -364,8 +368,5 @@ const endGameModal = () => {
         location.reload();
     });
 }
-
-
-
 
 export { generateUIForPuzzle };

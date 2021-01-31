@@ -24,24 +24,27 @@ body{
   font-size: larger;
   overflow-y: hidden;
   margin-top: 20px;
-  background-image: linear-gradient(315deg, #9b4193 0%, #ab59db 74%);
+  background-color: grey;
 }
 
 .grid-item {
   padding: 0.5em;
   text-align: center;
   text-transform: uppercase;
-  color: white;
+  color: black;
+  border: 1px solid black;
 }
 
 #container .selected {
-  color:black;
+  color:white;
   text-transform: uppercase;
   font-weight: 600;
+    transition: 100ms ease-out;
+
 }
 
 #container .found {
-  color:black;
+  color:white;
   font-weight: 800;
   transition: color 2000ms ease-in;
 }
@@ -51,7 +54,7 @@ body{
 }
 .wordFound {
   text-decoration: line-through;
-  color: black;
+  color: #9b4193;
   font-weight: 600;
   transition: color 2000ms ease-in;
 }
@@ -154,7 +157,7 @@ i{
   }
   #wordList {
     font-size: larger;
-    padding: 0px 250px 0px 250px;
+    padding: 10px 250px 10px 250px;
   }
 
 }
@@ -168,7 +171,7 @@ i{
   }
   #wordList {
     font-size: larger;
-    padding: 0px 150px 0px 150px;
+    padding: 10px 150px 10px 150px;
   }
 
 }
@@ -183,7 +186,7 @@ i{
   }
   #wordList {
     font-size: large;
-    padding: 0px 50px 0px 50px;
+    padding: 10px 50px 10px 50px;
   }
 
 }
