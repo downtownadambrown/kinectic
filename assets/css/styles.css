@@ -20,7 +20,8 @@ body{
   border: 1px solid #ddd;
   font-size: larger;
   overflow-y: hidden;
-  background-color: grey;
+  background: rgb(192,150,198);
+  background: linear-gradient(90deg, rgba(192,150,198,1) 0%, rgba(167,134,184,1) 100%);
 }
 
 .grid-item {
