@@ -1,4 +1,5 @@
-Table Of Contents
+
+ Table Of Contents
 
 
 
@@ -13,6 +14,19 @@ Table Of Contents
   - [HTML & CSS](#html--css)
   - [jQuery & Javascript](#jquery--javascript)
   - [Strapi & MongoDB](#strapi--mongodb)
+- [Testing](#testing)
+  - [User Stories](#user-stories)
+  - [Browser Compatibility](#browser-compatibility)
+  - [Responsiveness](#responsiveness)
+  - [Form Validation](#form-validation)
+  - [HTML Validation](#html-validation)
+  - [CSS Validation](#css-validation)
+- [Project Barriers and Solutions](#project-barriers-and-solutions)
+- [Deployment](#deployment)
+  - [Creation and Publication](#creation-and-publication)
+  - [Download Project & Github CLI](#download-project--github-cli)
+- [Credits](#credits)
+- [Acknowledgements](#acknowledgements)
 
 
 # User Experience Design - UX
@@ -272,6 +286,177 @@ I have coded the HTML side of the project by starting from the home page. The fi
 		-	**STEP 4** Navigate to Content Type Builder to build the schemas and fields.
 		![enter image description here](https://ik.imagekit.io/2a1in3cldn/MS2/mongo_strapi/strapi_setup_part_4_m8awI3_PVog5.png)
 		-	**STEP 5** Set what kind of CRUD operations the HTTP request will be allowed.
-![enter image description here](https://ik.imagekit.io/2a1in3cldn/MS2/mongo_strapi/strapi_setup_part_5_6n8y_YhdQ.png)
+			![enter image description here](https://ik.imagekit.io/2a1in3cldn/MS2/mongo_strapi/strapi_setup_part_5_6n8y_YhdQ.png)
 
 	- Once all this is done the APIs can be consumed.
+
+
+# Testing
+
+## User Stories
+
+- *As a User, I want to be presented with a well structured game, so I can intuitively navigate through the game and access the information I seek.*
+ 
+	-  **This has been achieved by having designed a very minimalistic UI. All users have to do is sign up, once logged he can use the sandwich bar menu to find out game play information or select a category and difficulty.**
+
+-  *As a User, I want to have a how to play section, so I don't waste time figuring out how to play the game.*	
+	-  **This has been achieved by having designed a very minimalistic UI. As the user logins in there is a 3 step guide on how to play the game, even though the game itself is intuitive. Also, the menu has an information section**
+
+- *As a User, I want to be able to select different words, so the game does not feel repetitive.*
+
+	-  **This has been achieved by giving 6 options for the user to pick, each serves a different category with 3 difficulty levels, when a game is generated is always going to be different as the words are randomly placed in the puzzle.**
+
+- *As a User, I want the UI to be consistent throughout the game, so it will be visually appealing to play it.*
+	
+	-  **I have tried my best to give a simplicity in the UI, by providing with the barebones, in general the user is given a 10 x 10, 15x15 or 20x20 grid, this can also depend on word sizes. Each word is highlighted in the grid when the full word is found and also the word list has animations by shaking and striking through the word. **
+
+- *As a User, I want to have a way to save my progress, so I don't have to start the game from scratch every time.*
+	
+	- **This has been achieved by having a leaderboard where it shows the progress by everyone. It displays the username, total score, total time and categories since started playing. The game is scored and timed based. **
+
+- *As a User, I want a way to visualise how I am doing in the game, so I can see how well I do in the game.*
+	
+	- **This has been achieved by having designed by having words highlighted when they are found and also there is a progress bar to inform user how far off to complete the game .**
+	- 
+- *As a User, I want the game to give me feedback every time I successfully find a word, so I am aware how I am doing as I play the game.*
+
+	- **This has been achieved by highlighting and animating words as they are found.**
+	
+- *As a Return User, I want to have a profile, so I can see how my progress is going.*
+	-  **This has been achieved by giving each user a way to sign up, and login back again to see their progress in the leaderboard.**
+
+- *As a New and Return User, I want the game to have some theme base sounds, so it can keep me engaged with the game.*
+ 
+	-  **This has been achieved, but instead of theme, it plays sounds according to each word found.**
+	 
+- *As a Return User, I want to see a learderboard section, so I can see how well I performed against other players.*
+
+	-  **This has been achieved by having a leaderboard modal that's pops up displaying table with all players performance. This is accessible once logged in located in the menu bar.**
+
+
+## Browser Compatibility
+
+ - The website was compatible with most browsers with latest updates. The optimum experiences was at Firefox, Chrome, Edge and Safari. The worst experience was IE 11 and below which completely broke the website. I have added prefixers to improve browser compatibility using [Autoprefixers](https://autoprefixer.github.io/) online.
+
+## Responsiveness
+
+In this section, I have checked how responsive my website is by using **Google Development Tools**, **Am I Responsive?**  and **Responsive Design Checker**. Also, I checked on **Samsung S20**, **iPhone 6S** and **iPhone 6S Plus** which all worked 100%. However, below 400px the game will break because of the puzzle. Whilst doing this game I have learned its hard to get the responsiveness 100% because of the nature of the game. The intention is for this game to be played in screens bigger than 700px of width.
+
+- **Am I Responsive?**
+	- I have checked my app against responsiveness and it all works fine up until a point. In general the app is a puzzle game and it is best played in bigger screen sizes between 700px to 1920px, outside of this range the game is not at its best because the puzzle sizes that can be large.
+
+- **Google Development Tools** 
+	- I have tested my website extensively during development and testing. I have taken some screenshots for the following sizes below, all tests done below worked properly without issues, however, if the screen is smaller than 400px the game breaks. I would say 700px and above are optimum sizes for the game.
+
+- **Responsive Design Checker** 
+
+	- I have tested using this website for all iPhones and all Samsungs were displaying the puzzle appropriately.  
+
+## Form Validation
+
+The tests that I have carried was for all forms. I can confirm that I have tested all forms and all of them behaved as expected, I did not screenshot extensively all inputs validation as all of them are the same, but all passed validation tests. 
+
+
+## HTML Validation
+
+- I have tested my website on the HTML Validation, there are no errors displayed in the check. The final check after the change shows validation successful. It can be viewed [here](https://ik.imagekit.io/2a1in3cldn/testing_images/html_validation_FA3s44bpxZL7.png).
+
+## CSS Validation
+- I have tested also my CSS file using the W3C validation. The result is that it did not pass the validation checks due to the bootstrap framework. All the CSS that I have coded passed were validated fine.  As it shows in the screenshot it shows that there were 2 errors and 751 warnings all from bootstrap. The result can be viewed [here](https://ik.imagekit.io/2a1in3cldn/testing_images/css_validation_LlCqghCeZexg.png).
+  
+
+# Project Barriers and Solutions
+
+  
+
+-  **Project Scope**
+
+	- I initially planned to have a lot more done than required because of my background in coding. However, after discussions with my mentor it was decided to down size my initial proposal. So I have cut down from an eCommerce website to a more static one.
+
+	- In addition, I was initially going to do an ordering system so users would be able to order cakes from the site, it would have a small backend and google maps for users to check location distance and so on. I have turned the ordering section into a photo gallery instead and removed the google maps feature.
+
+-  **Bootstrap Framework**
+
+	- The main challenging part for me was using bootstrap framework, as i have not used it extensively in the past. I took the wrong approach of not going through the documentation in detail. This lead me to do a lot of hard coding CSS when bootstrap had already had all laid out. After realising this mistake, starting from mid project forward I have extensively used more the framework and less hard coding.
+
+-  **Heavy Loading Website**
+
+	- In addition, I have had problems with the amount of images in my website. Initially I have just uploaded all images to the project images folder and even after resizing and using [TINYPNG](https://tinypng.com/) it still was making the website very heavy to load. So I decided to look for a CDN platform to mitigate this issue. Once I had the images in the CDN the website loaded much faster due to auto compressing and resizing.
+
+- **Bootstrap Navbar**
+	
+	- I have come across an issue during testing where the fixed top navbar was overlapping with the carousel, so I have followed bootstrap solution to add padding top to the body, even though this does work, if using older browsers it will actually display the white padding space, due to this reason I decided to remove the navbar being fixed to the top when scrolling and instead added a back to top button.
+  
+
+# Deployment
+
+## Creation and Publication  
+
+1.  I created an account on GitHub -  [My account](https://github.com/tpsantos2120)
+2.  I used the my-full-template -  [Code Institute Template](https://github.com/Code-Institute-Org/gitpod-full-template)  from Code Institute as the base for my project.
+3.  I created the repository -  [Hansel's Bakery](https://github.com/tpsantos2120/hanselsbakery)  for my Milestone project.
+4.  To publish the project and make it available for public viewing, I used the following steps:
+    -   Opened my repositories.
+    -   Selected -  [Hansel's Bakery Repository](https://github.com/tpsantos2120/hanselsbakery)  from the list of repositories.
+    -   Chose the settings option on the right of the taskbar.
+    -   Scrolled down the page until ‘GitHub Pages’ was visible.
+    -   Clicked on the ‘source settings’ drop-down menu and selected ‘master branch’ for publishing.
+    -   You are returned to the top of the page.
+    -   After scrolling back down to ‘GitHub Pages’, a link to my repository was available.
+    -   My project is now available to view publicly -  [https://github.com/tpsantos2120/hanselsbakery](https://github.com/tpsantos2120/hanselsbakery)
+ 
+##  Download Project & Github CLI
+ 
+-  You can select to clone my repository via CLI.
+	
+	1. Open terminal in your preferred IDE.
+	2. Navigate to the folder where you wish to close the repository.
+	3. Enter `git clone https://github.com/tpsantos2120/hanselsbakery.git`
+	4. The project will be pulled to your current directory.
+
+- To download this project do the following:
+	1. Navigate to the menu in the very top of this page
+	2. Click on the **Code** button.
+	3. Then click on **Download.zip**
+		- **Note** you can also click [here](https://github.com/tpsantos2120/hanselsbakery/archive/master.zip) to download the zip file. 
+	4. Choose the directory you wish to download it.
+	5. Unzip file.
+	6. Once unzipped project will be ready.
+		- If you are going to use it locally you will need a web server, something like **LAMP**, you use this [Tutorial](https://www.digitalocean.com/community/tutorials/how-to-install-linux-apache-mysql-php-lamp-stack-on-ubuntu-16-04) from Digital Ocean for Linux Machines or this [link](https://www.apachefriends.org/index.html) for Windows machines.
+
+
+  
+
+# Credits
+
+  https://www.w3schools.com/graphics/game_sound.asp
+  https://mixkit.co/free-sound-effects/alerts/
+
+
+- **UIKit** 
+	
+	- The majority of the project was completed using UIkit framework, I have mainly customised the framework to my own proposed wireframes and mockup as specified in the UX section of this document. I have used a lot of the documentation from UIkit to accomplish the end project.
+
+- **jQuery** 
+	- I have used jQuery for parts of the website, I have mainly used previous knowledge and documentation provided by jQuery.
+
+- **jQuery Form Validator** 
+
+	- I have used this jQuery Plugin for form validation. The source can be found [here](https://jqueryvalidation.org/). 
+
+- **ImageKit** 
+	 - This is a [CDN](https://imagekit.io/) where I have used to store all images and video.
+
+
+
+# Acknowledgements
+
+  
+
+- I would like to thank you [Stuart Crang](https://www.linkedin.com/in/stuart-crang-50401897/) again for helping me getting enrolled in this course which took ages and the support. Also, for the long conversations and patience that he had with me through this time.
+
+- Also, I would like to mention my mentor here. Thank you [Dick Vlaanderen](https://www.linkedin.com/in/dick-vlaanderen/) for the support and guidance especially when my plan was bigger than was needed so he told me to calm down. Also, for giving me your opinion throughout our meetings.
+
+- Last but not least, I would like to thank the [Code Institute](https://codeinstitute.net/) for the course content and amazing support they have always provided me!
+
+
