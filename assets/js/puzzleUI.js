@@ -1,4 +1,6 @@
 import puzzleLogic from "./puzzleLogic.js";
+import play from "./sound.js";
+
 
 let game, startGridItem,
     selectedGridItem = [],
@@ -9,12 +11,16 @@ let game, startGridItem,
     difficultyLevel,
     totalPlayedSeconds = 0,
     interval,
-    category;
+    category,
+    foundWordSound,
+    completedGameSound;
 
 const generateUIForPuzzle = (htmlContainer, wordList, settings) => {
     difficultyLevel = settings.level;
     category = settings.category;
     game = new puzzleLogic.PuzzleLogic(wordList, settings);
+    foundWordSound = new  play.sound("assets/sounds/found_word.wav");
+    completedGameSound = new play.sound("assets/sounds/one_man_clap.wav");
     drawPuzzle(htmlContainer, game.puzzle, wordList);
     addTimerAndScoreUI();
     addEventListenersToGrid();
@@ -26,9 +32,9 @@ const generateUIForPuzzle = (htmlContainer, wordList, settings) => {
 };
 
 const addTimerAndScoreUI = () => {
-    const timerAndScore = document.querySelector("#navBarTimerAndScore"); 
+    const timerAndScore = document.querySelector("#navBarTimerAndScore");
     let output = "";
-   
+
     output += `<li>`;
     output += `<label class="uk-margin-left"><button class="uk-button uk-button-primary category" id="newGame">New Game</button></label >`;
     output += `</li>`;
@@ -73,9 +79,6 @@ const drawPuzzle = (el, puzzle, words) => {
         }
     }
     el.setAttribute("uk-scrollspy", "target: > div; cls: uk-animation-fade ; delay: 10");
-   
-
-
 };
 
 const addEventListenersToGrid = () => {
@@ -195,9 +198,10 @@ const endGameTurn = function () {
             });
             wordList.splice(index, 1);
             document.querySelectorAll("#" + currentWord).forEach((el) => {
-                el.classList.add("wordFound")
-                el.classList.add("uk-animation-shake")
-                updateGameArea()
+                el.classList.add("wordFound");
+                el.style.color = "magenta";
+                el.classList.add("uk-animation-shake");
+                playSoundFoundWord();
                 addScore(difficultyLevel);
                 progressBarForWordFound();
             });;
@@ -206,6 +210,7 @@ const endGameTurn = function () {
             document.querySelectorAll(".grid-item").forEach((el) => {
                 el.classList.add("complete")
             });;
+            playSoundCompletedPuzzle();
             endGameModal();
         }
     });
@@ -327,16 +332,13 @@ const saveCompletedGameToDatabase = async (score, totalPlayedSeconds) => {
         });
 }
 
-
-var mySound;
-
-
-function updateGameArea() {
-  mySound = new sound("assets/js/audio.wav");
-
-      mySound.play();
+function playSoundFoundWord() {
+    foundWordSound.play();
 }
 
+function playSoundCompletedPuzzle() {
+    completedGameSound.play();
+}
 
 const endGameModal = () => {
 

@@ -1,4 +1,4 @@
-class Sound {
+class sound {
     constructor(src) {
         this.sound = document.createElement("audio");
         this.sound.src = src;
@@ -15,4 +15,4 @@ class Sound {
     }
 }
 
-export {Sound}
+export default { sound }
