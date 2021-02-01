@@ -14,13 +14,29 @@ let game, startGridItem,
     category,
     foundWordSound,
     completedGameSound;
+class sound {
+    constructor(src) {
+        this.sound = document.createElement("audio");
+        this.sound.src = src;
+        this.sound.setAttribute("preload", "auto");
+        this.sound.setAttribute("controls", "none");
+        this.sound.style.display = "none";
+        document.body.appendChild(this.sound);
+        this.play = function () {
+            this.sound.play();
+        };
+        this.stop = function () {
+            this.sound.pause();
+        };
+    }
+}
 
 const generateUIForPuzzle = (htmlContainer, wordList, settings) => {
     difficultyLevel = settings.level;
     category = settings.category;
     game = new puzzleLogic.PuzzleLogic(wordList, settings);
-    foundWordSound = new  play.sound("assets/sounds/found_word.wav");
-    completedGameSound = new play.sound("assets/sounds/one_man_clap.wav");
+    foundWordSound = new  sound("assets/sounds/audio.wav");
+    completedGameSound = new sound("assets/sounds/onemanclap.wav");
     drawPuzzle(htmlContainer, game.puzzle, wordList);
     addTimerAndScoreUI();
     addEventListenersToGrid();
@@ -62,10 +78,6 @@ const drawPuzzle = (el, puzzle, words) => {
     }
     for (let i = 0, height = puzzle.length; i < height; i++) {
         el.style.setProperty("--grid-rows", puzzle.length);
-        el.classList.add("uk-box-shadow-left");
-        el.classList.add("uk-box-shadow-right");
-        el.classList.add("uk-box-shadow-top");
-        el.classList.add("uk-box-shadow-xlarge");
         let row = puzzle[i];
         for (let j = 0, width = row.length; j < width; j++) {
             el.style.setProperty("--grid-cols", row.length);
