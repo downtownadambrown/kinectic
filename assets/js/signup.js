@@ -88,7 +88,7 @@ setTimeout(() => {
                 event.preventDefault();
                 const response = dispatchUserDetails(form.firstName.value, form.lastName.value, form.userName.value, form.email.value, form.password.value);
                 $('#signUpForm').trigger("reset");
-                storeUserDetailsLocallyForGaming(response)
+                storeUserDetailsLocallyForGaming(response);
             }
         });
     });

@@ -29,7 +29,6 @@ const addTimerAndScoreUI = () => {
     const timerAndScore = document.querySelector("#navBarTimerAndScore"); 
     let output = "";
    
-    output += `<li><label class="uk-margin-left"><button class="uk-button uk-button-primary category" id="wordsAndProgress">Words and Progress</button><div class="uk-navbar-dropdown uk-navbar-dropdown-width-2"><div id="wordList"></div></div></label></li>`;
     output += `<li>`;
     output += `<label class="uk-margin-left"><button class="uk-button uk-button-primary category" id="newGame">New Game</button></label >`;
     output += `</li>`;
@@ -222,9 +221,8 @@ const displayWordList = (wordList) => {
     let output = "";
     const wordListElement = document.querySelector("#wordList");
     const progressbarLength = wordList.length * 10;
-    wordListElement.classList.add("uk-padding-large");
     wordListElement.classList.add("uk-text-center");
-    output += `<h3 class="` + `uk-heading-line uk-text-center uk-column-1-1 uk-padding` + `" id="` + `progressBarHeading` + `">` + "<span>" + `Progress` + "</span>" + `</h3>`;
+    output += `<h3 class="` + `uk-heading-line uk-text-center uk-column-1-1 ` + `" id="` + `progressBarHeading` + `">` + "<span>" + `Progress` + "</span>" + `</h3>`;
     output += `<progress id="progressBar" class="uk-progress progress-purple" value="0" max="` + `${progressbarLength}` + `"></progress>`
     output += `<h3 class="` + `uk-heading-line uk-text-center uk-column-1-1 ` + `" id="` + `wordListHeading` + `">` + "<span>" + `Word List` + "</span>" + `</h3>`;
     output += "<div class=" + "uk-column-1-1" + ">";
@@ -327,6 +325,17 @@ const saveCompletedGameToDatabase = async (score, totalPlayedSeconds) => {
             return error.response;
         });
 }
+
+
+var mySound;
+
+
+function updateGameArea() {
+  mySound = new sound("bounce.mp3");
+
+      mySound.play();
+}
+
 
 const endGameModal = () => {
 
