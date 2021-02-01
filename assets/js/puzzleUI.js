@@ -197,6 +197,7 @@ const endGameTurn = function () {
             document.querySelectorAll("#" + currentWord).forEach((el) => {
                 el.classList.add("wordFound")
                 el.classList.add("uk-animation-shake")
+                updateGameArea()
                 addScore(difficultyLevel);
                 progressBarForWordFound();
             });;
@@ -331,7 +332,7 @@ var mySound;
 
 
 function updateGameArea() {
-  mySound = new sound("bounce.mp3");
+  mySound = new sound("assets/js/audio.wav");
 
       mySound.play();
 }
@@ -348,6 +349,7 @@ const endGameModal = () => {
     const elTotalScore = document.querySelector("#totalScore");
     const minutes = document.querySelector("#minutes");
     const seconds = document.querySelector("#seconds");
+
     stopTimer();
     if (difficultyLevel === "easy") {
         completionBonus = 10;
