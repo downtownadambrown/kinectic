@@ -1,7 +1,13 @@
+## Responsiveness
 
- Table Of Contents
+![enter image description here](https://ik.imagekit.io/2a1in3cldn/MS2/gameplay/responsive_image_vuuQ5NOgIdjq.png)
 
 
+## Gameplay Demo
+
+![enter image description here](https://ik.imagekit.io/2a1in3cldn/MS2/gameplay/gameplay_--IbYIbuJkBy.gif)
+
+## Table Of Contents
 
 - [User Experience Design - UX](#user-experience-design---ux)
   - [Strategy](#strategy)
@@ -17,14 +23,17 @@
 - [Testing](#testing)
   - [User Stories](#user-stories)
   - [Browser Compatibility](#browser-compatibility)
-  - [Responsiveness](#responsiveness)
+  - [Responsiveness](#responsiveness-1)
   - [Form Validation](#form-validation)
   - [HTML Validation](#html-validation)
   - [CSS Validation](#css-validation)
 - [Project Barriers and Solutions](#project-barriers-and-solutions)
+- [The Future](#the-future)
+  - [Features and Functionalities](#features-and-functionalities)
 - [Deployment](#deployment)
   - [Creation and Publication](#creation-and-publication)
   - [Download Project & Github CLI](#download-project--github-cli)
+  - [Backend Deployment](#backend-deployment)
 - [Credits](#credits)
 - [Acknowledgements](#acknowledgements)
 
@@ -163,11 +172,11 @@ At this stage I have chosen the Colours, Typography, Logo and Images.
 
 
 - **Font Awesome & Iconify**
-	- I had initially not planned to use [Iconify](https://iconify.design/) but during the mockup stage I have used Iconify for it and for some icons during implementation. In addition, [Font Awesome](https://fontawesome.com/) was also used for most of the icons.
+	- [Font Awesome](https://fontawesome.com/) was used for all icons.
 	
 - **Canva** 
 	
-	- I have used canva to design some iterations of the logo which you can view them [here](https://www.canva.com/design/DAEJMth8LoU/S4D2xtRz3mKmKW6sMpT09A/view?utm_content=DAEJMth8LoU&utm_campaign=designshare&utm_medium=link&utm_source=sharebutton).
+	- I have used canva to design some iterations of the logo which you can view them [here](https://www.canva.com/design/DAES7tZQo7A/t9gMvx49dTM8Y4uy7A030Q/view?utm_content=DAES7tZQo7A&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink).
 
 - **StackEdit**
 
@@ -198,9 +207,6 @@ At this stage I have chosen the Colours, Typography, Logo and Images.
 
 - **Auto CSS Prefixer**
 	- I have used auto-prefixer in this project to enhance compatibility with browsers, it can be found [here](https://autoprefixer.github.io/). 
-
-- **Auto Minifier** 
-	-  I have used this website to minify my CSS and JS to improve loading times. I have preserved the un-minified versions. The auto minifier can be found [here](https://www.minifier.org/).
 
 # Implementation
 
@@ -350,43 +356,101 @@ In this section, I have checked how responsive my website is by using **Google D
 
 - **Responsive Design Checker** 
 
-	- I have tested using this website for all iPhones and all Samsungs were displaying the puzzle appropriately.  
+	- I have tested using this website for all iPhones and all Samsung's were displaying the puzzle appropriately.  
 
 ## Form Validation
 
-The tests that I have carried was for all forms. I can confirm that I have tested all forms and all of them behaved as expected, I did not screenshot extensively all inputs validation as all of them are the same, but all passed validation tests. 
+The tests that I have carried was for all forms. I can confirm that I have tested all forms and all of them behaved as expected.
+
+- **Login Form - Submitted With No Input** ![enter image description here](https://ik.imagekit.io/2a1in3cldn/MS2/login_signup/login_form_no_input_error_CtyxpRctU.gif)
+
+- **Login Form - User Not Authenticated**
+![enter image description here](https://ik.imagekit.io/2a1in3cldn/MS2/login_signup/login_form_with_input_not_authenticated_error_XhIpFDuRSmBV.gif)
+
+- **Login Form  - User Authenticated Success**
+![enter image description here](https://ik.imagekit.io/2a1in3cldn/MS2/login_signup/login_form_with_input_authenticated_successful_wKrMuVyn6aLo.gif)
+
+- **Signup Form - User Authenticated Success**
+![enter image description here](https://ik.imagekit.io/2a1in3cldn/MS2/login_signup/signup_form_successful_F8VHNxEmGwAtu.gif)
+
+- **Signup Form - Email And/Or Password Already Exist**
+![enter image description here](https://ik.imagekit.io/2a1in3cldn/MS2/login_signup/signup_form_with_username_and_password_exist_error_EiwFsu1X_l7p.gif)
+
+- **Signup Form - Email And/Or Password Already Exist**
+![enter image description here](https://ik.imagekit.io/2a1in3cldn/MS2/login_signup/signup_form_with_no_input_error_zkgw_J6YzXBxh.gif)
 
 
 ## HTML Validation
 
-- I have tested my website on the HTML Validation, there are no errors displayed in the check. The final check after the change shows validation successful. It can be viewed [here](https://ik.imagekit.io/2a1in3cldn/testing_images/html_validation_FA3s44bpxZL7.png).
+- I have tested my website on the HTML Validation, there are no errors displayed in the check. The final check after the change shows validation successful. It can be viewed [here](https://ik.imagekit.io/2a1in3cldn/MS2/login_signup/html_validator_JAu-zvhzJGGC.png).
 
 ## CSS Validation
-- I have tested also my CSS file using the W3C validation. The result is that it did not pass the validation checks due to the bootstrap framework. All the CSS that I have coded passed were validated fine.  As it shows in the screenshot it shows that there were 2 errors and 751 warnings all from bootstrap. The result can be viewed [here](https://ik.imagekit.io/2a1in3cldn/testing_images/css_validation_LlCqghCeZexg.png).
+
+- I have tested also my CSS file using the W3C validation. The result shows 3 errors:
+ 
+	- **URI: 1** - This is a parse error from the UIKIT framework, I have no control over this error.
+	- **URI 18** and **URI 19** - It does not recognise the repeat() function which is actually supported by all browsers except internet explorer. You can find more about it [here](https://developer.mozilla.org/en-US/docs/Web/CSS/repeat%28%29). Therefore, it indicates it is normal to use it.	
+-  The result can be viewed [here](https://ik.imagekit.io/2a1in3cldn/MS2/login_signup/css_validator_uTezsIc3Ti.png).
   
 
 # Project Barriers and Solutions
 
-  
-
 -  **Project Scope**
 
-	- I initially planned to have a lot more done than required because of my background in coding. However, after discussions with my mentor it was decided to down size my initial proposal. So I have cut down from an eCommerce website to a more static one.
-
-	- In addition, I was initially going to do an ordering system so users would be able to order cakes from the site, it would have a small backend and google maps for users to check location distance and so on. I have turned the ordering section into a photo gallery instead and removed the google maps feature.
-
--  **Bootstrap Framework**
-
-	- The main challenging part for me was using bootstrap framework, as i have not used it extensively in the past. I took the wrong approach of not going through the documentation in detail. This lead me to do a lot of hard coding CSS when bootstrap had already had all laid out. After realising this mistake, starting from mid project forward I have extensively used more the framework and less hard coding.
-
--  **Heavy Loading Website**
-
-	- In addition, I have had problems with the amount of images in my website. Initially I have just uploaded all images to the project images folder and even after resizing and using [TINYPNG](https://tinypng.com/) it still was making the website very heavy to load. So I decided to look for a CDN platform to mitigate this issue. Once I had the images in the CDN the website loaded much faster due to auto compressing and resizing.
-
-- **Bootstrap Navbar**
+	- I initially planned to have a lot more done than required because of my background in coding. However, after discussions with my mentor it was decided to down size my initial proposal. So I have cut down from a blog  to then create a game. It was hard as I went through some tough times with my partner contracting covid-19. So a lot of the game features that I had in mind I had to cut it down. These are the following:
+	- **Settings Modal** - This is where users would turn on and off the sound for the game, reset password and game difficulty. Instead, I had to re think and now the game difficulty is chosen on per game basis.
 	
-	- I have come across an issue during testing where the fixed top navbar was overlapping with the carousel, so I have followed bootstrap solution to add padding top to the body, even though this does work, if using older browsers it will actually display the white padding space, due to this reason I decided to remove the navbar being fixed to the top when scrolling and instead added a back to top button.
+	- **Leaderboard Table** -  I was going to have a filterable table for global players and to see just your own achievements. 
+
+-  **UIKit Framework**
+
+	- I have set myself to attempt something else other than Bootstrap, so I have chosen UIKit. I feel I learned a lot about both frameworks, even though UIKit is not taught by the Code Institute course, it has similarities with bootstrap, the main challenge was how to implement components together.
+
+- **Game**
+	
+	- The most challenging part of the game is to get the logic right. I have used **OOP** which was what I initially thought to do. I have created a class that has a constructor that communicates with functions in order to generate the game. The constructor receives settings and a set of words from **puzzleUI.js**, then it starts to build the puzzle. It became much easier once I saw the puzzle as an object, from there I broke down the problem into smaller parts to get where I wanted.
+
+	- `class  PuzzleLogic {`
+		- `constructor(wordList, settings) {`
+    	`const  puzzle = this.generatePuzzle(wordList, settings);`
+    	`const  orientations = this.getOrientations();`
+    	`const  allOrientations = this.getAllOrientations();`
+    	`return { puzzle, orientations, allOrientations };` 
+    	`}`
+	- `}`
+	 
+	- The snippet above is how the constructor looks like, it will take two parameters, an array of words and game settings, such as orientation depending on game difficulty, difficulty level, chosen category. Once this is passed to the constructor it will then generate the puzzle and return an object containing the created puzzle, all possible orientations in the game and the functions needed to calculate orientations, which are then used together with CSS variables and CSS Grid to generate each grid square. The game follows this logic:
+		1.	 Create empty string array from array length or biggest word length
+		2. Find best locations taking in consideration the array size and word  list
+		3. Place words in array randomly on word per word basis
+		4. Fill the remaining empty strings with random letters
+		5. return puzzle
   
+ - **Responsiveness**
+	 - This is one of the most difficult parts because of the nature of the game, the grid sometimes are too large for small screens so I have attempted many different things to try to make this looking great in all screen, but it gets to a point that is hard to make it good in all screens, the main intention of the game is to play it on tablets and desktops but obviously desktops are the best options.
+
+	- I have added code that will detect screen size and disable medium and/or hard difficulties, this is an attempt to improve playability in smaller screens, however I still recommend to use tablets or desktop.
+
+- **Project Name**
+	- Initially the project name was puzzlemania but this has been changed to kinectic to represent the connection between letters to form a word. The puzzlemania logo was too long and it would look bad on small screens so instead I change to something shorter and different. 
+
+# The Future 
+
+## Features and Functionalities
+
+ - Once the course has ended I plan to continue to improve the game by adding new features. These are the features and functionalities I plan for the future:
+	
+	 - To give user the ability to change their passwords
+	 - To automatic generate all categories instead  of hard coding it. 
+	 - Refactor the code towards a more MCV pattern, module, view , controller. This would improve maintainability and readability.
+	 - To create a reward system based on badges each badge would be necessary to achieve a certain criteria to attain it.
+	 - To add profile images so people can upload their faces if they wish or choose a pre-set image.
+	 - To eventually include a variety of puzzle games, for users to choose, if they get bored of word search.
+	 - To improve security and not have the game store anything locally, even though no sensitive information  is not stored locally I wish to not use local storage all together.
+	 - To have a global leaderboard and a regional leaderboard.
+	 - To allow users to search their usernames in the leaderboard, also add sorting.
+	 - To create mobile app specific for small devices such as smartphones and tablets and have this game for large screens, this is because creating a native app will fit best and function better than web apps.
+
 
 # Deployment
 
@@ -394,16 +458,16 @@ The tests that I have carried was for all forms. I can confirm that I have teste
 
 1.  I created an account on GitHub -  [My account](https://github.com/tpsantos2120)
 2.  I used the my-full-template -  [Code Institute Template](https://github.com/Code-Institute-Org/gitpod-full-template)  from Code Institute as the base for my project.
-3.  I created the repository -  [Hansel's Bakery](https://github.com/tpsantos2120/hanselsbakery)  for my Milestone project.
+3.  I created the repository -  [Kinectic](https://github.com/tpsantos2120/kinectic)  for my Milestone project.
 4.  To publish the project and make it available for public viewing, I used the following steps:
     -   Opened my repositories.
-    -   Selected -  [Hansel's Bakery Repository](https://github.com/tpsantos2120/hanselsbakery)  from the list of repositories.
+    -   Selected -  [Kinectic Repository](https://github.com/tpsantos2120/kinectic)  from the list of repositories.
     -   Chose the settings option on the right of the taskbar.
     -   Scrolled down the page until ‘GitHub Pages’ was visible.
     -   Clicked on the ‘source settings’ drop-down menu and selected ‘master branch’ for publishing.
     -   You are returned to the top of the page.
     -   After scrolling back down to ‘GitHub Pages’, a link to my repository was available.
-    -   My project is now available to view publicly -  [https://github.com/tpsantos2120/hanselsbakery](https://github.com/tpsantos2120/hanselsbakery)
+    -   My project is now available to view publicly -  [https://tpsantos2120.github.io/kinectic/](https://tpsantos2120.github.io/kinectic/)
  
 ##  Download Project & Github CLI
  
@@ -411,44 +475,73 @@ The tests that I have carried was for all forms. I can confirm that I have teste
 	
 	1. Open terminal in your preferred IDE.
 	2. Navigate to the folder where you wish to close the repository.
-	3. Enter `git clone https://github.com/tpsantos2120/hanselsbakery.git`
+	3. Enter `git clone https://github.com/tpsantos2120/kinectic.git`
 	4. The project will be pulled to your current directory.
 
 - To download this project do the following:
 	1. Navigate to the menu in the very top of this page
 	2. Click on the **Code** button.
 	3. Then click on **Download.zip**
-		- **Note** you can also click [here](https://github.com/tpsantos2120/hanselsbakery/archive/master.zip) to download the zip file. 
+		- **Note** you can also click [here](https://github.com/tpsantos2120/kinectic/archive/master.zip) to download the zip file. 
 	4. Choose the directory you wish to download it.
 	5. Unzip file.
 	6. Once unzipped project will be ready.
 		- If you are going to use it locally you will need a web server, something like **LAMP**, you use this [Tutorial](https://www.digitalocean.com/community/tutorials/how-to-install-linux-apache-mysql-php-lamp-stack-on-ubuntu-16-04) from Digital Ocean for Linux Machines or this [link](https://www.apachefriends.org/index.html) for Windows machines.
 
+## Backend Deployment
 
-  
+- As I have used a headless CMS, in order to deploy it I have used Digital Ocean via their App Platform. Once an account with them is opened and your github account is authorized, the deployment is very straight forward, all is needed is to have Strapi push to a repository, then in Digital Ocean you can select that repository and deploy it.
 
+-  **Deployment Strapi**
+	1. **Follow Strapi Deployment Documentation** 
+		- [Follow this documentation](https://strapi.io/documentation/developer-docs/latest/getting-started/deployment.html).
+		 
+	2. **Cloud Deployment With Digital Ocean** 
+	 ![enter image description here](https://ik.imagekit.io/2a1in3cldn/MS2/strapi_deployment_4LBy8TFJX.gif) 
+
+	3.  **Domain and DNS Records**
+	 
+		- The domain I used was one that I had bought a while ago. Navigate to your Domain Registrar and point the NS Records to match the ones given by Digital Ocean. Once the domain has been propagated it is now possible to go to your APP deployment settings and create a alias record so your Strapi App now points to that domain. 	
+-  There are other ways, but this is the most straight forward if the backend is being developed locally.
 # Credits
 
-  https://www.w3schools.com/graphics/game_sound.asp
-  https://mixkit.co/free-sound-effects/alerts/
+- **Home Page Intro**
+	- I have used some text from wikipedia for the intro in the home page. The link to the source is [here](https://en.wikipedia.org/wiki/Word_search).
 
+- **Puzzle Logic**
+	- I have researched on how I could go on about creating the game and I have used these resources:
+
+		- https://codeguppy.com/site/tutorials/word-search.html
+		- https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/Object-oriented_JS
+		- https://davidxmoody.com/2014/wordsearch-game/
+
+- **Puzzle Words**
+	- I have used this [website](https://www.brainzilla.com/word-games/word-search/) to get the words for the game.
 
 - **UIKit** 
 	
-	- The majority of the project was completed using UIkit framework, I have mainly customised the framework to my own proposed wireframes and mockup as specified in the UX section of this document. I have used a lot of the documentation from UIkit to accomplish the end project.
+	- The majority of the project was completed using [UIkit framework](https://getuikit.com/docs/animation), I have mainly customised the framework to my own proposed wireframes and mockup as specified in the UX section of this document. I have used a lot of the documentation from UIkit to accomplish the end project.
 
 - **jQuery** 
 	- I have used jQuery for parts of the website, I have mainly used previous knowledge and documentation provided by jQuery.
 
 - **jQuery Form Validator** 
 
-	- I have used this jQuery Plugin for form validation. The source can be found [here](https://jqueryvalidation.org/). 
+	- I have used this jQuery Plugin for form validation, but mainly because of the jQuery Login Validator. The source can be found [here](https://jqueryvalidation.org/). 
 
 - **ImageKit** 
-	 - This is a [CDN](https://imagekit.io/) where I have used to store all images and video.
+	 - This is a [CDN](https://imagekit.io/) where I have used to store all images and gifs.
 
+- **UIKit**
+	- I have used extensively the UIKit framework in this project all UI components apart from the grid was created using this framework. 
 
+- **Axios**
+	- I have used this library to make all the HTTP requests, mainly because of the error handling and because I have used it in the past. It can be found [here](https://github.com/axios/axios). 
 
+- **Game Sound** 
+	-  I have used this piece of code from [W3C](https://www.w3schools.com/graphics/game_sound.asp)  for the sounds in the game.
+- **Font Awesome**
+	- I have used [font awesome](https://fontawesome.com/icons?d=gallery) for the icons in the game.
 # Acknowledgements
 
   
