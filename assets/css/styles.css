@@ -5,9 +5,6 @@ body{
     background-color: whitesmoke;
     font-family: 'Balsamiq Sans', cursive;
     letter-spacing: 2px;
-    overscroll-behavior-x: contain;
-    overscroll-behavior-y: contain;
-
 }
 
 :root {
