@@ -13,24 +13,8 @@ let game, startGridItem,
     interval,
     category,
     foundWordSound,
-    completedGameSound;
-
-class sound {
-    constructor(src) {
-        this.sound = document.createElement("audio");
-        this.sound.src = src;
-        this.sound.setAttribute("preload", "auto");
-        this.sound.setAttribute("controls", "none");
-        this.sound.style.display = "none";
-        document.body.appendChild(this.sound);
-        this.play = function () {
-            this.sound.play();
-        };
-        this.stop = function () {
-            this.sound.pause();
-        };
-    }
-}
+    completedGameSound,
+    letterSelectedSound;
 
 /**
  * 
@@ -48,8 +32,9 @@ const generateUIForPuzzle = (htmlContainer, wordList, settings) => {
     difficultyLevel = settings.level;
     category = settings.category;
     game = new puzzleLogic.PuzzleLogic(wordList, settings);
-    foundWordSound = new  sound("assets/sounds/audio.wav");
-    completedGameSound = new sound("assets/sounds/onemanclap.wav");
+    foundWordSound = new play.sound("assets/sounds/foundword.wav");
+    letterSelectedSound = new play.sound("assets/sounds/selectedletter.wav");
+    completedGameSound = new play.sound("assets/sounds/wongame.wav");
     drawPuzzle(htmlContainer, game.puzzle, wordList);
     addTimerAndScoreUI();
     addEventListenersToGrid();
@@ -164,6 +149,7 @@ const calculateOrientation = (x1, y1, x2, y2) => {
  */
 const startGameTurn = (event) => {
     event.target.className += " selected";
+    playLetterSelectedSound();
     startGridItem = event.target;
     selectedGridItem.push(event.target);
     currentWord = event.target.innerText;
@@ -300,7 +286,6 @@ const endGameTurn = function () {
             document.querySelectorAll(".grid-item").forEach((el) => {
                 el.classList.add("complete")
             });;
-            playSoundCompletedPuzzle();
             endGameModal();
         }
     });
@@ -453,15 +438,22 @@ const saveCompletedGameToDatabase = async (score, totalPlayedSeconds) => {
 /**
  * Play sound when word is found.
  */
-function playSoundFoundWord() {
+const playSoundFoundWord = () => {
     foundWordSound.play();
 }
 
 /**
  * Play sound when game is completed.
  */
-function playSoundCompletedPuzzle() {
+const playSoundCompletedPuzzle = () => {
     completedGameSound.play();
+}
+
+/**
+ * Play sound when letter is selected.
+ */
+const playLetterSelectedSound = () => {
+    letterSelectedSound.play();
 }
 
 /***
@@ -504,6 +496,7 @@ const endGameModal = () => {
     elTotalBonusCollected.innerText = (timeBonus + completionBonus).toString(10) + " points";
     elTotalScore.innerText = (timeBonus + completionBonus + score).toString(10) + " points";
     saveCompletedGameToDatabase((timeBonus + completionBonus + score), totalPlayedSeconds);
+    playSoundCompletedPuzzle();
 
     UIkit.modal("#endOfGameModal").show();
     UIkit.util.on('#endOfGameModal', 'click', function (e) {

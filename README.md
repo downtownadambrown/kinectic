@@ -546,9 +546,9 @@ The tests that I have carried was for all forms. I can confirm that I have teste
 
   
 
-- I would like to thank you [Stuart Crang](https://www.linkedin.com/in/stuart-crang-50401897/) again for helping me getting enrolled in this course which took ages and the support. Also, for the long conversations and patience that he had with me through this time.
+- I would like to thank you [Stuart Crang](https://www.linkedin.com/in/stuart-crang-50401897/) again for helping me getting enrolled in this course which took ages and the support. Also, for the long conversations and patience that you had with me through this time.
 
-- Also, I would like to mention my mentor here. Thank you [Dick Vlaanderen](https://www.linkedin.com/in/dick-vlaanderen/) for the support and guidance especially when my plan was bigger than was needed so he told me to calm down. Also, for giving me your opinion throughout our meetings.
+- Also, I would like to mention my mentor here. Thank you [Dick Vlaanderen](https://www.linkedin.com/in/dick-vlaanderen/) for the support and guidance especially when my plan was bigger than was needed so you told me to calm down. Also, for giving me your opinion throughout our meetings.
 
 - Last but not least, I would like to thank the [Code Institute](https://codeinstitute.net/) for the course content and amazing support they have always provided me!
 
