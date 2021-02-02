@@ -20,7 +20,15 @@ class PuzzleLogic {
         }
     }
 
-
+    /**
+     * 
+     * Returns a number of functions depending on
+     * orientation required. These calculates best location
+     * for each word. Each function has a respective object key
+     * only returns the orietations requested. Same applies for
+     * getSkippedOrientations() and getOrientations().
+     * 
+     */
     getCheckedOrientations = (orientation) => {
         const checkOrientations = {
             horizontal: function (x, y, h, w, l) {
@@ -417,16 +425,6 @@ class PuzzleLogic {
             : locations;
     };
 
-    removeLocations = (locations, overlap) => {
-        let removedLocations = [];
-        for (let i = 0, len = locations.length; i < len; i++) {
-            if (locations[i].overlap >= overlap) {
-                removedLocations.push(locations[i]);
-            }
-        }
-        return removedLocations;
-    };
-
     /** STEP 10
      * 
      * Similar to STEP 8, check word coordinates and save the letter in a given 
@@ -457,7 +455,36 @@ class PuzzleLogic {
         return overlap;
     };
 
-    /** STEP 10
+
+     /** STEP 11
+     * 
+     * Take locations and overlaps, remove locations
+     * that are not best due to overlapping being bigger than
+     * the maximum allowed overlap.
+     * 
+     * @param {Array} locations
+     * @param {Number} overlap
+     */
+    removeLocations = (locations, overlap) => {
+        let removedLocations = [];
+        for (let i = 0, len = locations.length; i < len; i++) {
+            if (locations[i].overlap >= overlap) {
+                removedLocations.push(locations[i]);
+            }
+        }
+        return removedLocations;
+    };
+
+    /** STEP 12
+     * 
+     * Once the puzzle has been filled
+     * with words, start process of filling the remaining 
+     * empty spaces. Check if settings allow to so, if it does
+     * generate letters randomly to be inserted in the empty spaces,
+     * once that is done fill all empty spaces with the generated letters.
+     * 
+     * @param {Array} puzzle
+     * @param {Object} settings
      * 
      */
     fillGridEmptySpaces = (puzzle, settings) => {
@@ -471,7 +498,12 @@ class PuzzleLogic {
         };
     };
 
-    /** STEP 11
+    /** STEP 13
+     * 
+     * Generate letters randomly, keep track of letters that
+     * will be added and letters that are removed. Get all letters ready uppercase.
+     * 
+     * @param {Object} settings
      * 
      */
     generateLettersForGrid = (settings) => {
@@ -491,14 +523,21 @@ class PuzzleLogic {
         return extraLetterGenerator;
     }
 
-    /** STEP 12
+    /** STEP 14
+     * 
+     * Work closely with generateLettersForGrid() as this is called
+     * for each empty space in the grid and we do it for as long as the puzzle array size and
+     * keep track of all letters being added. 
+     * 
+     * @param {Array} puzzle
+     * @param {Function} generatedLettersForPuzzle
      * 
      */
     fillEmptySquares = ({ puzzle, generatedLettersForPuzzle }) => {
-        var extraLettersCount = 0;
-        for (var i = 0, gridHeight = puzzle.length; i < gridHeight; i++) {
-            var row = puzzle[i];
-            for (var j = 0, gridWidth = row.length; j < gridWidth; j++) {
+        let extraLettersCount = 0;
+        for (const i = 0, gridHeight = puzzle.length; i < gridHeight; i++) {
+            const row = puzzle[i];
+            for (const j = 0, gridWidth = row.length; j < gridWidth; j++) {
                 if (!puzzle[i][j]) {
                     puzzle[i][j] = generatedLettersForPuzzle();
                     extraLettersCount++;

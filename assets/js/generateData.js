@@ -1,3 +1,11 @@
+/**
+ * 
+ * HTTP request funtion to populate words to the database
+ * via POST request, it wil respond with 200 if fulfilled correctly
+ * 
+ * @param {string} word 
+ * @param {string} category 
+ */
 async function postDataToAPI(word, category) {
     axios.post('https://api.kinectic.io/puzzles', {
         word: word,
@@ -281,7 +289,18 @@ const foodAndDrinks = ["BRUSCHETTA",
     "COCONUTMILK",
     "WATER"];
 
-
+/**
+ * 
+ * This takes all categories arrays and start populating them 
+ * via POST request
+ * 
+ * @param {Array} countries 
+ * @param {Array} animals 
+ * @param {Array} placesAndBeaches 
+ * @param {Array} tv 
+ * @param {Array} movies 
+ * @param {Array} foodAndDrinks 
+ */
 const populateData = (countries, animals, placesAndBeaches, tv, movies, foodAndDrinks) => {
     countries.forEach(element => {
         postDataToAPI(element, "countries")
@@ -303,18 +322,5 @@ const populateData = (countries, animals, placesAndBeaches, tv, movies, foodAndD
     });
 }
 
+// This is commented out as it is required only once.
 //populateData(countries, animals, placesAndBeaches, tv, movies, foodAndDrinks)
-
-async function getDataFromAPI(category) {
-    axios.get('https://api.kinectic.io/puzzles', {
-        params: {
-            category: category
-        }
-        
-    })
-        .then((response) => {
-            console.log(response);
-        }, (error) => {
-            console.log(error);
-        });
-}

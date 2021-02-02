@@ -14,6 +14,7 @@ let game, startGridItem,
     category,
     foundWordSound,
     completedGameSound;
+
 class sound {
     constructor(src) {
         this.sound = document.createElement("audio");
@@ -31,6 +32,18 @@ class sound {
     }
 }
 
+/**
+ * 
+ * Generate puzzle based on settings given by puzzlePlay.js
+ * Draw the puzzle with the returned puzzle from puzzleLogic.js
+ * Add event listeners to each grid square.
+ * Display word list for user to find them.
+ * Start timer and Set listener for New Game button.
+ * 
+ * @param {Obkect} htmlContainer 
+ * @param {Array} wordList 
+ * @param {Object} settings 
+ */
 const generateUIForPuzzle = (htmlContainer, wordList, settings) => {
     difficultyLevel = settings.level;
     category = settings.category;
@@ -47,10 +60,12 @@ const generateUIForPuzzle = (htmlContainer, wordList, settings) => {
     newGame();
 };
 
+/**
+ * It add the timer UI on the navbar.
+ */
 const addTimerAndScoreUI = () => {
     const timerAndScore = document.querySelector("#navBarTimerAndScore");
     let output = "";
-
     output += `<li>`;
     output += `<label class="uk-margin-left"><button class="uk-button uk-button-primary category" id="newGame">New Game</button></label >`;
     output += `</li>`;
@@ -61,9 +76,12 @@ const addTimerAndScoreUI = () => {
     output += `<label class="uk-margin-left uk-margin-top uk-text-center" id = "scoreElement" > Score: <label id="score">0</label></label >`;
     output += `</li>`;
     timerAndScore.innerHTML = output;
-
 }
 
+/**
+ * It is called when a New Game button is clicked
+ * then reloads the page.
+ */
 const newGame = () => {
     const newGame = document.querySelector("#newGame");
     newGame.addEventListener("click", () => {
@@ -71,6 +89,14 @@ const newGame = () => {
     });
 }
 
+/**
+ * Draw a puzzle using CSS variables and funtions,
+ * also add animation.
+ * 
+ * @param {Object} el 
+ * @param {Array} puzzle 
+ * @param {Array} words 
+ */
 const drawPuzzle = (el, puzzle, words) => {
     wordList = [...words];
     while (el.firstChild) {
@@ -110,6 +136,15 @@ const addEventListenersToGrid = () => {
     });
 }
 
+/**
+ * Get coordinates that was generated via event listeners and return 
+ * which orientation the user inputs.
+ * 
+ * @param {Number} x1 
+ * @param {Number} y1 
+ * @param {Number} x2 
+ * @param {Number} y2 
+ */
 const calculateOrientation = (x1, y1, x2, y2) => {
     for (let orientation in game.orientations) {
         let nextFn = game.orientations[orientation];
@@ -121,6 +156,12 @@ const calculateOrientation = (x1, y1, x2, y2) => {
     return null;
 };
 
+/**
+ * Called when user starts touch or click events.
+ * Save element for later use.
+ * 
+ * @param {Object} event 
+ */
 const startGameTurn = (event) => {
     event.target.className += " selected";
     startGridItem = event.target;
@@ -128,6 +169,19 @@ const startGameTurn = (event) => {
     currentWord = event.target.innerText;
 };
 
+/**
+ * 
+ * This function will keep track of letters as the user clicks
+ * and moves the mouse or touch across. It keeps track of all letters
+ * when user is still selecting. If user clicks in one letter
+ * the next letter will only be highlighted if that letter will form the word required,
+ * meaning ywhen you are selecting letters from a starting point it wont allow
+ * unless it is a word meant to be selected. Also, calls on function to calculate orientation
+ * if the orientation is wrong it wont hightlight it. If orientations are fine then it will add
+ * html class selected which in turn changes the letter colour. 
+ * 
+ * @param {Object} targetElement 
+ */
 const selectingSquares = (targetElement) => {
     if (!startGridItem) {
         return;
@@ -178,11 +232,22 @@ const selectingSquares = (targetElement) => {
         playGameTurn(targetElement);
     }
 };
-
+/**
+ * This is executed when user click and moves the mouse or finger. 
+ * 
+ * @param {Object} event 
+ */
 const mouseMovement = function (event) {
     selectingSquares(event.target);
 };
 
+/**
+ * This function is executed when there is touch movement by the aid of touch 
+ * event listeners, it gets coordinates of the exact square being touched 
+ * and returns it.
+ * 
+ * @param {Object} event 
+ */
 const touchMovement = function (event) {
     let xPos = event.touches[0].pageX;
     let yPos = event.touches[0].pageY;
@@ -191,6 +256,12 @@ const touchMovement = function (event) {
     selectingSquares(target);
 };
 
+/**
+ * This function happens whislt letters are being selected and user is doing movement.
+ * It tracks the letters selected.
+ * 
+ * @param {Object} square 
+ */
 const playGameTurn = function (square) {
     for (let i = 0, len = wordList.length; i < len; i++) {
         if (wordList[i].indexOf(currentWord + square.innerText) === 0) {
@@ -202,6 +273,13 @@ const playGameTurn = function (square) {
     }
 };
 
+/**
+ * Once letters selected matches oen of the words in the array list
+ * it will add css class to those letters that formed words. It will remove 
+ * selected letters once a release event has happened and word doesnt match.
+ * If all words are found then the game completes and sets a complete css class to
+ * all letters. At  the end reset all tracking variables.
+ */
 const endGameTurn = function () {
     wordList.forEach((value, index) => {
         if (wordList[index] === currentWord) {
@@ -235,6 +313,11 @@ const endGameTurn = function () {
     currentOrientation = null;
 };
 
+/**
+ * Displays word list with styles.
+ *
+ * @param {Array} wordList 
+ */
 const displayWordList = (wordList) => {
     let output = "";
     const wordListElement = document.querySelector("#wordList");
@@ -256,6 +339,9 @@ const displayWordList = (wordList) => {
     wordListElement.setAttribute("uk-scrollspy", "target: > div; cls: uk-animation-fade; delay: 500");
 };
 
+/**
+ * Fills progress bar as the words are being found.
+ */
 const progressBarForWordFound = () => {
     UIkit.util.ready(function () {
         let barInProgress = document.querySelector('#progressBar');
@@ -263,10 +349,16 @@ const progressBarForWordFound = () => {
     });
 }
 
+/**
+ * It stops timer when game ends.
+ */
 function stopTimer() {
     clearInterval(interval);
 }
 
+/**
+ * Starts timer when game begins.
+ */
 const startTimer = () => {
     const minutes = document.querySelector("#minutes");
     const seconds = document.querySelector("#seconds");
@@ -290,6 +382,12 @@ const startTimer = () => {
     }
 };
 
+/**
+ * Follows a point system logic where points are given for
+ * difficulty. Each word found gives you points.
+ * 
+ * @param {string} difficultyLevel 
+ */
 const addScore = (difficultyLevel) => {
     const displayScore = document.querySelector("#score");
     if (difficultyLevel === "easy") {
@@ -308,10 +406,18 @@ const addScore = (difficultyLevel) => {
 
 };
 
+/**
+ * 
+ * This is called to save game performance to database
+ * only when game has completed. 
+ * 
+ * @param {Number} score 
+ * @param {Number} totalPlayedSeconds 
+ */
 const saveCompletedGameToDatabase = async (score, totalPlayedSeconds) => {
 
     /**
-     * Get user ID locally and 
+     * Get user ID locally and game performance.
      */
     console.log(score)
     const userID = localStorage.getItem("id");
@@ -344,14 +450,24 @@ const saveCompletedGameToDatabase = async (score, totalPlayedSeconds) => {
         });
 }
 
+/**
+ * Play sound when word is found.
+ */
 function playSoundFoundWord() {
     foundWordSound.play();
 }
 
+/**
+ * Play sound when game is completed.
+ */
 function playSoundCompletedPuzzle() {
     completedGameSound.play();
 }
 
+/***
+ * Displays a modal with game summary performance
+ * and save it to database, then reloads the pages back to category selection.
+ */
 const endGameModal = () => {
 
     let completionBonus = 0, timeBonus = 0;

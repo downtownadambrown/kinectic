@@ -1,5 +1,12 @@
 import * as puzzleUI from "./puzzleUI.js";
 
+/**
+ * The object passwed to this funtion contains word list
+ * and user settings as well as game settings,generate a
+ * puzzle once called upon. Remove logo and welcome user. 
+ * 
+ * @param {object} wordsAndSettings 
+ */
 const playPuzzleGame = (wordsAndSettings) => {
     const gameCanvas = document.querySelector("#container");
     const logo = document.querySelector(".uk-logo");
@@ -11,12 +18,29 @@ const playPuzzleGame = (wordsAndSettings) => {
     });
 };
 
+/**
+ * Split a category that is longer than one word
+ * abd join them together with underscore _.
+ * 
+ * @param {string} category 
+ */
 const splitAndJoinCategory = (category) => {
     const splitCategory = category.split("-");
     const joinCategory = splitCategory.join("_");
     return joinCategory;
 }
 
+/**
+ * Take the difficulty chosen by user and create and object
+ * together with word list for puzzle generation. Fabricate
+ * a word list array from the array request from backend.
+ * Make sure words dont repeat inside new word list and that 
+ * this word list array is created with random words from a specific category
+ * return word list once ready.
+ * 
+ * @param {string} category 
+ * @param {string} difficulty 
+ */
 const puzzleWordsAndSettings = async (category, difficulty) => {
     const EASY = 10, MEDIUM = 15, HARD = 20, response = processCategoryRequest(category);
     const wordListArray = await response.then((element) => {
@@ -68,6 +92,14 @@ const puzzleWordsAndSettings = async (category, difficulty) => {
     return wordListArray;
 }
 
+/**
+ * This is to check words duplicates inside array
+ * whilst randomly insert words.
+ * 
+ * 
+ * @param {array} words 
+ * @param {string} level 
+ */
 const checkDuplicatedWords = (words, level) => {
     const wordList = [];
     for (let index = 0; index < words.length; index++) {
@@ -84,6 +116,12 @@ const checkDuplicatedWords = (words, level) => {
     return wordList;
 }
 
+/**
+ * This will preocess the request by calling a function that
+ * makes a HTTP GET request for a categories word.
+ * 
+ * @param {string} category 
+ */
 async function processCategoryRequest(category) {
     const promiseResponse = await getCategoryWords(category);
     return promiseResponse;
@@ -98,8 +136,7 @@ async function getCategoryWords(category) {
         })
         .then(response => {
             // Handle success.
-            //console.log('Username Check!');
-            //console.log('Username Checked Response', response.data);
+           
             return response.data;
         })
         .catch(error => {
@@ -110,13 +147,15 @@ async function getCategoryWords(category) {
     return res;
 }
 
+/**
+ * This makes a HTTP request for leaderboards of all users.
+ */
 async function getUsersLeaderboards() {
     const res = await axios
         .get('https://api.kinectic.io/users', {})
         .then(response => {
             // Handle success.
-            //console.log('Username Check!');
-            //console.log('Username Checked Response', response.data);
+           
             return response.data;
         })
         .catch(error => {

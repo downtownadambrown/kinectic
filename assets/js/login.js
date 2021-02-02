@@ -1,3 +1,10 @@
+/**
+ * This is a jQuery function from the jQuery Form Validator
+ * I have used to build form validation, for the login form,
+ * it will post a HTTP request once submitted, and return status 400 if
+ * user doesnt exist, then display error. If login is authenticated it will inform
+ * the local storage of it. 
+ */
 setTimeout(() => {
     $(document).ready(function () {
         $("#loginForm").validate({
@@ -34,12 +41,17 @@ setTimeout(() => {
     });
 }, 300);
 
+/**
+ * Take the object conatining user details and save some of it locally for 
+ * game use.
+ * 
+ * @param {Object} element 
+ */
 async function storeUserDetailsLocally(element) {
     console.log("Successfully received user details.", element)
     localStorage.setItem("firstname", element.user.firstname);
     localStorage.setItem("username", element.user.username);
     localStorage.setItem("id", element.user.id);
-    localStorage.setItem("token", element.jwt);
     localStorage.setItem("isAuthenticated", true);
     location.reload();
 }
@@ -49,6 +61,13 @@ async function dispatchUserDetailsForAuthentication(userName, password) {
     return promiseResponse;
 }
 
+/**
+ * Use HTTP request to check if user exist, then return error
+ * or success.
+ * 
+ * @param {string} username 
+ * @param {string} password 
+ */
 async function checkLoginDetailsExist(username, password) {
     console.log(`Username: ${username} and Password: ${password}`)
     const response = axios

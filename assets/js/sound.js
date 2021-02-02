@@ -1,3 +1,7 @@
+/**
+ * Class to create an audio element for game play.
+ * Play and Pause are called at different stages of the game.
+ */
 class sound {
     constructor(src) {
         this.sound = document.createElement("audio");

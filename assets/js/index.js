@@ -1,5 +1,13 @@
+/**
+ * This imports some funtions from puzzlePlay to 
+ * help game generation.
+ */
 import * as puzzlePlay from "./puzzlePlay.js";
 
+/**
+ * Checks if user has already logged in, if it is 
+ * load the correct page.
+ */
 window.addEventListener('load', () => {
     const isAuthenticated = localStorage.getItem("isAuthenticated")
     if (isAuthenticated === "true") {
@@ -14,6 +22,11 @@ window.addEventListener('load', () => {
     }
 });
 
+/**
+ * Wait until all HTML is loaded and then add listeners 
+ * to each category play button, also gets difficulty and 
+ * category name.
+ */
 setTimeout(() => {
     document.querySelectorAll('.category').forEach(item => {
         item.addEventListener('click', event => {
@@ -28,15 +41,25 @@ setTimeout(() => {
     });
 }, 300);
 
+/**
+ * Loads game page and then load leaderboard modal
+ */
 const loadLoggedInContent = () => {
     $("#app-root").load("gamepage.html");
     displayLeaderBoardContent();
 }
 
+/**
+ * Loads home page if user is logged out.
+ */
 const loadLoggedOutContent = () => {
     $("#app-root").load("homepage.html");
 }
 
+/**
+ * Disable medium or hard difficulty depending on 
+ * screen size.
+ */
 const disableDifficulty = () => {
     const screenSize = localStorage.getItem("screenSize");
     const categories = document.querySelector("#categories");
@@ -63,7 +86,11 @@ const disableDifficulty = () => {
     }
 }
 
-function getResolution() {
+/**
+ * identifies screen size for the disableDifficulty method,
+ * Use local storage to store if screen is small or medium.
+ */
+const getResolution = () => {
     const username = localStorage.getItem("firstname");
     if (window.outerWidth < 500) {
         if (!(localStorage.getItem("screenSize") === "small")) {
@@ -87,6 +114,9 @@ function getResolution() {
     }
 }
 
+/**
+ * This will log out user and set a vallue locally
+ */
 const logOutUser = () => {
     const logOutButton = document.querySelector("#logOut");
     if (logOutButton !== null) {
@@ -100,12 +130,22 @@ const logOutUser = () => {
     }
 }
 
+/**
+ * 
+ * This is to remove all categoiries from screen whenever the game is being played.
+ * 
+ * @param {Array} categoriesElements 
+ */
 const removeElements = (categoriesElements) => {
     while (categoriesElements.firstChild) {
         categoriesElements.removeChild(categoriesElements.lastChild);
     }
 }
 
+/**
+ * This is to personalise a bit, and display user with their first name
+ * as a welcome.
+ */
 const welcomeUser = () => {
     const welcomeUser = document.querySelector("#welcomeUser");
     const userFirstName = localStorage.getItem("firstname");
@@ -115,6 +155,13 @@ const welcomeUser = () => {
     }
 }
 
+
+/**
+ * This is a function to make the first letter 
+ * of someone's name capital, repeats for consecutive names too.
+ * 
+ * @param {string} firstName 
+ */
 const capitalizeFirstLetter = (firstName) => {
     const splitWords = firstName.toLowerCase().split(" ");
     const capitalizedName = splitWords.map((word) => {
@@ -123,6 +170,13 @@ const capitalizeFirstLetter = (firstName) => {
     return capitalizedName;
 }
 
+/**
+ * This function gets all leadereboard content,
+ * extract username, score, time and category for 
+ * building the leaderboard. Returns an object containing
+ * the coreect format for leaderboard display. 
+ * 
+ */
 const getLeaderBoardContent = async () => {
     const response = puzzlePlay.getUsersLeaderboards();
     const allUserPerformance = await response.then((user) => {
@@ -173,6 +227,13 @@ const displayLeaderBoardContent = () => {
     })
 }
 
+/**
+ * 
+ * This will caculate total second played
+ * and convert them into hours, minutes and seconds
+ * 
+ * @param {Object} element 
+ */
 const calculatePlayedSeconds = (element) => {
     const hours = splitTimeValues(Math.floor(element / 60 / 60))
     const minutes = splitTimeValues(Math.floor(element / 60) - (hours * 60));
@@ -180,6 +241,13 @@ const calculatePlayedSeconds = (element) => {
     return { hours: hours, minutes: minutes, seconds: seconds }
 }
 
+/**
+ * 
+ * This is to take a string and add a 0 before it
+ * if its only one digit.
+ * 
+ * @param {string} value 
+ */
 const splitTimeValues = (value) => {
     let valueString = value + "";
     if (valueString.length < 2) {

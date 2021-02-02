@@ -111,11 +111,25 @@ async function storeUserDetailsLocallyForGaming(response) {
     })
 }
 
+/**
+ * Process user details when signing up
+ * 
+ * @param {String} firstName 
+ * @param {String} lastName 
+ * @param {String} userName 
+ * @param {String} email 
+ * @param {String} password 
+ */
 async function dispatchUserDetails(firstName, lastName, userName, email, password) {
     const promiseResponse = await addUserDetailsToDatabase(firstName, lastName, userName, email, password);
     return promiseResponse;
 }
 
+/**
+ * Process Email check for existance.
+ * 
+ * @param {String} email 
+ */
 async function checkEmailExist(email) {
     if (localStorage.getItem("isAuthenticated") === "true") {
         location.reload()
@@ -123,6 +137,12 @@ async function checkEmailExist(email) {
     const promiseResponse = await checkExistingUserEmail(email);
     return promiseResponse;
 }
+
+/**
+ * Process check for input username.
+ * 
+ * @param {String} userName 
+ */
 async function checkUserNameExist(userName) {
     if (localStorage.getItem("isAuthenticated") === "true") {
         location.reload()
@@ -131,6 +151,15 @@ async function checkUserNameExist(userName) {
     return promiseResponse;
 }
 
+/**
+ * Add user to the database once validation is completed successfully.
+ * 
+ * @param {String} firstName 
+ * @param {String} lastName 
+ * @param {String} userName 
+ * @param {String} email 
+ * @param {String} password 
+ */
 async function addUserDetailsToDatabase(firstName, lastName, userName, email, password) {
     const res = axios
         .post('https://api.kinectic.io/auth/local/register', {
@@ -155,6 +184,12 @@ async function addUserDetailsToDatabase(firstName, lastName, userName, email, pa
     return res;
 }
 
+/**
+ * Check for existing email as the user is filling the form.
+ * Return response.
+ * 
+ * @param {string} email 
+ */
 async function checkExistingUserEmail(email) {
     const res = axios
         .get('https://api.kinectic.io/users', {
@@ -176,6 +211,11 @@ async function checkExistingUserEmail(email) {
     return res;
 }
 
+/**
+ * Checks for existing username as the user fills the form.
+ * 
+ * @param {string} username 
+ */
 async function checkExistingUserName(username) {
     const res = axios
         .get('https://api.kinectic.io/users', {
