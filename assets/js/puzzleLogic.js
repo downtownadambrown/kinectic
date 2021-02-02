@@ -535,15 +535,16 @@ class PuzzleLogic {
      */
     fillEmptySquares = ({ puzzle, generatedLettersForPuzzle }) => {
         let extraLettersCount = 0;
-        for (const i = 0, gridHeight = puzzle.length; i < gridHeight; i++) {
-            const row = puzzle[i];
-            for (const j = 0, gridWidth = row.length; j < gridWidth; j++) {
+        for (let i = 0, gridHeight = puzzle.length; i < gridHeight; i++) {
+            let row = puzzle[i];
+            for (let j = 0, gridWidth = row.length; j < gridWidth; j++) {
                 if (!puzzle[i][j]) {
                     puzzle[i][j] = generatedLettersForPuzzle();
                     extraLettersCount++;
                 }
             }
         }
+        return extraLettersCount;
     };
 };
 
